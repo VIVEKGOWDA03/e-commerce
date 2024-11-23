@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 const CheckAuth = ({ isAuthenticated, user, children }) => {
   const location = useLocation(); // Get the current location to check against paths
-console.log(location.pathname,isAuthenticated);
+  console.log(location.pathname, isAuthenticated);
 
   if (
     !isAuthenticated &&
@@ -16,13 +16,14 @@ console.log(location.pathname,isAuthenticated);
   // If the user is authenticated but is trying to access login or register pages, redirect based on role
   if (
     isAuthenticated &&
-    (location.pathname.includes("/auth/login") ||
+    (location.pathname.includes("/login") ||
       location.pathname.includes("/register"))
   ) {
     if (user?.role === "admin") {
       return <Navigate to="/admin/dashboard" />;
-    } else {
-      return <Navigate to="/shop/home-page" />;
+    }
+    if (user?.role === "user") {
+      return <Navigate to="/shop/listing" />;
     }
   }
 

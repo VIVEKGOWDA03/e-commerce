@@ -28,40 +28,29 @@ export const registerUser = createAsyncThunk(
 
 // Async thunk for login
 export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
-      formData,
-      { withCredentials: true }
-    );
-    return response.data; // Return the response data (user info or success message)
-  } catch (error) {
-    return rejectWithValue(error.response.data); // Capture and return the error response
-  }
+  const response = await axios.post(
+    "http://localhost:5000/api/auth/login",
+    formData,
+    { withCredentials: true }
+  );
+  return response.data; // Return the response data (user info or success message)
 });
 
 // Async thunk for auth
-export const checkAuth = createAsyncThunk(
-  "/auth/checkauth", // Action type string
-  async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/api/auth/check-auth",
-        {
-          withCredentials: true, // Send cookies along with the request
-          headers: {
-            "Cache-Control":
-              "no-store, no-cache, must-revalidate, proxy-revalidate", // Fix the syntax
-            Expires: "0", // Ensures the response isn't cached
-          },
-        }
-      );
-      return response.data; // Return the successful response data
-    } catch (error) {
-      return response.data;
+export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
+  const response = await axios.get(
+    "http://localhost:5000/api/auth/check-auth",
+    {
+      withCredentials: true, // Send cookies along with the request
+      headers: {
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate", 
+        Expires: "0", 
+      },
     }
-  }
-);
+  );
+  return response.data;
+});
 
 // Slice for authentication
 const authSlice = createSlice({
@@ -94,15 +83,16 @@ const authSlice = createSlice({
       // Login User
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        // state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
-        state.isAuthenticated = true;
+        state.user = action.payload.success ? action.payload.user : null;
+        state.isAuthenticated = action.payload.success ? true : false;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
+        state.user = null;
         state.error = action.payload?.message || "Login failed";
         state.isAuthenticated = false;
       })
@@ -110,7 +100,6 @@ const authSlice = createSlice({
       // check-auth1
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;

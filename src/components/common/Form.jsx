@@ -15,9 +15,10 @@ function CommonForm({
   setFormData,
   onSubmit,
   buttonText,
+  isBtnDisabled,
 }) {
   function renderInputsByComponentType(getControlItem) {
-    const value = formData[getControlItem.name] || "";  // Ensure value is fetched correctly
+    const value = formData[getControlItem.name] || ""; // Ensure value is fetched correctly
 
     let element = null;
 
@@ -53,7 +54,8 @@ function CommonForm({
             <SelectTrigger className="w-full">
               <SelectValue placeholder={getControlItem.placeholder} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-red- font-bold text-white bg-black
+             ">
               {getControlItem.options &&
                 getControlItem.options.length > 0 &&
                 getControlItem.options.map((optionsItem) => (
@@ -113,13 +115,11 @@ function CommonForm({
           </div>
         ))}
       </div>
-      <button type="submit" className="mt-2 w-full">
+      <button disabled={isBtnDisabled} type="submit" className="mt-2 w-full">
         {buttonText || "Submit"}
       </button>
     </form>
   );
 }
 
-
 export default CommonForm;
-

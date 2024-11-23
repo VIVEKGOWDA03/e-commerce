@@ -24,6 +24,7 @@ import { Toaster } from "./components/ui/toaster";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // This is a functional component that retrieves the authentication state from the store
 const RoutesWithAuth = () => {
@@ -35,9 +36,14 @@ const RoutesWithAuth = () => {
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
-  if (isLoading) return <div>loading</div>;
-  console.log(isLoading,user);
-  
+  if (isLoading)
+    return (
+      <div>
+        <Skeleton className="w-full  h-full " />
+      </div>
+    );
+  console.log(isLoading, user);
+
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -108,7 +114,7 @@ const RoutesWithAuth = () => {
           element: <ShoppingCheckoutPage />,
         },
         {
-          path: "accounts-page",
+          path: "accounts",
           element: <ShoppingAccountPage />,
         },
       ],
