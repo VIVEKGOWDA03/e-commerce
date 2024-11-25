@@ -145,3 +145,107 @@ export const addProductFormElements = [
     placeholder: "Enter total stock",
   },
 ];
+
+export const shoppingViewHeaderMenuItems = [
+  {
+    id: "home",
+    label: "Home",
+    path: "/shop/home",
+  },
+  {
+    id: "men",
+    label: "Men",
+    path: "/shop/listing",
+  },
+  {
+    id: "women",
+    label: "Women",
+    path: "/shop/listing",
+  },
+  {
+    id: "kids",
+    label: "Kids",
+    path: "/shop/listing",
+  },
+  {
+    id: "footwear",
+    label: "Footwear",
+    path: "/shop/listing",
+  },
+  {
+    id: "accessories",
+    label: "Accessories",
+    path: "/shop/listing",
+  },
+];
+
+export const FilterOptions = {
+  Category: [
+    {
+      id: "men",
+      label: "Men",
+    },
+    {
+      id: "women",
+      label: "Women",
+    },
+    {
+      id: "kids",
+      label: "Kids",
+    },
+    {
+      id: "accessories",
+      label: "Accessories",
+    },
+  ],
+  Brand: [
+    {
+      id: "puma",
+      label: "Puma",
+    },
+    {
+      id: "adidas",
+      label: "Adidas",
+    },
+    {
+      id: "levis",
+      label: "Levis",
+    },
+  ],
+};
+export const sortBy = [
+  {
+    id: "price-high-low",
+    label: "price:High to Low",
+  },
+  {
+    id: "price-low-high",
+    label: "price:Low to High",
+  },
+  {
+    id: "title-atoz",
+    label: "title: A to Z",
+  },
+  {
+    id: "title-ztoa",
+    label: "title: Z to A",
+  },
+];
+
+export const categoryOptionsMap ={
+  'men':'Men',
+  'Women':'Women',
+  'kids':'Kids',
+  'adidas': 'Adidas',
+  'footwear':'Footwear'
+}
+  
+export const brandOptionsMap ={
+  'nike':'Nike',
+  'adidas':'Adidas',
+  'evi':'Levi',
+  'zara': 'Zara',
+  'puma':'Puma',
+  'h&m':'H&M'
+}
+

@@ -42,7 +42,7 @@ const RoutesWithAuth = () => {
         <Skeleton className="w-full  h-full " />
       </div>
     );
-  console.log(isLoading, user);
+  // console.log(isLoading, user);
 
   const routes = createBrowserRouter([
     {
@@ -114,7 +114,7 @@ const RoutesWithAuth = () => {
           element: <ShoppingCheckoutPage />,
         },
         {
-          path: "accounts",
+          path: "account",
           element: <ShoppingAccountPage />,
         },
       ],
