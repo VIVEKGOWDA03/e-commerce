@@ -4,15 +4,31 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   productList: [],
+  productDetails: null,
 };
 
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchallproducts",
-  async () => {
+  async ({ filterParams, sortParams }) => {
+    const query = new URLSearchParams({
+      ...filterParams,
+      sortBy: sortParams,
+    });
     const result = await axios.get(
-      "http://localhost:5000/api/shop/products/get"
+      `http://localhost:5000/api/shop/products/get?${query}`
     );
+    console.log(`Sending request with query: ${query}`);
     return result?.data?.data || []; // Make sure we're returning the `data` array
+  }
+);
+
+export const fetchProductsDetails = createAsyncThunk(
+  "/products/fetchProductsDetails",
+  async ({ id }) => {
+    const result = await axios.get(
+      `http://localhost:5000/api/shop/products/get?${id}`
+    );
+    return result?.data?.data || [];
   }
 );
 

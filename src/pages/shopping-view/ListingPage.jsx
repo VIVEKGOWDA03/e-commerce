@@ -14,11 +14,25 @@ import { sortBy } from "@/config";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
 import ShoppingProductTitle from "./ProductTitle";
+import { useSearchParams } from "react-router-dom";
 
 const ShoppingListingPage = () => {
   const { productList, isLoading } = useSelector((state) => state.shopProducts);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  function createsearchParamsHelper(filterParams) {
+    const queryParams = [];
+    for (const [key, value] of Object.entries(filterParams)) {
+      if (Array.isArray(value) && value.length > 0) {
+        const paramValue = value.join(",");
+        queryParams.push(`${key}=${encodeURIComponent(paramValue)}`);
+      }
+    }
+    return queryParams.join("&");
+  }
+
   function handleSort(value) {
     setSort(value);
   }
@@ -52,13 +66,27 @@ const ShoppingListingPage = () => {
     setSort("price-high-low");
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
   }, []);
+
   useEffect(() => {
-    dispatch(fetchAllFilteredProducts());
-  }, []);
-  console.log(filters, filters);
+    if (filters && Object.keys(filters).length > 0) {
+      const createQueryString = createsearchParamsHelper(filters);
+      setSearchParams(new URLSearchParams(createQueryString));
+    }
+  }, [filters]);
+  useEffect(() => {
+    if (filters !== null && sort !== null) {
+      console.log("Filters:", filters);  
+      console.log("Sort:", sort);        
+      dispatch(
+        fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
+      );
+    }
+  }, [dispatch, sort, filters]);
+  
+  // console.log(searchParams, filters);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 p-4 md:p-6">
+    <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
       <ProductFilter filter={filters} handleFilters={handleFilter} />
       <div className="bg-background w-full rounded-lg shadow-sm">
         <div className="p-4 border-b flex gap-4 items-center justify-between">
@@ -67,8 +95,8 @@ const ShoppingListingPage = () => {
             <span className="text-muted-foreground">
               {productList.length} Products
             </span>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <DropdownMenu className="z-50">
+              <DropdownMenuTrigger asChild  className="z-50">
                 <button
                   className="flex items-center gap-1"
                   variant="outline"

@@ -87,7 +87,7 @@ export const addProductFormElements = [
         label: "Men",
       },
       {
-        id: "Women",
+        id: "women",
         label: "Women",
       },
       {
@@ -95,8 +95,8 @@ export const addProductFormElements = [
         label: "Accessories",
       },
       {
-        id: "foootwear",
-        label: "Foootwear",
+        id: "footwear",
+        label: "Footwear",
       },
     ],
   },
@@ -121,6 +121,14 @@ export const addProductFormElements = [
         id: "levi",
         label: "Levi's",
       },
+      {
+        id: "hm",
+        label: "H&M",
+      },
+      {
+        id: "zara",
+        label: "Zara",
+      }
     ],
   },
   {
@@ -197,6 +205,7 @@ export const FilterOptions = {
       id: "accessories",
       label: "Accessories",
     },
+    { id: "footwear", label: "Footwear" },
   ],
   Brand: [
     {
@@ -208,18 +217,31 @@ export const FilterOptions = {
       label: "Adidas",
     },
     {
-      id: "levis",
+      id: "levi",
       label: "Levis",
     },
+    {
+      id: "nike",
+      label: "Nike",
+    },
+    {
+      id: "hm",
+      label: "H&M",
+    },
+    {
+      id: "zara",
+      label: "Zara",
+    }
+
   ],
 };
 export const sortBy = [
   {
-    id: "price-high-low",
+    id: "price-hightolow",
     label: "price:High to Low",
   },
   {
-    id: "price-low-high",
+    id: "price-lowtohigh",
     label: "price:Low to High",
   },
   {
@@ -232,20 +254,18 @@ export const sortBy = [
   },
 ];
 
-export const categoryOptionsMap ={
-  'men':'Men',
-  'Women':'Women',
-  'kids':'Kids',
-  'adidas': 'Adidas',
-  'footwear':'Footwear'
-}
-  
-export const brandOptionsMap ={
-  'nike':'Nike',
-  'adidas':'Adidas',
-  'evi':'Levi',
-  'zara': 'Zara',
-  'puma':'Puma',
-  'h&m':'H&M'
-}
+export const categoryOptionsMap = {
+  men: "Men",
+  women: "Women",
+  kids: "Kids",
+  footwear: "Footwear",
+};
 
+export const brandOptionsMap = {
+  nike: "Nike",
+  adidas: "Adidas",
+  levi: "Levi's",
+  zara: "Zara",
+  puma: "Puma",
+  hm: "H&M",
+};
