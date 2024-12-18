@@ -1,4 +1,5 @@
 import CommonForm from "@/components/common/Form";
+import RippleButton from "@/components/ui/ripple-button";
 import { loginFormControls } from "@/config";
 import { useToast } from "@/hooks/use-toast";
 import { loginUser } from "@/store/auth-slice";
@@ -13,8 +14,9 @@ const Login = () => {
   };
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate();  // For navigating after login
   const { toast } = useToast();
+
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(formData)).then((data) => {
@@ -24,8 +26,14 @@ const Login = () => {
         toast({
           title: data?.payload?.message,
         });
-        // navigate("/shop");
-        console.log(data, "login done");
+
+        // Redirect based on user role
+        const role = data.payload.user?.role;
+        if (role === "admin") {
+          navigate("/admin/dashboard");  // Navigate to admin dashboard
+        } else if (role === "user") {
+          navigate("/shop/listing");  // Navigate to user shop listing page
+        }
       } else {
         toast({
           title: data?.payload?.message,
@@ -34,6 +42,7 @@ const Login = () => {
       }
     });
   };
+
   return (
     <div className="mx-auto bg-red-20 w-full max-w-md space-y-6 ">
       <div className="text-center">

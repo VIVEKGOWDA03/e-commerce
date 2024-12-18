@@ -42,7 +42,7 @@ const RoutesWithAuth = () => {
         <Skeleton className="w-full  h-full " />
       </div>
     );
-  // console.log(isLoading, user);
+    console.log('isAuthenticated:', isAuthenticated, 'user:', user);
 
   const routes = createBrowserRouter([
     {

@@ -4,12 +4,21 @@ import { brandOptionsMap, categoryOptionsMap } from "@/config";
 import { DollarSignIcon } from "lucide-react";
 import React from "react";
 
-const ShoppingProductTitle = ({ product }) => {
-
+const ShoppingProductTitle = ({
+  product,
+  handleGetProductDetails,
+  handleAddtoCart,
+}) => {
+  // console.log(product?._id,"product?._id");
 
   return (
     <Card className="w-full  max-w-sm mx-auto">
-      <div className="">
+      <div
+        onClick={() => {
+          handleGetProductDetails(product?._id);
+        }}
+        className=""
+      >
         <div className="relative">
           <img
             className="w-full h-[300px] object-cover rounded-t-lg"
@@ -42,7 +51,8 @@ const ShoppingProductTitle = ({ product }) => {
             >
               {product?.price > 0 ? (
                 <span className=" flex items-center text-lg font-semibold text-black">
-                  <DollarSignIcon className="inline-block w-4 h-4 mr-1" />
+                  <p className="inline-block  mr-1">₹</p>
+                  {/* <DollarSignIcon className="inline-block w-4 h-4 mr-1" /> */}
                   {product?.price}
                 </span>
               ) : null}
@@ -56,19 +66,27 @@ const ShoppingProductTitle = ({ product }) => {
             >
               {product?.salePrice > 0 ? (
                 <span className="text-lg flex items-center font-semibold text-red-600">
-                  <DollarSignIcon className="inline-block w-4 h-4 mr-1" />
+                  <p className="inline-block  mr-1">₹</p>
+                  {/* <DollarSignIcon className="inline-block w-4 h-4 mr-1" /> */}
                   {product?.salePrice}
                 </span>
               ) : null}
             </span>
           </div>
         </CardContent>
-        <CardFooter>
-          <button className="w-full py-2 bg-blue-600 text-white rounded-lg">
-            Add to cart
-          </button>
-        </CardFooter>
       </div>
+      <CardFooter>
+        <button
+          onClick={() => {
+            // alert("Button clicked!");
+            handleAddtoCart(product?._id);
+            // console.log("hello",product?._id);
+          }}
+          className="w-full py-2 bg-blue-600 text-white rounded-lg"
+        >
+          Add to cart
+        </button>
+      </CardFooter>
     </Card>
   );
 };

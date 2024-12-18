@@ -12,16 +12,27 @@ import {
 } from "@radix-ui/react-dropdown-menu";
 import { sortBy } from "@/config";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
+import {
+  fetchAllFilteredProducts,
+  fetchProductsDetails,
+} from "@/store/shop/products-slice";
 import ShoppingProductTitle from "./ProductTitle";
 import { useSearchParams } from "react-router-dom";
-
+import ProductDetailsDialog from "@/components/shopping-view/productdeatils";
+import { addToCart, fetchCartItems } from "@/store/cart-slice";
+import { useToast } from "@/hooks/use-toast";
 const ShoppingListingPage = () => {
-  const { productList, isLoading } = useSelector((state) => state.shopProducts);
+  const { productList, isLoading, productDetails } = useSelector(
+    (state) => state.shopProducts
+  );
+  const { user } = useSelector((state) => state.auth);
+  //  console.log("user:", user);
+
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const { toast } = useToast();
   function createsearchParamsHelper(filterParams) {
     const queryParams = [];
     for (const [key, value] of Object.entries(filterParams)) {
@@ -31,6 +42,34 @@ const ShoppingListingPage = () => {
       }
     }
     return queryParams.join("&");
+  }
+  function handleGetProductDetails(getCurrentProductId) {
+    console.log(getCurrentProductId, "getCurrentProductId");
+    dispatch(fetchProductsDetails({ id: getCurrentProductId }));
+  }
+  function handleAddtoCart(getCurrentProductId) {
+    if (!user?.id) {
+      console.log("User is not logged in or userId is missing");
+      return;
+    }
+
+    dispatch(
+      addToCart({
+        userId: user?.id,
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      // console.log(data,"datatatat");
+      if (data?.payload?.success) {
+        dispatch(fetchCartItems({ userId: user?.id }));
+
+        toast({
+          title: "Product added to cart",
+          type: "success",
+        });
+      }
+    });
   }
 
   function handleSort(value) {
@@ -75,15 +114,18 @@ const ShoppingListingPage = () => {
   }, [filters]);
   useEffect(() => {
     if (filters !== null && sort !== null) {
-      console.log("Filters:", filters);  
-      console.log("Sort:", sort);        
+      // console.log("Filters:", filters);
+      // console.log("Sort:", sort);
       dispatch(
         fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
       );
     }
   }, [dispatch, sort, filters]);
-  
-  // console.log(searchParams, filters);
+
+  useEffect(() => {
+    if (productDetails !== null) setOpenDetailsDialog(true);
+  }, [productDetails]);
+  // console.log(productDetails, "productDetails");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
@@ -96,7 +138,7 @@ const ShoppingListingPage = () => {
               {productList.length} Products
             </span>
             <DropdownMenu className="z-50">
-              <DropdownMenuTrigger asChild  className="z-50">
+              <DropdownMenuTrigger asChild className="z-50">
                 <button
                   className="flex items-center gap-1"
                   variant="outline"
@@ -126,17 +168,24 @@ const ShoppingListingPage = () => {
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-col-3 lg:grid-cols-4 p-4">
           {productList && productList.length > 0
             ? productList.map((productItem) => {
-                // console.log(productItem, "productItem in map");
+                // console.log(productItem._id, "productItem in map");
                 return (
                   <ShoppingProductTitle
-                    key={productItem.id}
+                    key={productItem._id}
                     product={productItem}
+                    handleGetProductDetails={handleGetProductDetails}
+                    handleAddtoCart={handleAddtoCart}
                   />
                 );
               })
             : "No Product available"}
         </div>
       </div>
+      <ProductDetailsDialog
+        open={openDetailsDialog}
+        setOpen={setOpenDetailsDialog}
+        productDetails={productDetails}
+      />
     </div>
   );
 };

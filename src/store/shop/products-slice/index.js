@@ -6,6 +6,7 @@ const initialState = {
   productList: [],
   productDetails: null,
 };
+const baseUrl = import.meta.env.VITE_SHOP_APP_BASE_URL;
 
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchallproducts",
@@ -14,10 +15,8 @@ export const fetchAllFilteredProducts = createAsyncThunk(
       ...filterParams,
       sortBy: sortParams,
     });
-    const result = await axios.get(
-      `http://localhost:5000/api/shop/products/get?${query}`
-    );
-    console.log(`Sending request with query: ${query}`);
+    const result = await axios.get(`${baseUrl}/products/get?${query}`);
+    // console.log(`Sending request with query: ${query}`);
     return result?.data?.data || []; // Make sure we're returning the `data` array
   }
 );
@@ -25,10 +24,8 @@ export const fetchAllFilteredProducts = createAsyncThunk(
 export const fetchProductsDetails = createAsyncThunk(
   "/products/fetchProductsDetails",
   async ({ id }) => {
-    const result = await axios.get(
-      `http://localhost:5000/api/shop/products/get?${id}`
-    );
-    return result?.data?.data || [];
+    const result = await axios.get(`${baseUrl}/products/get/${id}`);
+    return result?.data;
   }
 );
 
@@ -44,10 +41,24 @@ const shoppingProductsSlice = createSlice({
       state.isLoading = false;
       state.productList = action.payload; // Now it directly holds the array of products
     });
-    builder.addCase(fetchAllFilteredProducts.rejected, (state) => {
-      state.isLoading = false;
-      state.productList = [];
-    });
+    builder
+      .addCase(fetchAllFilteredProducts.rejected, (state) => {
+        state.isLoading = false;
+        state.productList = [];
+      })
+
+      // for all product details
+      .addCase(fetchProductsDetails.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchProductsDetails.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.productDetails = action.payload.data; // Now it directly holds the array of products
+      })
+      .addCase(fetchProductsDetails.rejected, (state) => {
+        state.isLoading = false;
+        state.productDetails = null;
+      });
   },
 });
 
