@@ -6,6 +6,7 @@ import { StarIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
 import { useToast } from "@/hooks/use-toast";
+import { setProductDetails } from "@/store/shop/products-slice";
 
 const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   const dispatch = useDispatch();
@@ -36,9 +37,13 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
       }
     });
   }
+  function handleDialogClose() {
+    setOpen(false);
+    dispatch(setProductDetails());
+  }
   return (
     <div className="bg-white">
-      <Dialog className="bg-white" open={open} onOpenChange={setOpen}>
+      <Dialog className="bg-white" open={open} onOpenChange={handleDialogClose}>
         <DialogContent className=" bg-white grid grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
           <div className="relative overflow-hidden rounded-lg">
             <img

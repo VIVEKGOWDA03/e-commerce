@@ -22,11 +22,20 @@ import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { logoutUser } from "@/store/auth-slice";
 import UserCartWrapper from "./cart-wrapper";
 import { fetchCartItems } from "@/store/cart-slice";
+import { Label } from "../ui/label";
+import TypingAnimation from "../ui/typing-animation";
+import WordRotate from "../ui/word-rotate";
+import SparklesText from "../ui/sparkles-text";
+import bucket from "../../assets/logos/bucket.png";
+import trolley from "../../assets/logos/trolley.png";
+import shop1 from "../../assets/logos/shop1.png";
+import Loader from "../ui/Loader";
+import Tooltip from "../ui/Tooltip";
+import { Dock, DockIcon } from "../ui/dock";
 
 const ShoppingHeader = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
-  // console.log(cartItems, "cartItemsccccccccc");
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,17 +49,41 @@ const ShoppingHeader = () => {
     }
   }, [dispatch, user?.id]);
   function MenuItems() {
+    function handleNavigate(getCurrentMennuItem) {
+      sessionStorage.removeItem("filters");
+      const currentFilter =
+        getCurrentMennuItem.id !== "home"
+          ? {
+              Category: [getCurrentMennuItem.id],
+            }
+          : null;
+
+      sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+      navigate(getCurrentMennuItem.path);
+    }
     return (
       <nav className="flex flex-col mt-4 mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
-        {shoppingViewHeaderMenuItems.map((menuItem) => (
-          <Link
-            className="text-sm font-medium"
-            to={menuItem.path}
+        {/* {shoppingViewHeaderMenuItems.map((menuItem) => (
+          <Label
+            onClick={() => handleNavigate(menuItem)}
+            className="text-sm font-medium cursor-pointer"
             key={menuItem.id}
           >
             {menuItem.label}
-          </Link>
-        ))}
+          </Label>
+        )
+        )} */}
+        <Dock>
+          {shoppingViewHeaderMenuItems.map((menuItem) => (
+            <DockIcon
+              key={menuItem.id}
+              onClick={() => handleNavigate(menuItem)}
+              className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer"
+            >
+              <span className="text-sm font-medium">{menuItem.icon}</span>
+            </DockIcon>
+          ))}
+        </Dock>
       </nav>
     );
   }
@@ -110,13 +143,30 @@ const ShoppingHeader = () => {
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background">
+    <header className="fixed top-0 z-40 w-full border-b bg-white bg-background ">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
-        <Link to="/shop/home" className="flex items-center gap-2 ">
-          <House className="w-6 h-6" />
-          <span className="font-bold">Ecommerce</span>
+        <Link
+          to="/shop/home"
+          className="flex items-center gap-2 min-w-[120px] "
+        >
+          {/* <House className="w-6 h-6" /> */}
+          {/* <img className="w-8 h-8" src={bucket} alt="logo" /> */}
+          {/* <Loader/> */}
+          <WordRotate
+            className="w-12"
+            words={[
+              <img src={bucket} alt="Bucket" className="w-12 h-12" />,
+              <img src={trolley} alt="Trolley" className="w-12 h-12" />,
+              <img src={shop1} alt="Trolley" className="w-12 h-12" />,
+            ]}
+          />
+          <span className="font-bold ">
+            <TypingAnimation text="Fashion Fynder" className="text-2xl " />
+            {/* <WordRotate words={[]} /> */}
+            {/* <SparklesText className="text-2xl " text="Fashion Fynder" /> */}
+          </span>
         </Link>
-        <Sheet>
+        <Sheet className="">
           <SheetTrigger asChild>
             <button variant="outline" size="icon " className="lg:hidden">
               <SquareMenu className="w-6 h-6" />
@@ -125,7 +175,9 @@ const ShoppingHeader = () => {
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs bg-white">
             <HeaderRightContent />
-            <MenuItems className="mt-3" />
+            <div className="flex justify-center items-center">
+              <MenuItems className="mt-3" />
+            </div>
           </SheetContent>
         </Sheet>
         <div className="hidden lg:block ">

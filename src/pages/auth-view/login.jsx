@@ -14,7 +14,7 @@ const Login = () => {
   };
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();  // For navigating after login
+  const navigate = useNavigate(); // For navigating after login
   const { toast } = useToast();
 
   const onSubmit = (e) => {
@@ -30,9 +30,9 @@ const Login = () => {
         // Redirect based on user role
         const role = data.payload.user?.role;
         if (role === "admin") {
-          navigate("/admin/dashboard");  // Navigate to admin dashboard
+          navigate("/admin/dashboard");
         } else if (role === "user") {
-          navigate("/shop/listing");  // Navigate to user shop listing page
+          navigate("/shop/home");
         }
       } else {
         toast({

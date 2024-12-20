@@ -23,8 +23,7 @@ import { addToCart, fetchCartItems } from "@/store/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 const ShoppingListingPage = () => {
   const { productList, isLoading, productDetails } = useSelector(
-    (state) => state.shopProducts
-  );
+  (state) => state.shopProducts);
   const { user } = useSelector((state) => state.auth);
   //  console.log("user:", user);
 
@@ -44,7 +43,7 @@ const ShoppingListingPage = () => {
     return queryParams.join("&");
   }
   function handleGetProductDetails(getCurrentProductId) {
-    console.log(getCurrentProductId, "getCurrentProductId");
+    // console.log(getCurrentProductId, "getCurrentProductId");
     dispatch(fetchProductsDetails({ id: getCurrentProductId }));
   }
   function handleAddtoCart(getCurrentProductId) {

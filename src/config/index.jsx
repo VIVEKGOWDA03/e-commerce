@@ -91,6 +91,11 @@ export const addProductFormElements = [
         label: "Women",
       },
       {
+        id: "kids",
+        label: "Kids",
+      },
+
+      {
         id: "accessories",
         label: "Accessories",
       },
@@ -128,7 +133,7 @@ export const addProductFormElements = [
       {
         id: "zara",
         label: "Zara",
-      }
+      },
     ],
   },
   {
@@ -154,35 +159,44 @@ export const addProductFormElements = [
   },
 ];
 
+
+import { Home, User, Users, Baby, ShoppingBag, Gem } from "lucide-react"; // Use valid icons
+
 export const shoppingViewHeaderMenuItems = [
   {
     id: "home",
     label: "Home",
+    icon: <Home className="w-6 h-6" />,
     path: "/shop/home",
   },
   {
     id: "men",
     label: "Men",
+    icon: <User className="w-6 h-6" />, // Replaced with 'User'
     path: "/shop/listing",
   },
   {
     id: "women",
     label: "Women",
+    icon: <Users className="w-6 h-6" />, // Replaced with 'Users'
     path: "/shop/listing",
   },
   {
     id: "kids",
     label: "Kids",
+    icon: <Baby className="w-6 h-6" />,
     path: "/shop/listing",
   },
   {
     id: "footwear",
     label: "Footwear",
+    icon: <ShoppingBag className="w-6 h-6" />, // Replaced with 'ShoppingBag'
     path: "/shop/listing",
   },
   {
     id: "accessories",
     label: "Accessories",
+    icon: <Gem className="w-6 h-6" />, // Replaced with 'Gem'
     path: "/shop/listing",
   },
 ];
@@ -231,8 +245,7 @@ export const FilterOptions = {
     {
       id: "zara",
       label: "Zara",
-    }
-
+    },
   ],
 };
 export const sortBy = [
@@ -269,3 +282,40 @@ export const brandOptionsMap = {
   puma: "Puma",
   hm: "H&M",
 };
+
+export const addressFormControls = [
+  {
+    label: "Address",
+    name: "address",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your address",
+  },
+  {
+    label: "City",
+    name: "city",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your city",
+  },
+  {
+    label: "Pincode",
+    name: "pincode",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your pincode",
+  },
+  {
+    label: "Phone",
+    name: "phone",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter your phone number",
+  },
+  {
+    label: "Notes",
+    name: "notes",
+    componentType: "textarea",
+    placeholder: "Enter any additional notes",
+  },
+];

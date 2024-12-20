@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import Tooltip from "@/components/ui/Tooltip";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
 import { DollarSignIcon } from "lucide-react";
 import React from "react";
@@ -78,13 +79,11 @@ const ShoppingProductTitle = ({
       <CardFooter>
         <button
           onClick={() => {
-            // alert("Button clicked!");
             handleAddtoCart(product?._id);
-            // console.log("hello",product?._id);
           }}
-          className="w-full py-2 bg-blue-600 text-white rounded-lg"
+          className="w-full py-2 flex bg-blue-60 justify-center text-white rounded-lg"
         >
-          Add to cart
+          <Tooltip text='Add To Cart' Price={product?.salePrice ||product?.price}/>
         </button>
       </CardFooter>
     </Card>

@@ -15,11 +15,9 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-       `${baseUrl}/register`,
-        formData,
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${baseUrl}/register`, formData, {
+        withCredentials: true,
+      });
       return response.data; // Return the response data (e.g., success message)
     } catch (error) {
       return rejectWithValue(error.response.data); // Capture and return the error response
@@ -29,12 +27,10 @@ export const registerUser = createAsyncThunk(
 
 // Async thunk for login
 export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  const response = await axios.post(
-    `${baseUrl}/login`,
-    formData,
-    { withCredentials: true }
-  );
-  return response.data; // Return the response data (user info or success message)
+  const response = await axios.post(`${baseUrl}/login`, formData, {
+    withCredentials: true,
+  });
+  return response.data;
 });
 
 // Async thunk for logout
@@ -49,17 +45,13 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
 
 // Async thunk for auth check
 export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
-  const response = await axios.get(
-   `${baseUrl}/check-auth`,
-    {
-      withCredentials: true,
-      headers: {
-        "Cache-Control":
-          "no-store, no-cache, must-revalidate, proxy-revalidate",
-        Expires: "0",
-      },
-    }
-  );
+  const response = await axios.get(`${baseUrl}/check-auth`, {
+    withCredentials: true,
+    headers: {
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      Expires: "0",
+    },
+  });
   return response.data;
 });
 
@@ -78,7 +70,7 @@ const authSlice = createSlice({
       // Register User
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
-        state.error = null; // Reset error state when loading starts
+        state.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         console.log(action);
@@ -97,8 +89,11 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        // console.log("ggggg", action.payload.user);
+        // state.user = action.payload.success ? action.payload.user : null;
         state.user = action.payload.success ? action.payload.user : null;
-        state.isAuthenticated = action.payload.success ? true : false;
+
+        state.isAuthenticated = action.payload.success;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
