@@ -2,7 +2,7 @@ import React from "react";
 import accountImage from "../../assets/banners/account.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Address from "@/components/shopping-view/Address";
-import Orders from "@/components/shopping-view/Orders";
+import ShoppingOrders from "@/components/shopping-view/Orders";
 
 const ShoppingAccountPage = () => {
   return (
@@ -24,7 +24,7 @@ const ShoppingAccountPage = () => {
               <TabsTrigger value="address">Address</TabsTrigger>
             </TabsList>
             <TabsContent value="orders">
-              <Orders />
+              <ShoppingOrders />
             </TabsContent>
             <TabsContent value="address">
               <Address />

@@ -2,12 +2,24 @@ import React from "react";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Label } from "../ui/label";
 
-const AddressCard = ({ addressInfo, handleEdit, handleDelete }) => {
-  console.log(addressInfo, "");
+const AddressCard = ({
+  addressInfo,
+  handleEdit,
+  handleDeleteAddress,
+  handleEditAddress,
+  setCurrentSelectedAddress,
+}) => {
+  // console.log(addressInfo, "");
 
   return (
     <div>
-      <Card>
+      <Card
+        onClick={() =>
+          setCurrentSelectedAddress
+            ? setCurrentSelectedAddress(addressInfo)
+            : null
+        }
+      >
         <CardContent className="grid gap-4 p-4">
           <Label>Address :{addressInfo?.address}</Label>
           <Label>City : {addressInfo?.city}</Label>
@@ -16,10 +28,16 @@ const AddressCard = ({ addressInfo, handleEdit, handleDelete }) => {
           <Label> Note :{addressInfo?.notes}</Label>
         </CardContent>
         <CardFooter className="p-3 flex justify-between">
-          <button onClick={() => handleEdit(addressInfo)} className="btn">
+          <button
+            onClick={() => handleEditAddress(addressInfo)}
+            className="btn"
+          >
             Edit
           </button>
-          <button onClick={() => handleDelete(addressInfo)} className="btn">
+          <button
+            onClick={() => handleDeleteAddress(addressInfo)}
+            className="btn"
+          >
             delete
           </button>
         </CardFooter>

@@ -54,8 +54,10 @@ function CommonForm({
             <SelectTrigger className="w-full">
               <SelectValue placeholder={getControlItem.placeholder} />
             </SelectTrigger>
-            <SelectContent className="bg-red- font-bold text-white bg-black
-             ">
+            <SelectContent
+              className="bg-red- font-bold text-black bg-white
+             "
+            >
               {getControlItem.options &&
                 getControlItem.options.length > 0 &&
                 getControlItem.options.map((optionsItem) => (
@@ -115,7 +117,11 @@ function CommonForm({
           </div>
         ))}
       </div>
-      <button disabled={isBtnDisabled} type="submit" className=" btn mt-2 w-full">
+      <button
+        disabled={isBtnDisabled}
+        type="submit"
+        className=" btn mt-2 w-full"
+      >
         {buttonText || "Submit"}
       </button>
     </form>

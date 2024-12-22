@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
+import PaypalReturnPage from "./components/shopping-view/paypal-return";
 
 // This is a functional component that retrieves the authentication state from the store
 const RoutesWithAuth = () => {
@@ -42,7 +43,7 @@ const RoutesWithAuth = () => {
         <Skeleton className="w-full  h-full " />
       </div>
     );
-    console.log('isAuthenticated:', isAuthenticated, 'user:', user);
+  console.log("isAuthenticated:", isAuthenticated, "user:", user);
 
   const routes = createBrowserRouter([
     {
@@ -116,6 +117,10 @@ const RoutesWithAuth = () => {
         {
           path: "account",
           element: <ShoppingAccountPage />,
+        },
+        {
+          path: "paypa-return",
+          element: <PaypalReturnPage />,
         },
       ],
     },

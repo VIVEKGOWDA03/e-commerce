@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <div className="mx-auto bg-red-20 w-full max-w-md space-y-6 ">
+    <div className="mx-auto p-[4%] bg-red-20 shadow-lg rounded-lg z-20 border border-white/20 backdrop-blur-md:  backdrop-blur-sm ">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tighter text-foreground">
           Log in to your account

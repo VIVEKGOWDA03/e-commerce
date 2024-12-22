@@ -5,8 +5,10 @@ import b3 from "../../assets/banners/b3.webp";
 import b4 from "../../assets/banners/b4.webp";
 import b5 from "../../assets/banners/b5.webp";
 import b6 from "../../assets/banners/b6.webp";
+import an1 from "../../assets/gifs/an5.gif";
+import an2 from "../../assets/gifs/an4.gif";
 
-
+import { motion } from "framer-motion";
 import {
   BabyIcon,
   ChevronLeftIcon,
@@ -35,8 +37,9 @@ import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/productdeatils";
+
 const ShoppingHome = () => {
-  const slides = [b1, b2, b3,b4,b5,b6];
+  const slides = [b1, b2, b3, b4, b5, b6];
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { user } = useSelector((state) => state.auth);
@@ -146,7 +149,7 @@ const ShoppingHome = () => {
       }
     });
   }
- useEffect(() => {
+  useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
@@ -217,7 +220,25 @@ const ShoppingHome = () => {
           </div>
         </div>
       </section>
-
+      <motion.div
+        style={{ overflow: "hidden", width: "100%" }} // Container to hide overflow
+      >
+        <motion.img
+          src={an2}
+          alt="Image"
+          style={{ width: "200px" }} // Adjust the width as needed
+          initial={{ x: "-100vw" }} // Start position (off-screen left)
+          animate={{
+            x: ["-100vw", "100vw"], // Move from left to right across the full width of the screen
+          }}
+          transition={{
+            duration: 5, // Time it takes to move from left to right
+            repeat: Infinity,
+            // repeatType: 'reverse',
+            ease: "easeInOut",
+          }}
+        />
+      </motion.div>
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Shop By Brand</h2>

@@ -1,36 +1,14 @@
 module.exports = {
     darkMode: ["class"],
     content: [
-	  "./src/**/*.{js,jsx,ts,tsx}",  // Ensure this includes your JSX/TSX files
+	  "./src/**/*.{js,jsx,ts,tsx}", 
 	],
 	theme: {
     	extend: {
-			keyframes: {
-				'toast-slide-in': {
-				  from: { transform: 'translateX(100%)' },
-				  to: { transform: 'translateX(0)' },
-				},
-				'toast-fade-out': {
-				  to: { opacity: '0', transform: 'translateX(100%)' },
-				},
+			backdropBlur: {
+				xs: '2px',
+				huge: '50px',
 			  },
-			  animation: {
-				'toast-slide-in': 'toast-slide-in 0.5s ease-out',
-				'toast-fade-out': 'toast-fade-out 0.5s ease-out 3.5s forwards',
-			  },
-    		colors: {
-    			muted: '#f3f4f6',
-    			foreground: '#333',
-    			primary: '#3490dc',
-    			secondary: '#6c757d',
-    			danger: '#e3342f'
-    		},
-    		animation: {
-    			rippling: 'rippling var(--duration) ease-out',
-    			'shimmer-slide': 'shimmer-slide var(--speed) ease-in-out infinite alternate',
-    			'spin-around': 'spin-around calc(var(--speed) * 2) infinite linear',
-    			grid: 'grid 15s linear infinite'
-    		},
     		keyframes: {
     			rippling: {
     				'0%': {
@@ -68,6 +46,19 @@ module.exports = {
     					transform: 'translateY(0)'
     				}
     			}
+    		},
+    		animation: {
+    			rippling: 'rippling var(--duration) ease-out',
+    			'shimmer-slide': 'shimmer-slide var(--speed) ease-in-out infinite alternate',
+    			'spin-around': 'spin-around calc(var(--speed) * 2) infinite linear',
+    			grid: 'grid 15s linear infinite'
+    		},
+    		colors: {
+    			muted: '#f3f4f6',
+    			foreground: '#333',
+    			primary: '#3490dc',
+    			secondary: '#6c757d',
+    			danger: '#e3342f'
     		}
     	}
     },
