@@ -20,7 +20,7 @@ const initialAddressFormData = {
   notes: "",
 };
 
-const Address = ({setCurrentSelectedAddress}) => {
+const Address = ({ setCurrentSelectedAddress }) => {
   const [formData, setFormData] = useState(initialAddressFormData);
   const [toast, setToast] = useState({
     isVisible: false,

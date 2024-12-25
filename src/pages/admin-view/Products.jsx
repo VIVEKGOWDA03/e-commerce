@@ -15,7 +15,7 @@ import {
   deleteProduct,
   editProduct,
   fetchAllProduct,
-} from "@/store/Product-Slice";
+} from "@/store/admin/Product-Slice";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

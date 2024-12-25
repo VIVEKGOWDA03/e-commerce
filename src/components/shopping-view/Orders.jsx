@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
   Table,
@@ -11,9 +11,45 @@ import {
 import RippleButton from "../ui/ripple-button";
 import { Dialog } from "../ui/dialog";
 import ShoppingOdersDetails from "./oder-details";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllOrdersByUser,
+  getOrderDetails,
+  resetOrderDetails,
+} from "@/store/shop/order-slice";
+import { Badge } from "../ui/badge";
+import Spinner from "../ui/Spinner";
 
 const ShoppingOrders = () => {
   const [openDetailsDialog, setOpenDetailsDailog] = useState(false);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { orderList, orderDetails, isLoading } = useSelector(
+    (state) => state.shopOrder
+  );
+  console.log(orderList, "orderDetails");
+
+  function handleFetchOrderDetails(getId) {
+    dispatch(getOrderDetails({ id: getId }));
+  }
+
+  useEffect(() => {
+    dispatch(getAllOrdersByUser({ userId: user?.id }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (orderDetails !== null) setOpenDetailsDailog(true);
+  }, [orderDetails]);
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen absolute inset-0 bg-white bg-opacity-50">
+        <div className="flex items-center">
+          <Spinner size="large" color="red" />
+          {/* <p className="ml-4 text-lg font-medium">Loading orders, please wait...</p> */}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="">
       <Card>
@@ -34,25 +70,51 @@ const ShoppingOrders = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>1234543</TableCell>
-                <TableCell>21/08/24024</TableCell>
-                <TableCell>Inprocess</TableCell>
-                <TableCell>₹500</TableCell>
-                <TableCell>
-                  {/* <button className="btn">View Details</button> */}
-                  <Dialog
-                    open={openDetailsDialog}
-                    onOpenChange={setOpenDetailsDailog}
-                    className=""
-                  >
-                    <RippleButton onClick={() => setOpenDetailsDailog(true)}>
-                      View Details
-                    </RippleButton>
-                    <ShoppingOdersDetails />
-                  </Dialog>
-                </TableCell>
-              </TableRow>
+              {orderList && orderList.length > 0
+                ? orderList.map((orderItem) => (
+                    <TableRow>
+                      <TableCell>{orderItem?._id}</TableCell>
+                      <TableCell>
+                        {orderItem?.orderDate.split("T")[0]}
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          className={`px-3 py-1 hover:bg-orange-600 ${
+                            orderItem?.orderStatus === "confirmed"
+                              ? "bg-green-500"
+                              : "bg-orange-400"
+                          }`}
+                        >
+                          {orderItem?.orderStatus
+                            ? orderItem.orderStatus.charAt(0).toUpperCase() +
+                              orderItem.orderStatus.slice(1)
+                            : ""}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>₹{orderItem?.totalAmount}</TableCell>
+                      <TableCell>
+                        {/* <button className="btn">View Details</button> */}
+                        <Dialog
+                          open={openDetailsDialog}
+                          onOpenChange={() => {
+                            setOpenDetailsDailog(false);
+                            dispatch(resetOrderDetails());
+                          }}
+                          className=""
+                        >
+                          <RippleButton
+                            onClick={() =>
+                              handleFetchOrderDetails(orderItem?._id)
+                            }
+                          >
+                            View Details
+                          </RippleButton>
+                          <ShoppingOdersDetails orderDetails={orderDetails} />
+                        </Dialog>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : null}
             </TableBody>
           </Table>
         </CardContent>

@@ -3,34 +3,62 @@ import { DialogContent } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import CommonForm from "../common/Form";
+import { Badge } from "../ui/badge";
+import { useSelector } from "react-redux";
 
 const initialFormData = {
-  satus: "",
+  Status: "",
 };
-const ShoppingOdersDetails = () => {
+const ShoppingOdersDetails = ({ orderDetails }) => {
   const [formData, setFormData] = useState(initialFormData);
+  const { user } = useSelector((state) => state.auth);
+
   function handleUpdateStatus(event) {
     event.preventDefault();
   }
+
   return (
     <DialogContent className="sm:max-w-[600px] bg-yellow-50">
       <div className="grid gap-6">
         <div className="grid gap-2">
           <div className="flex mt-6  items-center justify-between">
             <p className="font-medium "> Order Id </p>
-            <Label>123456</Label>
+            <Label>{orderDetails?._id}</Label>
           </div>
           <div className="flex mt-2  items-center justify-between">
             <p className="font-medium "> Order Date </p>
-            <Label>02/08/2024</Label>
+            <Label> {orderDetails?.orderDate.split("T")[0]}</Label>
           </div>
           <div className="flex mt-2  items-center justify-between">
             <p className="font-medium "> Order Price </p>
-            <Label>₹ 500</Label>
+            <Label>₹ {orderDetails?.totalAmount}</Label>
+          </div>
+          <div className="flex mt-2  items-center justify-between">
+            <p className="font-medium "> Payment Method </p>
+            <Label> {orderDetails?.paymentMethod}</Label>
+          </div>
+          <div className="flex mt-2  items-center justify-between">
+            <p className="font-medium "> Payment Status </p>
+            <Label> {orderDetails?.paymentStatus}</Label>
           </div>
           <div className="flex mt-2  items-center justify-between">
             <p className="font-medium "> Order Status </p>
-            <Label>Inpro</Label>
+            <Label>
+              <Badge
+                className={`px-3 py-1 hover:bg-orange-600 ${
+                  orderDetails?.orderStatus === "confirmed"
+                    ? "bg-green-500"
+                    : orderDetails?.orderStatus === "rejected"
+                    ? "bg-red-600"
+                    : "bg-orange-400"
+                }`}
+              >
+                {orderDetails?.orderStatus
+                  ? orderDetails.orderStatus.charAt(0).toUpperCase() +
+                    orderDetails.orderStatus.slice(1)
+                  : ""}
+              </Badge>
+            </Label>
           </div>
         </div>
         <Separator />
@@ -39,10 +67,15 @@ const ShoppingOdersDetails = () => {
           <div className="grid gap-2">
             <div className="font-medium">Order Details</div>
             <ul className="grid gap-3 ">
-              <li className="flex items-center justify-between">
-                <span>product one</span>
-                <span> ₹ 500</span>
-              </li>
+              {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
+                ? orderDetails?.cartItems.map((item) => (
+                    <li className="flex items-center justify-between">
+                      <span>Title: {item?.title}</span>
+                      <span>Quantity: {item?.quantity}</span>
+                      <span> Price: ₹ {item?.price}</span>
+                    </li>
+                  ))
+                : null}
             </ul>
           </div>
         </div>
@@ -50,12 +83,22 @@ const ShoppingOdersDetails = () => {
           <div className="grid gap-2">
             <div className="font-medium">Shipping info</div>
             <div className="grid gap-0.5 text-muted">
-              <span className="text-black">vivek</span>
-              <span className="text-black">Address</span>
-              <span className="text-black">city</span>
-              <span className="text-black">pincode</span>
-              <span className="text-black">phone</span>
-              <span className="text-black">notes</span>
+              <span className="text-black">{user?.userName}</span>
+              <span className="text-black">
+                {orderDetails?.addressInfo?.address}
+              </span>
+              <span className="text-black">
+                {orderDetails?.addressInfo?.city}
+              </span>
+              <span className="text-black">
+                {orderDetails?.addressInfo?.pincode}
+              </span>
+              <span className="text-black">
+                {orderDetails?.addressInfo?.phone}
+              </span>
+              <span className="text-black">
+                {orderDetails?.addressInfo?.notes}
+              </span>
             </div>
           </div>
         </div>

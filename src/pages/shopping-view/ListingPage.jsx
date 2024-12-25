@@ -23,7 +23,8 @@ import { addToCart, fetchCartItems } from "@/store/cart-slice";
 import { useToast } from "@/hooks/use-toast";
 const ShoppingListingPage = () => {
   const { productList, isLoading, productDetails } = useSelector(
-  (state) => state.shopProducts);
+    (state) => state.shopProducts
+  );
   const { user } = useSelector((state) => state.auth);
   //  console.log("user:", user);
 
@@ -31,6 +32,7 @@ const ShoppingListingPage = () => {
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const categorySearchParams = searchParams.get("category");
   const { toast } = useToast();
   function createsearchParamsHelper(filterParams) {
     const queryParams = [];
@@ -103,7 +105,7 @@ const ShoppingListingPage = () => {
   useEffect(() => {
     setSort("price-high-low");
     setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
-  }, []);
+  }, [categorySearchParams]);
 
   useEffect(() => {
     if (filters && Object.keys(filters).length > 0) {
@@ -113,8 +115,6 @@ const ShoppingListingPage = () => {
   }, [filters]);
   useEffect(() => {
     if (filters !== null && sort !== null) {
-      // console.log("Filters:", filters);
-      // console.log("Sort:", sort);
       dispatch(
         fetchAllFilteredProducts({ filterParams: filters, sortParams: sort })
       );

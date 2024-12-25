@@ -169,6 +169,13 @@ export const shoppingViewHeaderMenuItems = [
     icon: <Home className="w-6 h-6" />,
     path: "/shop/home",
   },
+
+  {
+    id: "products",
+    label: "Products",
+    icon: <Home className="w-6 h-6" />,
+    path: "/shop/listing",
+  },
   {
     id: "men",
     label: "Men",

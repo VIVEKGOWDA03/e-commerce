@@ -1,22 +1,26 @@
 import Address from "@/components/shopping-view/Address";
 import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import accountImage from "../../assets/banners/account.jpg";
 import { createNewOrder } from "@/store/shop/order-slice";
+import CustomToast from "@/components/ui/CustomToast";
 
 const ShoppingCheckoutPage = () => {
   const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
-  const { approvalUrl, orderId } = useSelector((state) => state.shopOrder);
-
-
+  const { approvalUrl, orderId, isLoading } = useSelector(
+    (state) => state.shopOrder
+  );
 
   const dispatch = useDispatch();
-  // console.log(cartItems, "cartItems");
   const [currentSelectedAddres, setCurrentSelectedAddress] = useState(null);
   const [isPaymentStart, setIsPaymentStart] = useState(false);
-  // console.log(currentSelectedAddres, "currentSelectedAddres");
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "",
+  }); // Toast state
 
   const totalCartAmount =
     cartItems && cartItems.items.length > 0
@@ -30,9 +34,32 @@ const ShoppingCheckoutPage = () => {
           0
         )
       : 0;
+
   function handleInitiatePalpalPayment() {
+    // Check if the cart is empty
+    if (cartItems.length === 0) {
+      setToast({
+        isVisible: true,
+        message: "Your cart is empty. Please add items to proceed",
+        type: "warning",
+      });
+      return; // Prevent further execution
+    }
+
+    // Check if no address is selected
+    if (currentSelectedAddres === null) {
+      setToast({
+        isVisible: true,
+        message: "Please Select one Address to proceed",
+        type: "info",
+      });
+      return; // Prevent further execution
+    }
+
+    // Prepare the order data
     const orderData = {
       userId: user?.id,
+      cartId: cartItems?._id,
       cartItems: cartItems.items.map((singleCartItem) => ({
         productId: singleCartItem?.productId,
         title: singleCartItem?.title,
@@ -59,13 +86,13 @@ const ShoppingCheckoutPage = () => {
       paymentId: "",
       payerId: "",
     };
-    // console.log(orderData, "orderData");
+
+    // Dispatch the action to create the order
     dispatch(createNewOrder({ orderData })).then((data) => {
-      // console.log(data, "vivek");
       if (data?.payload?.success) {
-        setIsPaymentStart(true);
+        setIsPaymentStart(true); // Set the payment to start
       } else {
-        setIsPaymentStart(false);
+        setIsPaymentStart(false); // Handle error in order creation
       }
     });
   }
@@ -80,7 +107,7 @@ const ShoppingCheckoutPage = () => {
     <div className="flex flex-col ">
       <div className="relative h-[auto] w-full overflow-hidden ">
         <img
-          className="h=full w-full object-cover object-center"
+          className="hfull w-full object-cover object-center"
           src={accountImage}
           alt=""
         />
@@ -106,6 +133,12 @@ const ShoppingCheckoutPage = () => {
           </div>
         </div>
       </div>
+      <CustomToast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
+      />
     </div>
   );
 };

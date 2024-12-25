@@ -6,7 +6,12 @@ import {
   SquareUserRound,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
@@ -39,6 +44,8 @@ const ShoppingHeader = () => {
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   function handleLogout() {
     dispatch(logoutUser());
   }
@@ -52,18 +59,23 @@ const ShoppingHeader = () => {
     function handleNavigate(getCurrentMennuItem) {
       sessionStorage.removeItem("filters");
       const currentFilter =
-        getCurrentMennuItem.id !== "home"
+        getCurrentMennuItem.id !== "home" &&
+        getCurrentMennuItem.id !== "products"
           ? {
               Category: [getCurrentMennuItem.id],
             }
           : null;
 
       sessionStorage.setItem("filters", JSON.stringify(currentFilter));
-      navigate(getCurrentMennuItem.path);
+      location.pathname.includes("listing") && currentFilter !== null
+        ? setSearchParams(
+            new URLSearchParams(`?category=${getCurrentMennuItem.id}`)
+          )
+        : navigate(getCurrentMennuItem.path);
     }
     return (
       <nav className="flex flex-col mt-4 mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
-        {/* {shoppingViewHeaderMenuItems.map((menuItem) => (
+        {shoppingViewHeaderMenuItems.map((menuItem) => (
           <Label
             onClick={() => handleNavigate(menuItem)}
             className="text-sm font-medium cursor-pointer"
@@ -72,8 +84,8 @@ const ShoppingHeader = () => {
             {menuItem.label}
           </Label>
         )
-        )} */}
-        <Dock>
+        )}
+        {/* <Dock>
           {shoppingViewHeaderMenuItems.map((menuItem) => (
             <DockIcon
               key={menuItem.id}
@@ -83,7 +95,7 @@ const ShoppingHeader = () => {
               <span className="text-sm font-medium">{menuItem.icon}</span>
             </DockIcon>
           ))}
-        </Dock>
+        </Dock> */}
       </nav>
     );
   }
@@ -103,7 +115,7 @@ const ShoppingHeader = () => {
             <span className="sr-only "> User Cart</span>
           </button>
           <UserCartWrapper
-          setOpenCartSheet={setOpenCartSheet}
+            setOpenCartSheet={setOpenCartSheet}
             cartItems={
               cartItems && cartItems.items && cartItems.items.length > 0
                 ? cartItems.items
@@ -162,9 +174,9 @@ const ShoppingHeader = () => {
             ]}
           />
           <span className="font-bold ">
-            <TypingAnimation text="Fashion Fynder" className="text-2xl " />
+            {/* <TypingAnimation text="Fashion Fynder" className="text-2xl " /> */}
             {/* <WordRotate words={[]} /> */}
-            {/* <SparklesText className="text-2xl " text="Fashion Fynder" /> */}
+            <SparklesText className="text-2xl " text="Fashion Fynder" />
           </span>
         </Link>
         <Sheet className="">
