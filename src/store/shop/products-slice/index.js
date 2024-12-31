@@ -6,7 +6,7 @@ const initialState = {
   productList: [],
   productDetails: null,
 };
-const baseUrl = import.meta.env.VITE_SHOP_APP_BASE_URL;
+const baseUrl = import.meta.env.VITE_SHOP_APP_API_BASE_URL;
 
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchallproducts",
@@ -15,7 +15,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
       ...filterParams,
       sortBy: sortParams,
     });
-    const result = await axios.get(`${baseUrl}/products/get?${query}`);
+    const result = await axios.get(`${baseUrl}/shop/products/get?${query}`);
     // console.log(`Sending request with query: ${query}`);
     return result?.data?.data || []; // Make sure we're returning the `data` array
   }
@@ -24,7 +24,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
 export const fetchProductsDetails = createAsyncThunk(
   "/products/fetchProductsDetails",
   async ({ id }) => {
-    const result = await axios.get(`${baseUrl}/products/get/${id}`);
+    const result = await axios.get(`${baseUrl}/shop/products/get/${id}`);
     return result?.data;
   }
 );

@@ -8,14 +8,14 @@ const initialState = {
   user: null,
   error: null,
 };
-const baseUrl = import.meta.env.VITE_AUTH_APP_BASE_URL;
+const baseUrl = import.meta.env.VITE_SHOP_APP_API_BASE_URL;
 
 // Async thunk for registration
 export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${baseUrl}/register`, formData, {
+      const response = await axios.post(`${baseUrl}/auth/register`, formData, {
         withCredentials: true,
       });
       return response.data; // Return the response data (e.g., success message)
@@ -27,7 +27,7 @@ export const registerUser = createAsyncThunk(
 
 // Async thunk for login
 export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  const response = await axios.post(`${baseUrl}/login`, formData, {
+  const response = await axios.post(`${baseUrl}/auth/login`, formData, {
     withCredentials: true,
   });
   return response.data;
@@ -36,7 +36,7 @@ export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
 // Async thunk for logout
 export const logoutUser = createAsyncThunk("/auth/logout", async () => {
   const response = await axios.post(
-    `${baseUrl}/logout`,
+    `${baseUrl}/auth/logout`,
     {},
     { withCredentials: true }
   );
@@ -45,7 +45,7 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
 
 // Async thunk for auth check
 export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
-  const response = await axios.get(`${baseUrl}/check-auth`, {
+  const response = await axios.get(`${baseUrl}/auth/check-auth`, {
     withCredentials: true,
     headers: {
       "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Avatar, AvatarFallback } from "../ui/avatar";
@@ -7,11 +7,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
 import { setProductDetails } from "@/store/shop/products-slice";
 import CustomToast from "../ui/CustomToast";
+import { Label } from "../ui/label";
+import StarRating from "../common/StarRating";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { addReview, getReview } from "@/store/shop/review-slice";
 
 const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   const dispatch = useDispatch();
+  const [reviewMsg, setreviewMsg] = useState("");
+  const [rating, setRating] = useState(0);
+  console.log(productDetails?._id, "hdhdhdh");
+
+  const { reviews, isloading } = useSelector((state) => state.shopReview);
+  console.log(reviews, "log");
+
   const { user } = useSelector((state) => state.auth);
-  // console.log(productDetails?._id,"productDetails");
   const { cartItems } = useSelector((state) => state.shopCart);
 
   const [toast, setToast] = useState({
@@ -19,6 +30,9 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
     message: "",
     type: "",
   });
+  function handleRatingChange(getRating) {
+    setRating(getRating);
+  }
 
   function handleAddtoCart(getCurrentProductId, getTotalStock) {
     let getCartItems = cartItems.items || [];
@@ -61,8 +75,53 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   }
   function handleDialogClose() {
     setOpen(false);
-    dispatch(setProductDetails());
+    dispatch(setProductDetails(null));
+    setRating(0);
+    setreviewMsg("");
   }
+  function handleAddReview() {
+    const formData = {
+      productId: productDetails?._id,
+      userId: user?.id,
+      userName: user?.userName,
+      reviewMessage: reviewMsg,
+      reviewValue: rating,
+    };
+
+    console.log("Form Data:", formData); // Log the formData for debugging
+
+    dispatch(addReview({ formData })).then((data) => {
+      if (data.payload.success) {
+        setRating(0);
+        setreviewMsg("");
+        dispatch(getReview({ id: productDetails?._id }));
+        setToast({
+          isVisible: true,
+          message: "Review added",
+          type: "success",
+        });
+      } else {
+        setToast({
+          isVisible: true,
+          message: data.payload.message || "Failed to add review.",
+          type: "error",
+        });
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (productDetails !== null) {
+      console.log("Fetching reviews for product:", productDetails?._id); // Debugging
+      dispatch(getReview({ id: productDetails?._id }));
+    }
+  }, [productDetails]);
+
+  const averageReview =
+    reviews && reviews.length > 0
+      ? reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
+        reviews.length
+      : 2;
   return (
     <div className="bg-white">
       <Dialog className="bg-white" open={open} onOpenChange={handleDialogClose}>
@@ -99,13 +158,11 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
             </div>
             <div className="flex items-center gap-2 mt-2">
               <div className="flex items-center gap-0.5">
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-primary" />
-                <StarIcon className="w-5 h-5 fill-primary" />
+                <StarRating rating={averageReview} />
               </div>
-              <span className="text-foreground">(4.5)</span>
+              <span className="text-foreground">
+                ({averageReview.toFixed(1)})
+              </span>
             </div>
             <div className="mt-5 w-full mb-5">
               {productDetails?.totalStock === 0 ? (
@@ -127,30 +184,57 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
               )}
             </div>
             <Separator />
-            <div className="max-h-[300px] overflow-auto">
-              <h2 className="text-xl font-bold mb-4">Reviews</h2>
+            <div className={` max-h-[300px] overflow-auto}`}>
+              <h2 className={` text-xl font-bold mb-4 `}>Reviews</h2>
               <div className="grid gap-6">
-                <div className="flex gap-4">
-                  <Avatar className="w-10 h-10 border">
-                    <AvatarFallback>SM</AvatarFallback>
-                  </Avatar>
-                  <div className="grid gap-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-bold">Vivek</h3>
+                {reviews && reviews.length > 0 ? (
+                  reviews.map((reviewItem) => (
+                    <div className="flex gap-4">
+                      <Avatar className="w-10 h-10 border">
+                        <AvatarFallback>
+                          {reviewItem?.userName[0].toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="grid gap-1">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold">{reviewItem?.userName}</h3>
+                        </div>
+                        <div className="flex items-center gap-0.5">
+                          <StarRating rating={reviewItem?.reviewValue} />
+                        </div>
+                        <p className="text-foreground">
+                          {reviewItem?.reviewMessage}{" "}
+                        </p>
+                      </div>
                     </div>
-
-                    <p className="text-foreground"> good product</p>
-                  </div>
-                </div>
+                  ))
+                ) : (
+                  <h1></h1>
+                )}
               </div>
-              <div className="mt-6  min-h-fit overflow-hidden w-full relative flex gap-2">
-                <input
+
+              <div className=" mt-10 flex-col min-h-fit overflow-hidden w-full relative flex gap-2">
+                <Label>Write a review</Label>
+                <div className="flex gap-2 ">
+                  <StarRating
+                    rating={rating}
+                    handleRatingChange={handleRatingChange}
+                  />
+                  <Button
+                    onClick={handleAddReview}
+                    disabled={reviewMsg.trim() === ""}
+                    className=" btn-primary"
+                  >
+                    Submit
+                  </Button>
+                </div>
+                <Input
+                  name="reviewMsg"
+                  value={reviewMsg}
+                  onChange={(event) => setreviewMsg(event.target.value)}
                   className="w-full pl-4 pr-16 py-2 border rounded-lg focus:outline-none"
                   placeholder="Write a review"
                 />
-                <button className="absolute pt-1 pb-1 rounded-md right-2 top-1/2 transform -translate-y-1/2 btn-primary">
-                  Submit
-                </button>
               </div>
             </div>
           </div>
