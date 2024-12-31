@@ -1,27 +1,32 @@
-import ProductImageUploade from "@/components/admin-view/image-uploade";
-import { Button } from "@/components/ui/button";
-import { addFeatureImages, getFeatureImages } from "@/store/common-slice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import ProductImageUploade from "@/components/admin-view/image-uploade";
+import { Button } from "@/components/ui/button";
+import { addFeatureImages, deleteFeatureImage, getFeatureImages } from "@/store/common-slice";
 
 const AdminDashboard = () => {
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
-  const { featureImageList, isLoading } = useSelector(
-    (state) => state.commonfeature
-  );
+  const { featureImageList, isLoading } = useSelector((state) => state.commonfeature);
   const dispatch = useDispatch();
 
-  function handleUploadFeatureImage() {
+  const handleUploadFeatureImage = () => {
     dispatch(addFeatureImages({ image: uploadedImageUrl })).then((data) => {
       if (data?.payload?.success) {
         dispatch(getFeatureImages());
-        setImageFile(null)
-        setUploadedImageUrl("")
+        setImageFile(null);
+        setUploadedImageUrl("");
       }
     });
-  }
+  };
+
+  const handleDeleteImage = (id) => {
+    dispatch(deleteFeatureImage(id)).then(() => {
+      dispatch(getFeatureImages());
+    });
+  };
 
   useEffect(() => {
     dispatch(getFeatureImages());
@@ -29,13 +34,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 md:px-16">
-      {/* <h1 className="text-3xl font-bold text-gray-800 text-center mb-8">
-        Admin Dashboard - Feature Image Management
-      </h1> */}
       <div className="bg-white p-6 rounded-lg shadow-md">
-        {/* <h2 className="text-xl font-semibold text-gray-700 mb-4">
-          Upload Feature Images
-        </h2> */}
         <ProductImageUploade
           imageFile={imageFile}
           setImageFile={setImageFile}
@@ -65,7 +64,7 @@ const AdminDashboard = () => {
           {featureImageList && featureImageList.length > 0 ? (
             featureImageList.map((imgItem, index) => (
               <div
-                key={index}
+                key={imgItem._id}
                 className="relative bg-white rounded-lg shadow-md overflow-hidden"
               >
                 <img
@@ -75,6 +74,12 @@ const AdminDashboard = () => {
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gray-900 bg-opacity-50 text-white text-center py-2">
                   Feature Image {index + 1}
+                  <button
+                    className="ml-2 text-red-400 hover:text-red-600"
+                    onClick={() => handleDeleteImage(imgItem._id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))

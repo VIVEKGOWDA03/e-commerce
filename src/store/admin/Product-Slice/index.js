@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";  // Ensure axios is imported
+import axios from "axios"; // Ensure axios is imported
 
 const initialState = {
   isLoading: false,
@@ -8,11 +8,13 @@ const initialState = {
 };
 
 // Add new product
+const baseUrl = import.meta.env.VITE_SHOP_APP_API_BASE_URL;
+
 export const addNewProduct = createAsyncThunk(
-  "/products/addnewproduct",  // Change action name to be unique
+  "/products/addnewproduct", // Change action name to be unique
   async (formdata) => {
     const result = await axios.post(
-      "http://localhost:5000/api/admin/products/add",
+      ` ${baseUrl}/admin/products/add`,
       formdata,
       {
         headers: {
@@ -26,10 +28,11 @@ export const addNewProduct = createAsyncThunk(
 
 // Fetch all products
 export const fetchAllProduct = createAsyncThunk(
-  "/products/fetchallproducts",  // Change action name to be unique
+  "/products/fetchallproducts", // Change action name to be unique
   async () => {
     const result = await axios.get(
-      "http://localhost:5000/api/admin/products/get"
+      ` ${baseUrl}/admin/products/get`,
+
     );
     return result?.data;
   }
@@ -37,10 +40,10 @@ export const fetchAllProduct = createAsyncThunk(
 
 // Edit product
 export const editProduct = createAsyncThunk(
-  "/products/editproduct",  // Change action name to be unique
+  "/products/editproduct", // Change action name to be unique
   async ({ formData, id }) => {
     const result = await axios.put(
-      `http://localhost:5000/api/admin/products/edit/${id}`,
+      ` ${baseUrl}/admin/products/edit/${id}`,
       formData,
       {
         headers: {
@@ -54,10 +57,10 @@ export const editProduct = createAsyncThunk(
 
 // Delete product
 export const deleteProduct = createAsyncThunk(
-  "/products/deleteproduct",  // Change action name to be unique
+  "/products/deleteproduct", // Change action name to be unique
   async ({ id }) => {
     const result = await axios.delete(
-      `http://localhost:5000/api/admin/products/delete/${id}`
+      ` ${baseUrl}/admin/products/delete/${id}`
     );
     return result?.data;
   }
@@ -79,7 +82,7 @@ const AdminProductSlice = createSlice({
       .addCase(fetchAllProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.productList = [];
-        state.error = action.error.message;  // Handle the error message
+        state.error = action.error.message; // Handle the error message
       });
 
     builder
@@ -93,7 +96,7 @@ const AdminProductSlice = createSlice({
       })
       .addCase(addNewProduct.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message;  // Handle the error message
+        state.error = action.error.message; // Handle the error message
       });
   },
 });

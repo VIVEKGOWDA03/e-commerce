@@ -13,9 +13,10 @@ const ProductImageUploade = ({
   setImageLoadingState,
   imageLoadingState,
   isEditMode,
-  isCustomStyling=false
+  isCustomStyling = false,
 }) => {
   const inputRef = useRef(null);
+  const baseUrl = import.meta.env.VITE_SHOP_APP_API_BASE_URL;
 
   function handleImageFileChange(event) {
     console.log(event.target.files);
@@ -42,7 +43,7 @@ const ProductImageUploade = ({
     const data = new FormData();
     data.append("my_file", imageFile);
     const response = await axios.post(
-      "http://localhost:5000/api/admin/products/upload-image",
+      ` ${baseUrl}/admin/products/upload-image`,
       data
     );
     console.log(response.data, "response.data");
