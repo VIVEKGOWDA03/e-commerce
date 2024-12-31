@@ -1,10 +1,11 @@
-import Address from "@/components/shopping-view/Address";
-import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import accountImage from "../../assets/banners/account.jpg";
 import { createNewOrder } from "@/store/shop/order-slice";
 import CustomToast from "@/components/ui/CustomToast";
+import Address from "@/components/shopping-view/Address";
+import UserCartItemsContent from "@/components/shopping-view/cart-items-content";
+import { Button } from "@/components/ui/button";
 
 const ShoppingCheckoutPage = () => {
   const { cartItems } = useSelector((state) => state.shopCart);
@@ -20,7 +21,7 @@ const ShoppingCheckoutPage = () => {
     isVisible: false,
     message: "",
     type: "",
-  }); // Toast state
+  });
 
   const totalCartAmount =
     cartItems && cartItems.items.length > 0
@@ -36,39 +37,33 @@ const ShoppingCheckoutPage = () => {
       : 0;
 
   function handleInitiatePalpalPayment() {
-    // Check if the cart is empty
-    if (cartItems.length === 0) {
+    if (cartItems.items.length === 0) {
       setToast({
         isVisible: true,
         message: "Your cart is empty. Please add items to proceed",
         type: "warning",
       });
-      return; // Prevent further execution
+      return;
     }
 
-    // Check if no address is selected
-    if (currentSelectedAddres === null) {
+    if (!currentSelectedAddres) {
       setToast({
         isVisible: true,
-        message: "Please Select one Address to proceed",
+        message: "Please select an address to proceed",
         type: "info",
       });
-      return; // Prevent further execution
+      return;
     }
 
-    // Prepare the order data
     const orderData = {
       userId: user?.id,
       cartId: cartItems?._id,
-      cartItems: cartItems.items.map((singleCartItem) => ({
-        productId: singleCartItem?.productId,
-        title: singleCartItem?.title,
-        image: singleCartItem?.image,
-        price:
-          singleCartItem?.salePrice > 0
-            ? singleCartItem?.salePrice
-            : singleCartItem?.price,
-        quantity: singleCartItem?.quantity,
+      cartItems: cartItems.items.map((item) => ({
+        productId: item?.productId,
+        title: item?.title,
+        image: item?.image,
+        price: item?.salePrice > 0 ? item?.salePrice : item?.price,
+        quantity: item?.quantity,
       })),
       addressInfo: {
         addressId: currentSelectedAddres?._id,
@@ -87,12 +82,11 @@ const ShoppingCheckoutPage = () => {
       payerId: "",
     };
 
-    // Dispatch the action to create the order
     dispatch(createNewOrder({ orderData })).then((data) => {
       if (data?.payload?.success) {
-        setIsPaymentStart(true); // Set the payment to start
+        setIsPaymentStart(true);
       } else {
-        setIsPaymentStart(false); // Handle error in order creation
+        setIsPaymentStart(false);
       }
     });
   }
@@ -104,20 +98,23 @@ const ShoppingCheckoutPage = () => {
   }, [approvalUrl]);
 
   return (
-    <div className="flex flex-col ">
-      <div className="relative h-[auto] w-full overflow-hidden ">
+    <div className="flex flex-col">
+      <div className="relative h-[auto] w-full overflow-hidden">
         <img
           className="hfull w-full object-cover object-center"
           src={accountImage}
-          alt=""
+          alt="account"
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 p-5">
-        <Address setCurrentSelectedAddress={setCurrentSelectedAddress} />
+        <Address
+          selectedId={currentSelectedAddres?._id}
+          setCurrentSelectedAddress={setCurrentSelectedAddress}
+        />
         <div className="flex flex-col gap-4">
           {cartItems && cartItems.items && cartItems.items.length > 0
             ? cartItems.items.map((item) => (
-                <UserCartItemsContent cartItem={item} />
+                <UserCartItemsContent key={item._id} cartItem={item} />
               ))
             : null}
           <div className="mt-8 space-y-4">
@@ -126,10 +123,12 @@ const ShoppingCheckoutPage = () => {
               <span className="font-bold">₹{totalCartAmount}</span>
             </div>
           </div>
-          <div className="mt-4 w-full btn ">
-            <button onClick={handleInitiatePalpalPayment} className="w-full">
-              Checkout with PayPal
-            </button>
+          <div className="mt-4 w-full btn">
+            <Button onClick={handleInitiatePalpalPayment} className="w-full">
+              {isPaymentStart
+                ? "Processing Paypal Payment..."
+                : "Checkout with PayPal"}
+            </Button>
           </div>
         </div>
       </div>

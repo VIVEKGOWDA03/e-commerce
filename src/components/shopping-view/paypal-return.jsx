@@ -6,7 +6,7 @@ import { capturePayment } from "@/store/shop/order-slice";
 
 const PaypalReturnPage = () => {
   const dispatch = useDispatch();
-  const loaction = useLocation();
+  const location = useLocation();
   const params = new URLSearchParams(location.search);
   const paymentId = params.get("paymentId");
   const payerId = params.get("PayerId");
@@ -23,14 +23,25 @@ const PaypalReturnPage = () => {
         }
       );
     }
-  }, [payerId, payerId, dispatch]);
+  }, [payerId, paymentId, dispatch]);
+
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Please Wait</CardTitle>
-        </CardHeader>
-      </Card>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600">
+      <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg text-center">
+        <Card className="p-4 mb-4">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold text-gray-800">
+              Please Wait...
+            </CardTitle>
+          </CardHeader>
+        </Card>
+        <div className="mt-4 text-lg text-gray-700">
+          We're processing your payment. Please wait a moment while we complete your transaction.
+        </div>
+        <div className="mt-6">
+          <div className="w-16 h-16 border-t-4 border-b-4 border-gray-300 rounded-full animate-spin mx-auto"></div>
+        </div>
+      </div>
     </div>
   );
 };

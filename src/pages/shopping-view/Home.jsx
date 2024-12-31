@@ -37,6 +37,7 @@ import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
 import ProductDetailsDialog from "@/components/shopping-view/productdeatils";
 import CustomToast from "@/components/ui/CustomToast";
+import { getFeatureImages } from "@/store/common-slice";
 
 const ShoppingHome = () => {
   const slides = [b1, b2, b3, b4, b5, b6];
@@ -46,6 +47,7 @@ const ShoppingHome = () => {
   const { productList, isLoading, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const { featureImageList } = useSelector((state) => state.commonfeature);
   const [toast, setToast] = useState({
     isVisible: false,
     message: "",
@@ -166,7 +168,9 @@ const ShoppingHome = () => {
       })
     );
   }, [dispatch]);
-
+  useEffect(() => {
+    dispatch(getFeatureImages());
+  }, [dispatch]);
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Carousel */}

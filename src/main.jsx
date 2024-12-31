@@ -45,12 +45,16 @@ const RoutesWithAuth = () => {
         <Skeleton className="w-full  h-full " />
       </div>
     );
-  console.log("isAuthenticated:", isAuthenticated, "user:", user);
+  // console.log("isAuthenticated:", isAuthenticated, "user:", user);
 
   const routes = createBrowserRouter([
     {
       path: "/",
-      element: <App />,
+      element: (
+        <CheckAuth>
+          <App />
+        </CheckAuth>
+      ),
     },
     {
       path: "auth",

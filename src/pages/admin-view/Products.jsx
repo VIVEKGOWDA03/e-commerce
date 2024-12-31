@@ -32,10 +32,10 @@ const AdminProducts = () => {
     salePrice: "",
     totalStock: "",
   };
+  const [imageLoadingState, setImageLoadingState] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [formData, setFormData] = useState(initialFormData);
-  const [imageLoadingState, setImageLoadingState] = useState(false);
   const [currentEditedId, setCurrentEditedId] = useState(null);
   const { isLoading, productList, error } = useSelector(
     (state) => state.adminProducts || {}

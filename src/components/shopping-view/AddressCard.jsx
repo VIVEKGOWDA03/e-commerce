@@ -8,12 +8,18 @@ const AddressCard = ({
   handleDeleteAddress,
   handleEditAddress,
   setCurrentSelectedAddress,
+  selectedId,
 }) => {
-  // console.log(addressInfo, "");
+  const isSelected = selectedId === addressInfo?._id;
 
   return (
-    <div>
+    <div className="w-full max-w-md mx-auto">
       <Card
+        className={`border-2 rounded-lg shadow-md ${
+          isSelected
+            ? "border-green-500 bg-green-50"
+            : "border-gray-300 bg-white"
+        } cursor-pointer transition-all duration-200 hover:shadow-lg`}
         onClick={() =>
           setCurrentSelectedAddress
             ? setCurrentSelectedAddress(addressInfo)
@@ -21,24 +27,39 @@ const AddressCard = ({
         }
       >
         <CardContent className="grid gap-4 p-4">
-          <Label>Address :{addressInfo?.address}</Label>
-          <Label>City : {addressInfo?.city}</Label>
-          <Label>Pincode :{addressInfo?.pincode}</Label>
-          <Label>Phone : {addressInfo?.phone}</Label>
-          <Label> Note :{addressInfo?.notes}</Label>
+          <Label className="font-medium text-gray-700">
+            <span className="font-semibold text-gray-900">Address:</span>{" "}
+            {addressInfo?.address}
+          </Label>
+          <Label className="font-medium text-gray-700">
+            <span className="font-semibold text-gray-900">City:</span>{" "}
+            {addressInfo?.city}
+          </Label>
+          <Label className="font-medium text-gray-700">
+            <span className="font-semibold text-gray-900">Pincode:</span>{" "}
+            {addressInfo?.pincode}
+          </Label>
+          <Label className="font-medium text-gray-700">
+            <span className="font-semibold text-gray-900">Phone:</span>{" "}
+            {addressInfo?.phone}
+          </Label>
+          <Label className="font-medium text-gray-700">
+            <span className="font-semibold text-gray-900">Note:</span>{" "}
+            {addressInfo?.notes}
+          </Label>
         </CardContent>
         <CardFooter className="p-3 flex justify-between">
           <button
             onClick={() => handleEditAddress(addressInfo)}
-            className="btn"
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
           >
             Edit
           </button>
           <button
             onClick={() => handleDeleteAddress(addressInfo)}
-            className="btn"
+            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
           >
-            delete
+            Delete
           </button>
         </CardFooter>
       </Card>

@@ -37,6 +37,7 @@ import shop1 from "../../assets/logos/shop1.png";
 import Loader from "../ui/Loader";
 import Tooltip from "../ui/Tooltip";
 import { Dock, DockIcon } from "../ui/dock";
+import { Button } from "../ui/button";
 
 const ShoppingHeader = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -106,14 +107,19 @@ const ShoppingHeader = () => {
           open={openCartSheet}
           onOpenChange={(open) => setOpenCartSheet(open)}
         >
-          <button
+          <Button
             onClick={() => setOpenCartSheet(true)}
             variant="outline"
             size="icon"
+            className="relative"
           >
             <ShoppingCart className="w-6 h-6" />
+            <span className="absolute -top-1 -right-1 font-extrabold text-xs text-white bg-red-600 px-2 py-0.5 rounded-full shadow-md">
+              {cartItems?.items?.length || 0}
+            </span>
+
             <span className="sr-only "> User Cart</span>
-          </button>
+          </Button>
           <UserCartWrapper
             setOpenCartSheet={setOpenCartSheet}
             cartItems={

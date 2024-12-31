@@ -20,7 +20,7 @@ const initialAddressFormData = {
   notes: "",
 };
 
-const Address = ({ setCurrentSelectedAddress }) => {
+const Address = ({ setCurrentSelectedAddress, selectedId }) => {
   const [formData, setFormData] = useState(initialAddressFormData);
   const [toast, setToast] = useState({
     isVisible: false,
@@ -131,6 +131,7 @@ const Address = ({ setCurrentSelectedAddress }) => {
               handleDeleteAddress={handleDeleteAddress}
               handleEditAddress={handleEditAddress}
               setCurrentSelectedAddress={setCurrentSelectedAddress}
+              selectedId={selectedId}
             />
           ))
         ) : (
