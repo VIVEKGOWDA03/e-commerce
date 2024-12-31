@@ -1,4 +1,9 @@
-import { LayoutDashboard, PackageSearch, ShoppingBasket } from "lucide-react";
+import {
+  LayoutDashboard,
+  PackageSearch,
+  SearchCheckIcon,
+  ShoppingBasket,
+} from "lucide-react";
 import path from "path";
 
 export const registerFormControls = [
@@ -159,7 +164,6 @@ export const addProductFormElements = [
   },
 ];
 
-
 import { Home, User, Users, Baby, ShoppingBag, Gem } from "lucide-react"; // Use valid icons
 
 export const shoppingViewHeaderMenuItems = [
@@ -205,6 +209,12 @@ export const shoppingViewHeaderMenuItems = [
     label: "Accessories",
     icon: <Gem className="w-6 h-6" />, // Replaced with 'Gem'
     path: "/shop/listing",
+  },
+  {
+    id: "search",
+    label: "Search",
+    icon: <SearchCheckIcon className="w-6 h-6" />,
+    path: "/shop/search",
   },
 ];
 

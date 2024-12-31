@@ -1,23 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { StarIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
-import { useToast } from "@/hooks/use-toast";
 import { setProductDetails } from "@/store/shop/products-slice";
+import CustomToast from "../ui/CustomToast";
 
 const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   // console.log(productDetails?._id,"productDetails");
-  const { toast } = useToast();
+  const { cartItems } = useSelector((state) => state.shopCart);
 
-  function handleAddtoCart(getCurrentProductId) {
-    if (!user?.id) {
-      console.log("User is not logged in or userId is missing");
-      return;
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "",
+  });
+
+  function handleAddtoCart(getCurrentProductId, getTotalStock) {
+    let getCartItems = cartItems.items || [];
+    {
+      if (getCartItems.length) {
+        const indexOfCurrentItem = getCartItems.findIndex(
+          (items) => items.productId === getCurrentProductId
+        );
+        if (indexOfCurrentItem > -1) {
+          const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+          if (getQuantity + 1 > getTotalStock) {
+            setToast({
+              isVisible: true,
+              message: `Only ${getQuantity} items can be added.`,
+              type: "info",
+            });
+            return;
+          }
+        }
+      }
     }
 
     dispatch(
@@ -30,8 +51,9 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
       if (data?.payload?.success) {
         dispatch(fetchCartItems({ userId: user?.id }));
         setOpen(false);
-        toast({
-          title: "Product added to cart",
+        setToast({
+          isVisible: true,
+          message: "Product added to cart",
           type: "success",
         });
       }
@@ -86,12 +108,23 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
               <span className="text-foreground">(4.5)</span>
             </div>
             <div className="mt-5 w-full mb-5">
-              <button
-                onClick={() => handleAddtoCart(productDetails?._id)}
-                className="w-full !bg-black rounded-[10px] btn-danger"
-              >
-                Add to cart
-              </button>
+              {productDetails?.totalStock === 0 ? (
+                <button className="w-full !bg-black opacity-60 cursor-not-allowed rounded-[10px] btn-danger">
+                  Out of stock
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    handleAddtoCart(
+                      productDetails?._id,
+                      productDetails?.totalStock
+                    )
+                  }
+                  className="w-full !bg-black rounded-[10px] btn-danger"
+                >
+                  Add to cart
+                </button>
+              )}
             </div>
             <Separator />
             <div className="max-h-[300px] overflow-auto">
@@ -121,6 +154,13 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
               </div>
             </div>
           </div>
+          <CustomToast
+            className="z-100"
+            message={toast.message}
+            type={toast.type}
+            isVisible={toast.isVisible}
+            onClose={() => setToast({ ...toast, isVisible: false })}
+          />
         </DialogContent>
       </Dialog>
     </div>

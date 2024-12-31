@@ -1,18 +1,23 @@
-import { useToast } from "@/hooks/use-toast";
 import { deleteCartItems, updateCartItems } from "@/store/cart-slice";
 import { Minus, Plus, Trash } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import CustomToast from "../ui/CustomToast";
 
 const UserCartItemsContent = ({ cartItem }) => {
   // console.log(cartItems, "cartxxxxxxxxxxx");
   const { user } = useSelector((state) => state.auth);
-  const { toast } = useToast();
+  const { cartItems } = useSelector((state) => state.shopCart);
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "",
+  });
   const dispatch = useDispatch();
-
+  const { productList, isLoading, productDetails } = useSelector(
+    (state) => state.shopProducts
+  );
   function handleCartItemDelete(getCartItem) {
-    console.log("hello");
-
     dispatch(
       deleteCartItems({ userId: user?.id, productId: getCartItem?.productId })
     ).then((data) => {
@@ -25,6 +30,33 @@ const UserCartItemsContent = ({ cartItem }) => {
   }
 
   function handleUpdateQuantity(getCartItem, typeOfAction) {
+    if (typeOfAction === "plus") {
+      let getCartItems = cartItems.items || [];
+      {
+        if (getCartItems.length) {
+          const indexOfCurrentCartItem = getCartItems.findIndex(
+            (items) => items.productId === getCartItem?.productId
+          );
+          const getCurrentProductIndex = productList.findIndex(
+            (product) => product._id === getCartItem?.productId
+          );
+          // console.log(getCurrentProductIndex,getTotalStock,"getTotalStock");
+
+          const getTotalStock = productList[getCurrentProductIndex].totalStock;
+          if (indexOfCurrentCartItem > -1) {
+            const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
+            if (getQuantity + 1 > getTotalStock) {
+              setToast({
+                isVisible: true,
+                message: `Only ${getQuantity} items can be added.`,
+                type: "info",
+              });
+              return;
+            }
+          }
+        }
+      }
+    }
     dispatch(
       updateCartItems({
         userId: user?.id,
@@ -91,6 +123,13 @@ const UserCartItemsContent = ({ cartItem }) => {
           className="cursor-pointer mt-1 size={20}"
         />
       </div>
+      <CustomToast
+        className="z-100"
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
+      />
     </div>
   );
 };

@@ -20,20 +20,26 @@ import ShoppingProductTitle from "./ProductTitle";
 import { useSearchParams } from "react-router-dom";
 import ProductDetailsDialog from "@/components/shopping-view/productdeatils";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
-import { useToast } from "@/hooks/use-toast";
+import CustomToast from "@/components/ui/CustomToast";
 const ShoppingListingPage = () => {
   const { productList, isLoading, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const { cartItems } = useSelector((state) => state.shopCart);
   const { user } = useSelector((state) => state.auth);
   //  console.log("user:", user);
+  // console.log(cartItems, "cartItems");
 
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "",
+  });
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const categorySearchParams = searchParams.get("category");
-  const { toast } = useToast();
   function createsearchParamsHelper(filterParams) {
     const queryParams = [];
     for (const [key, value] of Object.entries(filterParams)) {
@@ -45,15 +51,33 @@ const ShoppingListingPage = () => {
     return queryParams.join("&");
   }
   function handleGetProductDetails(getCurrentProductId) {
-    // console.log(getCurrentProductId, "getCurrentProductId");
     dispatch(fetchProductsDetails({ id: getCurrentProductId }));
   }
-  function handleAddtoCart(getCurrentProductId) {
-    if (!user?.id) {
-      console.log("User is not logged in or userId is missing");
-      return;
-    }
+  function handleAddtoCart(getCurrentProductId, getTotalStock) {
+    // console.log(cartItems, "cartItems");
+    // console.log(getTotalStock, "getTotalStock");
 
+    let getCartItems = cartItems.items || [];
+    {
+      if (getCartItems.length) {
+        const indexOfCurrentItem = getCartItems.findIndex(
+          (items) => items.productId === getCurrentProductId
+        );
+        if (indexOfCurrentItem > -1) {
+          const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+          if (getQuantity + 1 > getTotalStock) {
+            setToast({
+              isVisible: true,
+              message: `Only ${
+                 getQuantity
+              } items can be added.`,
+              type: "info",
+            });
+            return;
+          }
+        }
+      }
+    }
     dispatch(
       addToCart({
         userId: user?.id,
@@ -65,8 +89,9 @@ const ShoppingListingPage = () => {
       if (data?.payload?.success) {
         dispatch(fetchCartItems({ userId: user?.id }));
 
-        toast({
-          title: "Product added to cart",
+        setToast({
+          isVisible: true,
+          message: "Product added to cart",
           type: "success",
         });
       }
@@ -125,6 +150,7 @@ const ShoppingListingPage = () => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
   // console.log(productDetails, "productDetails");
+  // console.log(productList, "productLisysys");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
@@ -184,6 +210,13 @@ const ShoppingListingPage = () => {
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
+      />
+      <CustomToast
+        className="z-100"
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
       />
     </div>
   );

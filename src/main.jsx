@@ -27,6 +27,7 @@ import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./components/shopping-view/paypal-return";
 import PaymentSuccess from "./components/shopping-view/payment-success";
+import SearchProducts from "./pages/shopping-view/SearchProducts";
 
 // This is a functional component that retrieves the authentication state from the store
 const RoutesWithAuth = () => {
@@ -118,6 +119,10 @@ const RoutesWithAuth = () => {
         {
           path: "account",
           element: <ShoppingAccountPage />,
+        },
+        {
+          path: "search",
+          element: <SearchProducts />,
         },
         {
           path: "paypal-return",

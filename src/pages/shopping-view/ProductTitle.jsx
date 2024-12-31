@@ -26,12 +26,26 @@ const ShoppingProductTitle = ({
             src={product.image}
             alt={product.title || "Product Image"}
           />
-          {product?.salePrice > 0 ? (
+
+          {product?.totalStock === 0 && (
             <Badge className="absolute top-2 left-2 bg-red-600 hover:bg-red-600">
+              Out of stock
+            </Badge>
+          )}
+
+          {product?.totalStock > 0 && product?.totalStock < 10 && (
+            <Badge className="text-white absolute top-10 left-2 bg-yellow-500 hover:bg-yellow-500">
+              Only {product?.totalStock} items left
+            </Badge>
+          )}
+
+          {product?.salePrice > 0 && (
+            <Badge className="absolute text-white top-16 left-2 bg-green-600 hover:bg-green-600">
               Sale
             </Badge>
-          ) : null}
+          )}
         </div>
+
         <CardContent className="p-4">
           <h2 className="text-xl font-bold mb-2">{product?.title}</h2>
           <div className="flex w-full  justify-between items-center mb-2">
@@ -76,16 +90,31 @@ const ShoppingProductTitle = ({
           </div>
         </CardContent>
       </div>
-      <CardFooter>
-        <button
-          onClick={() => {
-            handleAddtoCart(product?._id);
-          }}
-          className="w-full py-2 flex bg-blue-60 justify-center text-white rounded-lg"
-        >
-          <Tooltip text='Add To Cart' Price={product?.salePrice ||product?.price}/>
-        </button>
-      </CardFooter>
+      <CardFooter className="items-center w-full flex justify-center">
+  {product?.totalStock > 0 ? (
+    <button
+      onClick={() => handleAddtoCart(product?._id,product?.totalStock)}
+      className="w-fit py-2 flex bg-blue-60 justify-center text-white rounded-lg"
+    >
+      <Tooltip
+      className="w-full"
+        text="Add To Cart"
+        Price={product?.salePrice || product?.price}
+      />
+    </button>
+  ) : (
+    <button
+      disabled
+      className="w-full py-2 flex opacity-60  bg-gray-400 justify-center text-white rounded-lg cursor-not-allowed"
+    >
+      <Tooltip
+        text="Out of Stock"
+        Price={product?.salePrice || product?.price}
+      />
+    </button>
+  )}
+</CardFooter>
+
     </Card>
   );
 };

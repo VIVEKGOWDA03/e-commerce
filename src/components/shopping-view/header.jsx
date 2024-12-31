@@ -60,7 +60,8 @@ const ShoppingHeader = () => {
       sessionStorage.removeItem("filters");
       const currentFilter =
         getCurrentMennuItem.id !== "home" &&
-        getCurrentMennuItem.id !== "products"
+        getCurrentMennuItem.id !== "products" &&
+        getCurrentMennuItem.id !== "search"
           ? {
               Category: [getCurrentMennuItem.id],
             }
@@ -83,8 +84,7 @@ const ShoppingHeader = () => {
           >
             {menuItem.label}
           </Label>
-        )
-        )}
+        ))}
         {/* <Dock>
           {shoppingViewHeaderMenuItems.map((menuItem) => (
             <DockIcon

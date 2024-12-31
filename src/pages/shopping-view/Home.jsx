@@ -35,8 +35,8 @@ import {
 } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
-import { useToast } from "@/hooks/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/productdeatils";
+import CustomToast from "@/components/ui/CustomToast";
 
 const ShoppingHome = () => {
   const slides = [b1, b2, b3, b4, b5, b6];
@@ -46,7 +46,11 @@ const ShoppingHome = () => {
   const { productList, isLoading, productDetails } = useSelector(
     (state) => state.shopProducts
   );
-  const { toast } = useToast();
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "",
+  });
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
 
   // console.log(productList,"productList");
@@ -142,8 +146,9 @@ const ShoppingHome = () => {
       if (data?.payload?.success) {
         dispatch(fetchCartItems({ userId: user?.id }));
 
-        toast({
-          title: "Product added to cart",
+        setToast({
+          isVisible: true,
+          message: "Order Status Updated",
           type: "success",
         });
       }
@@ -280,6 +285,13 @@ const ShoppingHome = () => {
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
+      />
+      <CustomToast
+        className="z-100"
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
       />
     </div>
   );
