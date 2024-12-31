@@ -1,21 +1,23 @@
 import { defineConfig } from "vite";
 import path from "path";
 import react from "@vitejs/plugin-react";
-import { NodeGlobalsPolyfillPlugin } from "vite-plugin-node-polyfills";
+import polyfillNode from "rollup-plugin-polyfill-node";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    NodeGlobalsPolyfillPlugin({
-      protocolImports: true, // Enables Node.js polyfills for the browser
-    }),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   define: {
-    "process.env": {}, // Ensures `process.env` is defined
+    "process.env": {}, // Defines `process.env` to prevent errors
+  },
+  build: {
+    rollupOptions: {
+      plugins: [
+        polyfillNode(), // Add Node.js polyfills for the browser
+      ],
+    },
   },
 });
