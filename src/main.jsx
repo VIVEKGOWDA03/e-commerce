@@ -7,7 +7,6 @@ import Register from "./pages/auth-view/register";
 import AdminLayout from "./components/admin-view/Layout";
 import AdminDashboard from "./pages/admin-view/Dashboard";
 import AdminProducts from "./pages/admin-view/Products";
-import AdminFeatures from "./pages/admin-view/features";
 import AdminOrders from "./pages/admin-view/Orders";
 import Shoppinglayout from "./components/shopping-view/layout";
 import NotFoundPage from "./pages/Not-found";
@@ -28,6 +27,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./components/shopping-view/paypal-return";
 import PaymentSuccess from "./components/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/SearchProducts";
+import AdminFeatures from "./pages/admin-view/Features";
 
 // This is a functional component that retrieves the authentication state from the store
 const RoutesWithAuth = () => {
