@@ -37,19 +37,9 @@ const RoutesWithAuth = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const storedToken = sessionStorage.getItem("token");
-    if (storedToken) {
-      try {
-        const token = JSON.parse(storedToken);
-        dispatch(checkAuth(token));
-      } catch (err) {
-        console.error("Invalid token in sessionStorage:", err);
-      }
-    } else {
-      console.warn("No token found in sessionStorage.");
-    }
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    dispatch(checkAuth(token));
   }, [dispatch]);
-
   if (isLoading)
     return (
       <div>

@@ -16,7 +16,7 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${baseUrl}/auth/register`, formData, {
+      const response = await axios.post(`${baseUrl}/api/auth/register`, formData, {
         withCredentials: true,
       });
       return response.data; // Return the response data (e.g., success message)
@@ -28,7 +28,7 @@ export const registerUser = createAsyncThunk(
 
 // Async thunk for login
 export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  const response = await axios.post(`${baseUrl}/auth/login`, formData, {
+  const response = await axios.post(`${baseUrl}/api/auth/login`, formData, {
     withCredentials: true,
   });
   return response.data;
@@ -104,10 +104,17 @@ const authSlice = createSlice({
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
+      // .addCase(loginUser.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.token = action.payload.token;
+      //   sessionStorage.setItem("token", JSON.stringify(action.token));
+      //   state.user = action.payload.success ? action.payload.user : null;
+      //   state.isAuthenticated = action.payload.success;
+      // })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.token = action.payload.token;
-        sessionStorage.setItem("token", JSON.stringify(action.token));
+        state.token = action.payload.token; // Store the token in Redux state
+        sessionStorage.setItem("token", action.payload.token); // Store the token in sessionStorage
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
       })
