@@ -56,16 +56,22 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
 //   return response.data;
 // });
 
-export const checkAuth = createAsyncThunk("/auth/checkauth", async (token) => {
-  const response = await axios.get(`${baseUrl}/api/auth/check-auth`, {
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-    },
-  });
-  return response.data;
+export const checkAuth = createAsyncThunk("/auth/checkauth", async (token, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(`${baseUrl}/api/auth/check-auth`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Authentication check failed:", error.response?.data || error.message);
+    return rejectWithValue(error.response?.data || "Authentication failed");
+  }
 });
+
 
 // Slice for authentication
 const authSlice = createSlice({
