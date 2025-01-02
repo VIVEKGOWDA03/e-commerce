@@ -1,7 +1,7 @@
 import CommonForm from "@/components/common/Form";
+import CustomToast from "@/components/ui/CustomToast";
 import RippleButton from "@/components/ui/ripple-button";
 import { loginFormControls } from "@/config";
-import { useToast } from "@/hooks/use-toast";
 import { loginUser } from "@/store/auth-slice";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,7 +15,11 @@ const Login = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate(); // For navigating after login
-  const { toast } = useToast();
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "",
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -35,9 +39,10 @@ const Login = () => {
           navigate("/shop/home");
         }
       } else {
-        toast({
-          title: data?.payload?.message,
-          variant: "destructive",
+        setToast({
+          isVisible: true,
+          message: data?.payload?.message,
+          type: "success",
         });
       }
     });
@@ -66,6 +71,13 @@ const Login = () => {
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
+      />
+      <CustomToast
+        className="z-100"
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
       />
     </div>
   );

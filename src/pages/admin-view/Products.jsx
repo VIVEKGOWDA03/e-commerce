@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/sheet";
 
 import { addProductFormElements } from "@/config";
-import { useToast } from "@/hooks/use-toast";
 import {
   addNewProduct,
   deleteProduct,
@@ -41,7 +40,11 @@ const AdminProducts = () => {
     (state) => state.adminProducts || {}
   );
   console.log(productList, "productList");
-  const { toast } = useToast();
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "",
+  });
   const dispatch = useDispatch();
   function onSubmit(event) {
     event.preventDefault();
@@ -70,8 +73,10 @@ const AdminProducts = () => {
             setopenCreateProductsDialog(false);
             setImageFile(null);
             setFormData(initialFormData);
-            toast({
-              title: "Product added successfully ",
+            setToast({
+              isVisible: true,
+              message: "Product added successfully",
+              type: "success",
             });
           }
         });

@@ -16,7 +16,11 @@ const Register = () => {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const [toast, setToast] = useState({
+    isVisible: false,
+    message: "",
+    type: "",
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -29,9 +33,10 @@ const Register = () => {
         navigate("/auth/login");
         console.log(data, "registerantion done");
       } else {
-        toast({
-          title: data?.payload?.message,
-          variant: "destructive",
+        setToast({
+          isVisible: true,
+          message: data?.payload?.message,
+          type: "success",
         });
       }
     });
