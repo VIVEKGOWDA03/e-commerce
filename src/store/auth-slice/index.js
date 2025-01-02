@@ -7,6 +7,7 @@ const initialState = {
   isLoading: true,
   user: null,
   error: null,
+  token: null,
 };
 const baseUrl = import.meta.env.VITE_SHOP_APP_API_BASE_URL;
 
@@ -44,12 +45,23 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
 });
 
 // Async thunk for auth check
-export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
+// export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
+//   const response = await axios.get(`${baseUrl}/auth/check-auth`, {
+//     withCredentials: true,
+//     headers: {
+//       "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+//       Expires: "0",
+//     },
+//   });
+//   return response.data;
+// });
+
+export const checkAuth = createAsyncThunk("/auth/checkauth", async (token) => {
   const response = await axios.get(`${baseUrl}/auth/check-auth`, {
     withCredentials: true,
     headers: {
+      Authorization: `Bearer ${token}`,
       "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-      Expires: "0",
     },
   });
   return response.data;
@@ -63,6 +75,11 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
       state.isAuthenticated = true;
+    },
+    resetTokenAndCredentials: (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.token = null;
     },
   },
   extraReducers: (builder) => {
@@ -89,10 +106,9 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        // console.log("ggggg", action.payload.user);
-        // state.user = action.payload.success ? action.payload.user : null;
+        state.token = action.payload.token;
+        sessionStorage.setItem("token", JSON.stringify(action.token));
         state.user = action.payload.success ? action.payload.user : null;
-
         state.isAuthenticated = action.payload.success;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -100,6 +116,7 @@ const authSlice = createSlice({
         state.user = null;
         state.error = action.payload?.message || "Login failed";
         state.isAuthenticated = false;
+        state.token = null;
       })
       // Logout User
       .addCase(logoutUser.fulfilled, (state) => {
@@ -124,5 +141,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, resetTokenAndCredentials } = authSlice.actions;
 export default authSlice.reducer;

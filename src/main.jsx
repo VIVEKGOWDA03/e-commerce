@@ -37,7 +37,8 @@ const RoutesWithAuth = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkAuth());
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    dispatch(checkAuth(token));
   }, [dispatch]);
   if (isLoading)
     return (

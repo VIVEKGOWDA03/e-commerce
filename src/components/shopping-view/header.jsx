@@ -24,7 +24,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
-import { logoutUser } from "@/store/auth-slice";
+import { logoutUser, resetTokenAndCredentials } from "@/store/auth-slice";
 import UserCartWrapper from "./cart-wrapper";
 import { fetchCartItems } from "@/store/cart-slice";
 import { Label } from "../ui/label";
@@ -48,7 +48,10 @@ const ShoppingHeader = () => {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   function handleLogout() {
-    dispatch(logoutUser());
+    // dispatch(logoutUser());
+    dispatch(resetTokenAndCredentials());
+    sessionStorage.clear();
+    navigate("/auth/login");
   }
   useEffect(() => {
     if (user?.id) {
