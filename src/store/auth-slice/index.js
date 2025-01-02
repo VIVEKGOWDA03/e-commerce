@@ -37,7 +37,7 @@ export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
 // Async thunk for logout
 export const logoutUser = createAsyncThunk("/auth/logout", async () => {
   const response = await axios.post(
-    `${baseUrl}/auth/logout`,
+    `${baseUrl}/api/auth/logout`,
     {},
     { withCredentials: true }
   );
@@ -46,7 +46,7 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
 
 // Async thunk for auth check
 // export const checkAuth = createAsyncThunk("/auth/checkauth", async () => {
-//   const response = await axios.get(`${baseUrl}/auth/check-auth`, {
+//   const response = await axios.get(`${baseUrl}/api/auth/check-auth`, {
 //     withCredentials: true,
 //     headers: {
 //       "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
@@ -57,7 +57,7 @@ export const logoutUser = createAsyncThunk("/auth/logout", async () => {
 // });
 
 export const checkAuth = createAsyncThunk("/auth/checkauth", async (token) => {
-  const response = await axios.get(`${baseUrl}/auth/check-auth`, {
+  const response = await axios.get(`${baseUrl}/api/auth/check-auth`, {
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${token}`,

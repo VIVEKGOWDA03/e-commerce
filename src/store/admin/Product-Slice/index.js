@@ -14,7 +14,7 @@ export const addNewProduct = createAsyncThunk(
   "/products/addnewproduct", // Change action name to be unique
   async (formdata) => {
     const result = await axios.post(
-      ` ${baseUrl}/admin/products/add`,
+      ` ${baseUrl}/api/admin/products/add`,
       formdata,
       {
         headers: {
@@ -31,7 +31,7 @@ export const fetchAllProduct = createAsyncThunk(
   "/products/fetchallproducts", // Change action name to be unique
   async () => {
     const result = await axios.get(
-      ` ${baseUrl}/admin/products/get`,
+      ` ${baseUrl}/api/admin/products/get`,
 
     );
     return result?.data;
@@ -43,7 +43,7 @@ export const editProduct = createAsyncThunk(
   "/products/editproduct", // Change action name to be unique
   async ({ formData, id }) => {
     const result = await axios.put(
-      ` ${baseUrl}/admin/products/edit/${id}`,
+      ` ${baseUrl}/api/admin/products/edit/${id}`,
       formData,
       {
         headers: {
@@ -60,7 +60,7 @@ export const deleteProduct = createAsyncThunk(
   "/products/deleteproduct", // Change action name to be unique
   async ({ id }) => {
     const result = await axios.delete(
-      ` ${baseUrl}/admin/products/delete/${id}`
+      ` ${baseUrl}/api/admin/products/delete/${id}`
     );
     return result?.data;
   }

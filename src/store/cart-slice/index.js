@@ -16,7 +16,7 @@ const baseUrl = import.meta.env.VITE_SHOP_APP_API_BASE_URL;
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId, quantity }) => {
-    const response = await axios.post(`${baseUrl}/shop/cart/add`, {
+    const response = await axios.post(`${baseUrl}/api/shop/cart/add`, {
       userId,
       productId,
       quantity,
@@ -29,7 +29,7 @@ export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async ({ userId }) => {
     // console.log("Fetching cart for userId (dynamic):", userId);
-    const response = await axios.get(`${baseUrl}/shop/cart/get/${userId}`);
+    const response = await axios.get(`${baseUrl}/api/shop/cart/get/${userId}`);
     return response.data;
   }
 );
@@ -38,7 +38,7 @@ export const deleteCartItems = createAsyncThunk(
   "cart/deleteCartItems ",
   async ({ userId, productId }) => {
     const response = await axios.delete(
-      `${baseUrl}/shop/cart/${userId}/${productId}`
+      `${baseUrl}/api/shop/cart/${userId}/${productId}`
     );
     return response.data;
   }
@@ -47,7 +47,7 @@ export const deleteCartItems = createAsyncThunk(
 export const updateCartItems = createAsyncThunk(
   "cart/updateCartItems ",
   async ({ userId, productId, quantity }) => {
-    const response = await axios.put(`${baseUrl}/shop/cart/update-cart`, {
+    const response = await axios.put(`${baseUrl}api/shop/cart/update-cart`, {
       userId,
       productId,
       quantity,

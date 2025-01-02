@@ -13,7 +13,7 @@ export const getFeatureImages = createAsyncThunk(
   "feature/getFeatureImages",
   async (_, { rejectWithValue }) => {
     try {
-      const result = await axios.get(`${baseUrl}/common/feature/get`);
+      const result = await axios.get(`${baseUrl}/api/common/feature/get`);
       return result?.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -25,7 +25,7 @@ export const addFeatureImages = createAsyncThunk(
   "feature/addFeatureImages",
   async (image, { rejectWithValue }) => {
     try {
-      const result = await axios.post(`${baseUrl}/common/feature/add`, image);
+      const result = await axios.post(`${baseUrl}/api/common/feature/add`, image);
       return result?.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -37,7 +37,7 @@ export const deleteFeatureImage = createAsyncThunk(
   "feature/deleteFeatureImage",
   async (id, { rejectWithValue }) => {
     try {
-      const result = await axios.delete(`${baseUrl}/common/feature/delete/${id}`);
+      const result = await axios.delete(`${baseUrl}/api/common/feature/delete/${id}`);
       return result?.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

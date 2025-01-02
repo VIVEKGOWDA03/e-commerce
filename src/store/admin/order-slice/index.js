@@ -12,7 +12,7 @@ const baseUrl = import.meta.env.VITE_SHOP_APP_API_BASE_URL;
 export const getAllOrdersForAdmin = createAsyncThunk(
   "/orders/getAllOrdersForAdmin",
   async () => {
-    const response = await axios.get(`${baseUrl}/admin/orders/get`, {});
+    const response = await axios.get(`${baseUrl}/api/admin/orders/get`, {});
     return response.data;
   }
 );
@@ -20,7 +20,7 @@ export const getAllOrdersForAdmin = createAsyncThunk(
 export const getOrderDetailsForAdmin = createAsyncThunk(
   "/orders/getOrderDetailsForAdmin",
   async ({ id }) => {
-    const response = await axios.get(`${baseUrl}/admin/orders/details/${id}`, {});
+    const response = await axios.get(`${baseUrl}/api/admin/orders/details/${id}`, {});
     return response.data;
   }
 );
@@ -28,7 +28,7 @@ export const getOrderDetailsForAdmin = createAsyncThunk(
 export const updateOrderStatus = createAsyncThunk(
   "/orders/updateOrderStatus",
   async ({ id, orderStatus }) => {
-    const response = await axios.put(`${baseUrl}/admin/orders/update/${id}`, {
+    const response = await axios.put(`${baseUrl}/api/admin/orders/update/${id}`, {
       orderStatus,
     });
     return response.data;

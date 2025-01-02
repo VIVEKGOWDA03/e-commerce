@@ -11,7 +11,7 @@ const baseUrl = import.meta.env.VITE_SHOP_APP_API_BASE_URL;
 export const getSearchResults = createAsyncThunk(
   "/search/getSearchResults",
   async ({ keyword }) => {
-    const result = await axios.get(`${baseUrl}/shop/search/${keyword}`);
+    const result = await axios.get(`${baseUrl}/api/shop/search/${keyword}`);
     return result?.data;
   }
 );
