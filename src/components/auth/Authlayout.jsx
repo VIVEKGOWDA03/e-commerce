@@ -71,7 +71,7 @@ const Authlayout = () => {
     if (isSmallScreen) {
       const timer = setTimeout(() => {
         setShowSplash(false); // Hide Section 1 after 2 seconds on small screens
-      }, 10000);
+      }, 5000);
       return () => clearTimeout(timer); // Clean up the timer
     }
   }, [isSmallScreen]);
