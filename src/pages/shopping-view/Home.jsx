@@ -285,7 +285,7 @@ const ShoppingHome = () => {
               : null}
           </div>
         </div>
-        <CustomCard title="title" productImage={productList?.im} />
+        {/* <CustomCard title="title" productImage={productList?.im} /> */}
       </section>
       <ProductDetailsDialog
         open={openDetailsDialog}

@@ -68,9 +68,7 @@ const ShoppingListingPage = () => {
           if (getQuantity + 1 > getTotalStock) {
             setToast({
               isVisible: true,
-              message: `Only ${
-                 getQuantity
-              } items can be added.`,
+              message: `Only ${getQuantity} items can be added.`,
               type: "info",
             });
             return;
@@ -159,7 +157,7 @@ const ShoppingListingPage = () => {
         <div className="p-4 border-b flex gap-4 items-center justify-between">
           <h2 className="text-lg font-extrabold">All Products</h2>
           <div className="flex items-center gap-3">
-            <span className="text-muted-foreground">
+            <span className="font-cairoPlay">
               {productList.length} Products
             </span>
             <DropdownMenu className="z-50">
@@ -169,15 +167,19 @@ const ShoppingListingPage = () => {
                   variant="outline"
                   size="sm"
                 >
-                  <ArrowUpDownIcon className="h-4 w-4" />
-                  <span>Sort by</span>
+                  <ArrowUpDownIcon className="h-4 w-4 " />
+                  <span className="font-cairoPlay">Sort by</span>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[200px]">
-                <DropdownMenuRadioGroup value={sort} onValueChange={handleSort}>
+              <DropdownMenuContent align="end" className="z-30 w-[200px]">
+                <DropdownMenuRadioGroup
+                  className="z-10"
+                  value={sort}
+                  onValueChange={handleSort}
+                >
                   {sortBy.map((sortItem) => (
                     <DropdownMenuRadioItem
-                      className="bg-blue-300 text-bold"
+                      className="bg-blue-200 z-30 px-3 py-2 text-bold font-cairoPlay border border-gray-300 rounded-lg shadow-sm hover:bg-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
                       key={sortItem.id}
                       value={sortItem.id}
                     >

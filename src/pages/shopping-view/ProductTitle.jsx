@@ -6,7 +6,7 @@ import { DollarSignIcon } from "lucide-react";
 import React from "react";
 import styled from "styled-components";
 
-const ShoppingProductTitle = ({ 
+const ShoppingProductTitle = ({
   product,
   handleGetProductDetails,
   handleAddtoCart,
@@ -46,16 +46,16 @@ const ShoppingProductTitle = ({
             )}
 
             {product?.totalStock > 0 && product?.totalStock < 10 && (
-              <Badge className="text-white absolute top-10 left-2 bg-yellow-500 hover:bg-yellow-500">
+              <Badge className="text-white absolute top-1 left-2 bg-yellow-500 hover:bg-yellow-500">
                 Only {product?.totalStock} items left
               </Badge>
             )}
 
-            {product?.salePrice > 0 && (
+            {/* {product?.salePrice > 0 && (
               <Badge className="absolute text-white top-16 left-2 bg-green-600 hover:bg-green-600">
                 Sale
               </Badge>
-            )}
+            )} */}
           </div>
 
           <CardContent className="p-4">
@@ -74,48 +74,55 @@ const ShoppingProductTitle = ({
             </div>
 
             <div className="flex w-full gap-2 items-center mb-2">
-              {/* Regular Price */}
-              <span
-                className={`${
-                  product?.salePrice > 0 ? "line-through" : ""
-                } text-sm flex items-center text-[gray]`}
-              >
-                {product?.price > 0 ? (
-                  <span className=" flex items-center  font-[10px] text-[gray]">
-                    <p className="inline-block  mr-1">₹</p>
-                    {product?.price}
-                  </span>
-                ) : null}
-              </span>
-
-              {/* Sale Price */}
-              <span
-                className={`${
-                  product?.salePrice > 0 ? "text-black" : ""
-                } text-lg font-semibold text-black`}
-              >
-                {product?.salePrice > 0 ? (
-                  <span className="text-lg flex items-center font-bold text-black">
-                    <p className="inline-block  mr-1">₹</p>
+              <div className="flex w-full gap-2 items-center mb-2">
+                {/* Price and Sale Price Logic */}
+                {product?.price === product?.salePrice ? (
+                  // Show only salePrice when both are equal
+                  <span className="text-lg font-semibold text-black flex items-center">
+                    <p className="inline-block mr-1">₹</p>
                     {product?.salePrice}
                   </span>
-                ) : null}
-              </span>
-              <span
-                className={`${
-                  product?.salePrice > 0 ? "text-black" : ""
-                } text-lg font-semibold text-black`}
-              >
-                {product?.salePrice > 0 ? (
-                  <span className="text-sm flex items-center font-bold text-black">
-                    {calculateDiscountPercentage(
-                      product?.price,
-                      product?.salePrice
+                ) : (
+                  <>
+                    {/* Regular Price */}
+                    <span
+                      className={`${
+                        product?.salePrice > 0 ? "line-through" : ""
+                      } text-sm flex items-center text-[gray]`}
+                    >
+                      {product?.price > 0 && (
+                        <span className="flex items-center font-[10px] text-[gray]">
+                          <p className="inline-block mr-1">₹</p>
+                          {product?.price}
+                        </span>
+                      )}
+                    </span>
+
+                    {/* Sale Price */}
+                    {product?.salePrice > 0 && (
+                      <span className="text-lg font-bold text-black flex items-center">
+                        <p className="inline-block mr-1">₹</p>
+                        {product?.salePrice}
+                      </span>
                     )}
-                    %<p className="inline-block">OFF!</p>
-                  </span>
-                ) : null}
-              </span>
+                  </>
+                )}
+
+                {/* Discount Percentage */}
+                {product?.salePrice > 0 &&
+                  calculateDiscountPercentage(
+                    product?.price,
+                    product?.salePrice
+                  ) > 0 && (
+                    <span className="text-sm flex items-center font-bold text-red-500">
+                      {calculateDiscountPercentage(
+                        product?.price,
+                        product?.salePrice
+                      )}
+                      %<p className="inline-block ml-1">OFF!</p>
+                    </span>
+                  )}
+              </div>
             </div>
           </CardContent>
         </div>

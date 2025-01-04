@@ -268,19 +268,19 @@ export const FilterOptions = {
 export const sortBy = [
   {
     id: "price-hightolow",
-    label: "price:High to Low",
+    label: "Price:High to Low",
   },
   {
     id: "price-lowtohigh",
-    label: "price:Low to High",
+    label: "Price:Low to High",
   },
   {
     id: "title-atoz",
-    label: "title: A to Z",
+    label: "Title: A to Z",
   },
   {
     id: "title-ztoa",
-    label: "title: Z to A",
+    label: "Title: Z to A",
   },
 ];
 
