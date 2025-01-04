@@ -31,7 +31,7 @@ const Register = () => {
           // title:"registeration done",
         });
         navigate("/auth/login");
-        console.log(data, "registerantion done");
+        // console.log(data, "registerantion done");
       } else {
         setToast({
           isVisible: true,
@@ -46,10 +46,10 @@ const Register = () => {
   return (
     <div className="mx-auto p-[4%] bg-red-20 shadow-lg rounded-lg z-20 border border-white/20 backdrop-blur-md:  backdrop-blur-sm w-full max-w-md space-y-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tighter text-foreground">
+        <h1 className="text-3xl font-cairoPlay font-bold tracking-tighter text-foreground">
           Create new account
         </h1>
-        <p className="mt-2">
+        <p className="mt-2 font-cairoPlay">
           Already have an account
           <Link
             to="/auth/login"

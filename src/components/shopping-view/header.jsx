@@ -182,10 +182,17 @@ const ShoppingHeader = () => {
               <img src={shop1} alt="Trolley" className="w-12 h-12" />,
             ]}
           />
-          <span className="font-bold ">
+          <span className="sm:text-8xl font-cairoPlay ">
             {/* <TypingAnimation text="Fashion Fynder" className="text-2xl " /> */}
             {/* <WordRotate words={[]} /> */}
-            <SparklesText className="text-2xl " text="Fashion Fynder" />
+            {/* <SparklesText className="text-xl " text="Urban Store" /> */}
+            <h1 className="text-xl sm:text-2xl md:text-2xl font-rubikVinyl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-700 bg-opacity-50">
+              Urban{" "}
+              <span className="text-yellow-400  font-rubikVinyl">
+                Store{" "}
+              </span>
+              {/* <br />   Store */}
+            </h1>
           </span>
         </Link>
         <Sheet className="">

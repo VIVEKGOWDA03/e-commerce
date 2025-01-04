@@ -109,7 +109,7 @@ function CommonForm({
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="flex flex-col gap-3">
+      <div className="flex  font-cairoPlay flex-col gap-3">
         {formControls.map((controlItem) => (
           <div className="grid w-full gap-1.5" key={controlItem.name}>
             <label className="mb-1">{controlItem.label}</label>
@@ -120,7 +120,7 @@ function CommonForm({
       <button
         disabled={isBtnDisabled}
         type="submit"
-        className=" btn mt-2 w-full"
+        className=" btn font-cairoPlay mt-2 w-full"
       >
         {buttonText || "Submit"}
       </button>

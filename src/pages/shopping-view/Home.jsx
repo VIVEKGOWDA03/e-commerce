@@ -38,6 +38,7 @@ import { addToCart, fetchCartItems } from "@/store/cart-slice";
 import ProductDetailsDialog from "@/components/shopping-view/productdeatils";
 import CustomToast from "@/components/ui/CustomToast";
 import { getFeatureImages } from "@/store/common-slice";
+import CustomCard from "@/components/common/CustomCard";
 
 const ShoppingHome = () => {
   const slides = [b1, b2, b3, b4, b5, b6];
@@ -284,6 +285,7 @@ const ShoppingHome = () => {
               : null}
           </div>
         </div>
+        <CustomCard title="title" productImage={productList?.im} />
       </section>
       <ProductDetailsDialog
         open={openDetailsDialog}

@@ -1,8 +1,15 @@
+/** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ['"Roboto"', "sans-serif"],
+        rubikVinyl: ['"Rubik Vinyl"', "cursive"],
+        cairoPlay: ['"Cairo Play"', "sans-serif"],
+        sixtyfour: ['"Sixtyfour"', "cursive"],
+      },
       backdropBlur: {
         xs: "2px",
         huge: "50px",
@@ -44,6 +51,16 @@ export default {
             transform: "translateY(0)",
           },
         },
+        spotlight: {
+          "0%": {
+            opacity: 0,
+            transform: "translate(-72%, -62%) scale(0.5)",
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translate(-50%, -40%) scale(1)",
+          },
+        },
       },
       animation: {
         rippling: "rippling var(--duration) ease-out",
@@ -51,6 +68,7 @@ export default {
           "shimmer-slide var(--speed) ease-in-out infinite alternate",
         "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
         grid: "grid 15s linear infinite",
+        spotlight: "spotlight 2s ease .75s 1 forwards",
       },
       colors: {
         muted: "#f3f4f6",
@@ -77,7 +95,7 @@ export default {
             "", // Apply valid focus:ring class
         },
         ".btn-danger": {
-          "@apply bg-danger  p-2 border-[red] text-white font-bold hover:bg-red-600 focus:ring-danger":
+          "@apply bg-danger p-2 border-[red] text-white font-bold hover:bg-red-600 focus:ring-danger":
             "", // Apply valid focus:ring class
         },
       });

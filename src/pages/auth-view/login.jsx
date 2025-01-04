@@ -51,14 +51,14 @@ const Login = () => {
   return (
     <div className="mx-auto p-[4%] bg-red-20 shadow-lg rounded-lg z-20 border border-white/20 backdrop-blur-md:  backdrop-blur-sm ">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tighter text-foreground">
+        <h1 className="text-3xl font-cairoPlay font-bold tracking-tighter text-foreground">
           Log in to your account
         </h1>
-        <p className="mt-2 ">
+        <p className="mt-2 font-cairoPlay ">
           Don't have an account
           <Link
             to="/auth/register"
-            className="ml-2 font-medium text-primary hover:underline"
+            className="ml-2 font-medium font-cairoPlay text-primary hover:underline"
           >
             {" "}
             Sign Up
