@@ -22,6 +22,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
+import { TiThMenu } from "react-icons/ti";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { logoutUser, resetTokenAndCredentials } from "@/store/auth-slice";
@@ -105,11 +106,19 @@ const ShoppingHeader = () => {
   }
   function HeaderRightContent() {
     return (
-      <div className="flex lg:items-center lg:flex-row flex-col gap-4">
+      <div className="flex lg:items-center lg:flex-row  gap-2">
         <Sheet
           open={openCartSheet}
           onOpenChange={(open) => setOpenCartSheet(open)}
         >
+          <UserCartWrapper
+            setOpenCartSheet={setOpenCartSheet}
+            cartItems={
+              cartItems && cartItems.items && cartItems.items.length > 0
+                ? cartItems.items
+                : []
+            }
+          />
           <Button
             onClick={() => setOpenCartSheet(true)}
             variant="outline"
@@ -123,24 +132,16 @@ const ShoppingHeader = () => {
 
             <span className="sr-only "> User Cart</span>
           </Button>
-          <UserCartWrapper
-            setOpenCartSheet={setOpenCartSheet}
-            cartItems={
-              cartItems && cartItems.items && cartItems.items.length > 0
-                ? cartItems.items
-                : []
-            }
-          />
         </Sheet>
-        <DropdownMenu>
+        <DropdownMenu className="">
           <DropdownMenuTrigger asChild>
             <Avatar className="bg-black">
-              <AvatarFallback className="bg-black text-white font-extrabold">
+              <AvatarFallback className="bg-black text-2xl font-rubikVinyl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
                 {user?.userName[0].toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" className="w-56 ">
+          <DropdownMenuContent side="right" className="w-56 bg-slate-100 ">
             <DropdownMenuLabel>
               Logged in as
               <span className="text-bold  text-red-600">
@@ -188,23 +189,26 @@ const ShoppingHeader = () => {
             {/* <SparklesText className="text-xl " text="Urban Store" /> */}
             <h1 className="text-xl sm:text-2xl md:text-2xl font-rubikVinyl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-700 bg-opacity-50">
               Urban{" "}
-              <span className="text-yellow-400  font-rubikVinyl">
-                Store{" "}
-              </span>
+              <span className="text-yellow-400  font-rubikVinyl">Store </span>
               {/* <br />   Store */}
             </h1>
           </span>
         </Link>
         <Sheet className="">
           <SheetTrigger asChild>
-            <button variant="outline" size="icon " className="lg:hidden">
-              <SquareMenu className="w-6 h-6" />
+            <Button
+              variant="outline"
+              size="icon "
+              className="lg:hidden w-8 h-8"
+            >
+              {/* <SquareMenu className="w-6 h-6" /> */}
+              <TiThMenu className="w-8 h-8" />
               <span className="sr-only">Toggle header menu</span>
-            </button>
+            </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-full max-w-xs bg-white">
             <HeaderRightContent />
-            <div className="flex justify-center items-center">
+            <div className="flex justify-cente items-cente">
               <MenuItems className="mt-3" />
             </div>
           </SheetContent>

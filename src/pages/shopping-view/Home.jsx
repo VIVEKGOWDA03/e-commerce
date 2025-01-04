@@ -175,7 +175,7 @@ const ShoppingHome = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Carousel */}
-      <div className="relative w-full h-[600px] overflow-hidden">
+      <div className="relative w-full sm:h-[400px] lg:h-[600px] h-[300px]  overflow-hidden">
         {slides.map((slide, index) => (
           <img
             key={index}
@@ -222,7 +222,7 @@ const ShoppingHome = () => {
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
+                  <categoryItem.icon className="w-12 h-12 mb-4 text-black" />
                   <span className="font-bold">{categoryItem.label}</span>
                 </CardContent>
               </Card>
