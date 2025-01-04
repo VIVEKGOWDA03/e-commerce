@@ -82,24 +82,24 @@ const Authlayout = () => {
       <div
         className={`${
           showSplash && isSmallScreen ? "flex w-full px-0" : "hidden"
-        } bg-blak lg:flex items-center justify-center w-1/2 px-12`}
+        } bg-blak lg:flex items-center justify-center w-1/2 px-12 box-border`}
       >
-        <div className="max-w-md flex flex-col space-y-6 text-center h-[100vh]">
+        <div className="w-full flex flex-col items-center justify-center text-center h-[100vh]">
           <Spotlight
             className="-top-40 left-0 md:left-50 md:-top-20"
             fill="white"
           />
-          <SpotlightPreview className="" />
-          {images.map((image, index) => (
-            <img
-              key={index}
-              className={`absolute top-[35%] left-[35%] w-[120px] h-[120px] transition-opacity duration-1000 ${
-                currentImage === index ? "opacity-100" : "opacity-0"
-              }`}
-              src={image}
-              alt={`Image-${index}`}
-            />
-          ))}
+          <SpotlightPreview
+            images={images}
+            isSmallScreen={isSmallScreen}
+            showSplash={showSplash}
+            currentImage={currentImage}
+            className=""
+          />
+          {/* <p className="top-[20%] left-[10% w-fit h-[120px] absolute font-cairoPlay text-xl text-white">
+            Urban Store is an online fashion hub offering trendy products with a
+            seamless shopping experience.
+          </p> */}
         </div>
         {/* <IconCloud iconSlugs={iconSlugs} /> */}
 

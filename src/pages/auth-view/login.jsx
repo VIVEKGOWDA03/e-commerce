@@ -14,7 +14,7 @@ const Login = () => {
   };
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // For navigating after login
+  const navigate = useNavigate(); 
   const [toast, setToast] = useState({
     isVisible: false,
     message: "",

@@ -1,21 +1,39 @@
 import React from "react";
 import { Spotlight } from "../ui/spotlight";
 
-export function SpotlightPreview() {
+export function SpotlightPreview({
+  images,
+  isSmallScreen,
+  showSplash,
+  currentImage,
+}) {
   return (
-    <div className="h-[40rem] w-full rounded-md flex md:items-center md:justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
-      {/* <Spotlight className="-top-40 left-0 md:left-50 md:-top-20" fill="white" /> */}
-      <div className=" p-4 max-w-7xl  mx-auto relative z-10  w-full pt-20 md:pt-0">
-        <h1 className="text-4xl md:text-7xl font-rubikVinyl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-          Urban <span className="text-yellow-400 font-[400] font-rubikVinyl">Store </span>
-          {/* <br />   Store */}
-        </h1>
-        <p className="mt-4 font-normal text-base text-neutral-300 max-w-lg text-center mx-auto">
-          {/* The Urban Store E-Commerce Platform offers a seamless shopping
-          experience with personalized recommendations, secure payments, and
-          real-time tracking. It features eco-friendly products and 24/7
-          customer support for modern, city-dwelling consumers. */}
-        </p>
+    <div
+      className={`${
+        showSplash && isSmallScreen ? "justify-between" : "justify-center"
+      } flex flex-col h-full items-center pt-[20%]  gap-10`}
+    >
+      <h1 className=" text-7xl font-rubikVinyl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
+        Urban{" "}
+        <span className="text-yellow-400 font-[400] font-rubikVinyl">
+          Store{" "}
+        </span>
+      </h1>
+      <div className="w-full flex items-center pt-[50px] justify-center">
+        {images.map((image, index) => (
+          <img
+            key={index}
+            className={`absolute w-[120px] h-[120px] transition-opacity duration-1000 ${
+              currentImage === index ? "opacity-100" : "opacity-0"
+            }`}
+            src={image}
+            alt={`Image-${index}`}
+          />
+        ))}
+      </div>
+      <div className="w-full py-[5%] flex flex-col text-xl font-sixtyfour font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
+        <span>Your Favorite!</span>
+        <span>fashion Partner</span>
       </div>
     </div>
   );
