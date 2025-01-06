@@ -5,23 +5,21 @@ const StarRating = ({ rating, handleRatingChange }) => {
   return (
     <div className="flex items-center space-x-1">
       {[1, 2, 3, 4, 5].map((star) => (
-        <Button
+        <button
           onClick={handleRatingChange ? () => handleRatingChange(star) : null}
-          className={`p-2 rounded-full transition duration-200 ease-in-out transform ${
+          className={`p-2 rounded-full   border-[1px] transition duration-200 ease-in-out transform ${
             star <= rating
-              ? "text-yellow-400 bg-black hover:bg-yellow-500 hover:text-black"
+              ? "text-yellow-400  bg-black hover:bg-yellow-500 hover:text-black"
               : "text-gray-400 hover:text-yellow-400 hover:scale-110"
           }`}
           key={star}
-          variant="outline"
-          size="icon"
         >
           <StarIcon
-            className={`w-6 h-6 ${
-              star <= rating ? "fill-yellow-500" : "fill-black"
+            className={`w-3 h-3  ${
+              star <= rating ? "fill-yellow-500" : "fill-black border-black"
             }`}
           />
-        </Button>
+        </button>
       ))}
     </div>
   );

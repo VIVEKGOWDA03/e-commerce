@@ -34,7 +34,7 @@ const ShoppingProductTitle = ({
         >
           <div className="relative">
             <img
-              className="w-full h-[200px] object-cover rounded-t-lg"
+              className="w-full h-[200px] object-scaledown rounded-t-lg"
               src={product.image}
               alt={product.title || "Product Image"}
             />
@@ -130,7 +130,7 @@ const ShoppingProductTitle = ({
           {product?.totalStock > 0 ? (
             <button
               onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
-              className="w-fit py-2 flex bg-blue-60 justify-center text-white rounded-lg"
+              className="w-full bg-black py-2 flex bg-blue-60 justify-center text-white rounded-lg"
             >
               <Tooltip
                 className="w-full"

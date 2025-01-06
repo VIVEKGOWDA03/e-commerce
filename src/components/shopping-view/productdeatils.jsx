@@ -33,7 +33,17 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   function handleRatingChange(getRating) {
     setRating(getRating);
   }
+  const price = productDetails?.price;
+  const salePrice = productDetails?.salePrice;
+  function calculateDiscountPercentage(price, salePrice) {
+    if (price <= 0 || salePrice < 0) {
+      return 0; // Return 0 if the price or salePrice is invalid
+    }
 
+    const discount = price - salePrice;
+    const discountPercentage = (discount / price) * 100;
+    return discountPercentage.toFixed(0); // Return the percentage rounded to 2 decimal places
+  }
   function handleAddtoCart(getCurrentProductId, getTotalStock) {
     let getCartItems = cartItems.items || [];
     {
@@ -123,16 +133,20 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
         reviews.length
       : 2;
   return (
-    <div className="bg-white">
-      <Dialog className="bg-white" open={open} onOpenChange={handleDialogClose}>
-        <DialogContent className=" bg-white grid grid-cols-2 gap-8 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
-          <div className="relative overflow-hidden rounded-lg">
+    <div className="w-full h-auto">
+      <Dialog
+        className="bg-white w-full overflow-auto"
+        open={open}
+        onOpenChange={handleDialogClose}
+      >
+        <DialogContent className=" bg-white pb-[10%] overflow-auto sm:flex sm:w-full sm:h-fit gap-5 sm:p-12 h-[100vh] max-w-[fit] sm:max-w-[fit] lg:max-w-[fit]">
+          <div className="relative w-fit h-auto overflow-auto rounded-l">
             <img
               src={productDetails?.image}
               alt={productDetails?.title}
-              width={600}
-              height={600}
-              className="aspect-square w-full object-cover"
+              // width={600}
+              // height={600}
+              className="aspect-square w-[full] h-[200px] object-cover"
             />
           </div>
           <div className=" flex flex-col min-h-[10px] ">
@@ -142,21 +156,56 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
             <p className="text-foreground text-2xl mb-5 mt-4">
               {productDetails?.description}
             </p>
-            <div className="flex items-center justify-between">
-              <p
-                className={`text-3xl font-bold text-primary ${
-                  productDetails?.salePrice > 0 ? "line-through" : ""
-                }`}
-              >
-                ₹ {productDetails?.price}
-              </p>
-              {productDetails?.salePrice > 0 ? (
-                <p className="text-2xl font-bold text-foreground">
-                  ₹ {productDetails?.salePrice}
-                </p>
-              ) : null}
+            <div className="flex w-full gap-2 items-center mb-2">
+              {/* Price and Sale Price Logic */}
+              {productDetails?.price === productDetails?.salePrice ? (
+                // Show only salePrice when both are equal
+                <span className="text-lg font-semibold text-black flex items-center">
+                  <p className="inline-block mr-1">₹</p>
+                  {productDetails?.salePrice}
+                </span>
+              ) : (
+                <>
+                  {/* Regular Price */}
+                  <span
+                    className={`${
+                      productDetails?.salePrice > 0 ? "line-through" : ""
+                    } text-sm flex items-center text-[gray]`}
+                  >
+                    {productDetails?.price > 0 && (
+                      <span className="flex items-center font-[10px] text-[gray]">
+                        <p className="inline-block mr-1">₹</p>
+                        {productDetails?.price}
+                      </span>
+                    )}
+                  </span>
+
+                  {/* Sale Price */}
+                  {productDetails?.salePrice > 0 && (
+                    <span className="text-lg font-bold text-black flex items-center">
+                      <p className="inline-block mr-1">₹</p>
+                      {productDetails?.salePrice}
+                    </span>
+                  )}
+                </>
+              )}
+
+              {/* Discount Percentage */}
+              {productDetails?.salePrice > 0 &&
+                calculateDiscountPercentage(
+                  productDetails?.price,
+                  productDetails?.salePrice
+                ) > 0 && (
+                  <span className="text-sm flex items-center font-bold text-red-500">
+                    {calculateDiscountPercentage(
+                      productDetails?.price,
+                      productDetails?.salePrice
+                    )}
+                    %<p className="inline-block ml-1">OFF!</p>
+                  </span>
+                )}
             </div>
-            <div className="flex items-center gap-2 mt-2">
+            <div className="flex font-roboto  items-center gap-2 mt-2">
               <div className="flex items-center gap-0.5">
                 <StarRating rating={averageReview} />
               </div>
@@ -177,19 +226,21 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
                       productDetails?.totalStock
                     )
                   }
-                  className="w-full !bg-black rounded-[10px] btn-danger"
+                  className="w-full font-roboto  !bg-black rounded-[10px] btn-danger"
                 >
                   Add to cart
                 </button>
               )}
             </div>
             <Separator />
-            <div className={` max-h-[300px] overflow-auto}`}>
-              <h2 className={` text-xl font-bold mb-4 `}>Reviews</h2>
+            <div className={` max-h-[300px] overflow-auto font-roboto }`}>
+              {reviews && reviews.length > 0 ? (
+                <h2 className={` text-xl font-bold mb-4  `}>Reviews</h2>
+              ) : null}
               <div className="grid gap-6">
                 {reviews && reviews.length > 0 ? (
                   reviews.map((reviewItem) => (
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 font-roboto">
                       <Avatar className="w-10 h-10 border">
                         <AvatarFallback>
                           {reviewItem?.userName[0].toUpperCase()}
@@ -213,7 +264,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
                 )}
               </div>
 
-              <div className=" mt-10 flex-col min-h-fit overflow-hidden w-full relative flex gap-2">
+              <div className=" mt-10 font-roboto flex-col min-h-fit overflow-hidden w-full relative flex gap-2">
                 <Label>Write a review</Label>
                 <div className="flex gap-2 ">
                   <StarRating
@@ -232,7 +283,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
                   name="reviewMsg"
                   value={reviewMsg}
                   onChange={(event) => setreviewMsg(event.target.value)}
-                  className="w-full pl-4 pr-16 py-2 border rounded-lg focus:outline-none"
+                  className="pl-4 pr-16 py-2 font-roboto border border-gray-300 rounded-lg focus:outline-none"
                   placeholder="Write a review"
                 />
               </div>

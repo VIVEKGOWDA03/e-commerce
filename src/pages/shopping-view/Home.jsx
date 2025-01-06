@@ -7,7 +7,6 @@ import b5 from "../../assets/banners/b5.webp";
 import b6 from "../../assets/banners/b6.webp";
 import an1 from "../../assets/gifs/an5.gif";
 import an2 from "../../assets/gifs/an4.gif";
-
 import { motion } from "framer-motion";
 import {
   BabyIcon,
@@ -41,7 +40,17 @@ import { getFeatureImages } from "@/store/common-slice";
 import CustomCard from "@/components/common/CustomCard";
 
 const ShoppingHome = () => {
-  const slides = [b1, b2, b3, b4, b5, b6];
+  // const slides = [b1, b2, b3, b4, b5, b6];
+  // const slides = ["/assets/imp/off3.webp","/assets/imp/off2.png","/assets/imp/off1.jpg",];
+  const slides = [
+    "/assets/imp/s1.webp",
+    "/assets/imp/s2.webp",
+    "/assets/imp/s3.webp",
+    "/assets/imp/s4.webp",
+    "/assets/imp/s5.webp",
+    "/assets/imp/s6.webp",
+  ];
+
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { user } = useSelector((state) => state.auth);
@@ -175,11 +184,11 @@ const ShoppingHome = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Carousel */}
-      <div className="relative w-full sm:h-[400px] lg:h-[600px] h-[300px]  overflow-hidden">
+      <div className="relative w-full bg-slate-300 h-[600px] items-center lg:h-[80vh]  overflow-hidden">
         {slides.map((slide, index) => (
           <img
             key={index}
-            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  max-w-[1220px] lg:w-[90vw]  w-full h-full object-fit transition-opacity duration-1000 ${
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
             src={slide}

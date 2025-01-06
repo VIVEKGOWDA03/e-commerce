@@ -4,6 +4,9 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        xs: "325px", 
+      },
       fontFamily: {
         roboto: ['"Roboto"', "sans-serif"],
         rubikVinyl: ['"Rubik Vinyl"', "cursive"],

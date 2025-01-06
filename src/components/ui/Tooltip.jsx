@@ -1,14 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-const Tooltip = ({text,Price}) => {
+const Tooltip = ({ text, Price }) => {
   return (
     <StyledWrapper>
-     <div className="button" data-tooltip={`₹${Price}`}>
-        <div className="button-wrapper">
+      <div className="button" data-tooltip={`₹${Price}`}>
+        <div className="button-wrapper w-full">
           <div className="text">{text}</div>
           <span className="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="currentColor" className="bi bi-cart2" viewBox="0 0 16 16">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={16}
+              height={16}
+              fill="currentColor"
+              className="bi bi-cart2"
+              viewBox="0 0 16 16"
+            >
               <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
             </svg>
           </span>
@@ -16,7 +23,7 @@ const Tooltip = ({text,Price}) => {
       </div>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .button {
@@ -29,7 +36,7 @@ const StyledWrapper = styled.div`
     --tooltip-color: #fff;
     width: var(--width);
     height: var(--height);
-    background: var(--button-color);
+    // background: var(--button-color);
     position: relative;
     text-align: center;
     border-radius: 0.5em;
@@ -73,6 +80,7 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: Roboto;
   }
 
   .button-wrapper,
@@ -132,6 +140,7 @@ const StyledWrapper = styled.div`
 
   .button:hover:before {
     bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
-  }`;
+  }
+`;
 
 export default Tooltip;

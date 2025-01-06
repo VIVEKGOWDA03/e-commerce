@@ -203,6 +203,7 @@ const ShoppingHeader = () => {
             >
               {/* <SquareMenu className="w-6 h-6" /> */}
               <TiThMenu className="w-8 h-8" />
+              {/* <img className="w-8 h-8" src="/assets/icons/menu.gif"/> */}
               <span className="sr-only">Toggle header menu</span>
             </Button>
           </SheetTrigger>
