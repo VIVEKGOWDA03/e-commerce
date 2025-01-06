@@ -98,10 +98,10 @@ const ShoppingCheckoutPage = () => {
   }, [approvalUrl]);
 
   return (
-    <div className="flex flex-col">
-      <div className="relative h-[auto] w-full overflow-hidden">
+    <div className="flex flex-col mt-14">
+      <div className="relative h-full w-full overflow-hidden">
         <img
-          className="hfull w-full object-cover object-center"
+          className="h-full w-full object-contain object-center"
           src={accountImage}
           alt="account"
         />
@@ -123,7 +123,7 @@ const ShoppingCheckoutPage = () => {
               <span className="font-bold">₹{totalCartAmount}</span>
             </div>
           </div>
-          <div className="mt-4 w-full btn">
+          <div className="mt-4 w-full font-roboto">
             <Button onClick={handleInitiatePalpalPayment} className="w-full">
               {isPaymentStart
                 ? "Processing Paypal Payment..."

@@ -12,7 +12,7 @@ const Footer = () => {
       </h1>
       <p className="text-yellow-40 items-center flex gap-0.5 mt-[10px] text-[#ACC7ED]  font-[600] font-roboto">
         <IoPhonePortraitOutline className="text-yellow-200" />
-        Experience the souled store app
+        Experience the Urban store app
       </p>
       <div className="w-full gap-[50px] flex mt-[20px] h-auto  flex-wrap justify-between items-center ">
         <div className="app-ad-store flex  gap-4  h-[50px] ">
@@ -140,6 +140,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold text-white mb-4">STORE NEAR ME</h3>
             <ul className="space-y-2">
+            <li>
+                <a href="#" className="hover:text-yellow-400">
+                  Bengaluru
+                </a>
+              </li>
               <li>
                 <a href="#" className="hover:text-yellow-400">
                   Mumbai
@@ -152,12 +157,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#" className="hover:text-yellow-400">
-                  Indore
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-yellow-400">
-                  Bengaluru
+                  New Delhi
                 </a>
               </li>
               <li>

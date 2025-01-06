@@ -122,7 +122,7 @@ const Address = ({ setCurrentSelectedAddress, selectedId }) => {
 
   return (
     <Card>
-      <div className="mb-5 p-3 grid grid-cols-1 sm:grid-cols-2 md:frid-cols-3 gap-2 ">
+      <div className={`mb-5 p-3 grid grid-cols-1 ${addressList.length > 1 ?"sm:grid-cols-2":""}  md:grid-cols-3 gap-2 `}>
         {addressList && addressList.length > 0 ? (
           addressList.map((singleAddressItem) => (
             <AddressCard
@@ -135,7 +135,7 @@ const Address = ({ setCurrentSelectedAddress, selectedId }) => {
             />
           ))
         ) : (
-          <p>No addresses found</p>
+          <p className="font-roboto text-xl"></p>
         )}
       </div>
       <CardHeader>

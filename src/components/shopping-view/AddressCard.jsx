@@ -13,7 +13,7 @@ const AddressCard = ({
   const isSelected = selectedId === addressInfo?._id;
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full min-w-fit max-w-md mx-auto">
       <Card
         className={`border-2 rounded-lg shadow-md ${
           isSelected
@@ -23,12 +23,12 @@ const AddressCard = ({
         onClick={() =>
           setCurrentSelectedAddress
             ? setCurrentSelectedAddress(addressInfo)
-            : null
+            : null 
         }
       >
-        <CardContent className="grid gap-4 p-4">
+        <CardContent className="grid  gap-4 pt-4 p-4 font-roboto ">
           <Label className="font-medium text-gray-700">
-            <span className="font-semibold text-gray-900">Address:</span>{" "}
+            <span className="font-semibold leading-tight text-gray-900">Address:</span>{" "}
             {addressInfo?.address}
           </Label>
           <Label className="font-medium text-gray-700">

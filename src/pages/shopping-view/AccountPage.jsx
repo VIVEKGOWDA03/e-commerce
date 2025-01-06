@@ -6,7 +6,7 @@ import ShoppingOrders from "@/components/shopping-view/Orders";
 
 const ShoppingAccountPage = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col  overflow-auto mt-14 font-roboto">
       <div className="relative w-full flex items-center justify-center h-[300px] overflow-hidden">
         <img
           width={"1600"}
@@ -16,11 +16,11 @@ const ShoppingAccountPage = () => {
           src={accountImage}
         ></img>
       </div>
-      <div className="container mx-auto grid grid-cols gap-8 py-8 ">
-        <div className="flex flex-col rounded-lg border bg-background p-6 shadow-sm">
+      <div className="containe mx-auto grid grid-cols gap-8 py-8 ">
+        <div className="flex w-full  flex-col rounded-lg border bg-background p-6 shadow-sm">
           <Tabs defaultValue="orders">
-            <TabsList>
-              <TabsTrigger value="orders">Orders</TabsTrigger>
+            <TabsList className="font-cairoPlay text-2xl bg-purple-400">
+              <TabsTrigger className="text-2xl" value="orders">Orders</TabsTrigger>
               <TabsTrigger value="address">Address</TabsTrigger>
             </TabsList>
             <TabsContent value="orders">

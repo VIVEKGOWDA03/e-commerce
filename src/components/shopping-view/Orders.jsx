@@ -27,7 +27,7 @@ const ShoppingOrders = () => {
   const { orderList, orderDetails, isLoading } = useSelector(
     (state) => state.shopOrder
   );
-  console.log(orderList, "orderDetails");
+  // console.log(orderList, "orderDetails");
 
   function handleFetchOrderDetails(getId) {
     dispatch(getOrderDetails({ id: getId }));
@@ -79,10 +79,12 @@ const ShoppingOrders = () => {
                       </TableCell>
                       <TableCell>
                         <Badge
-                          className={`px-3 py-1 hover:bg-orange-600 ${
-                            orderItem?.orderStatus === "confirmed"
+                          className={`px-3 py-1 font-roboto  hover:bg-orange-600 ${
+                            orderItem?.orderStatus === "deliverd"
                               ? "bg-green-500"
-                              : "bg-orange-400"
+                              : orderItem?.orderStatus === "rejected"
+                              ? "bg-red-500"
+                              : "bg-orange-200"
                           }`}
                         >
                           {orderItem?.orderStatus
