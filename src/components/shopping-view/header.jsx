@@ -166,7 +166,7 @@ const ShoppingHeader = () => {
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-white bg-background ">
+    <header className="fixed top-0 z-40 w-full border-b bg-white ">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
         <Link
           to="/shop/home"
@@ -180,7 +180,7 @@ const ShoppingHeader = () => {
             words={[
               <img src={bucket} alt="Bucket" className="w-12 h-12" />,
               <img src={trolley} alt="Trolley" className="w-12 h-12" />,
-              <img src={shop1} alt="Trolley" className="w-12 h-12" />,
+              // <img src={shop1} alt="Trolley" className="w-12 h-12" />,
             ]}
           />
           <span className="sm:text-8xl font-cairoPlay ">

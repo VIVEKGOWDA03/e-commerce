@@ -38,6 +38,7 @@ import ProductDetailsDialog from "@/components/shopping-view/productdeatils";
 import CustomToast from "@/components/ui/CustomToast";
 import { getFeatureImages } from "@/store/common-slice";
 import CustomCard from "@/components/common/CustomCard";
+import Footer from "@/components/shopping-view/Footer";
 
 const ShoppingHome = () => {
   // const slides = [b1, b2, b3, b4, b5, b6];
@@ -182,9 +183,9 @@ const ShoppingHome = () => {
     dispatch(getFeatureImages());
   }, [dispatch]);
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col mt-16 min-h-screen">
       {/* Hero Carousel */}
-      <div className="relative w-full bg-slate-300 h-[600px] items-center lg:h-[80vh]  overflow-hidden">
+      <div className="relative w-full bg-slate-200 h-[600px] items-center  lg:h-[91vh]  overflow-hidden">
         {slides.map((slide, index) => (
           <img
             key={index}
@@ -296,6 +297,9 @@ const ShoppingHome = () => {
         </div>
         {/* <CustomCard title="title" productImage={productList?.im} /> */}
       </section>
+      <footer>
+        <Footer className="w-full"/>
+      </footer>
       <ProductDetailsDialog
         open={openDetailsDialog}
         setOpen={setOpenDetailsDialog}
@@ -308,6 +312,7 @@ const ShoppingHome = () => {
         isVisible={toast.isVisible}
         onClose={() => setToast({ ...toast, isVisible: false })}
       />
+
     </div>
   );
 };
