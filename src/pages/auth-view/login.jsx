@@ -1,10 +1,11 @@
 import CommonForm from "@/components/common/Form";
+import Loading from "@/components/common/Loading";
 import CustomToast from "@/components/ui/CustomToast";
 import RippleButton from "@/components/ui/ripple-button";
 import { loginFormControls } from "@/config";
 import { loginUser } from "@/store/auth-slice";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -12,9 +13,10 @@ const Login = () => {
     email: "",
     password: "",
   };
+  const { isLoading } = useSelector((state) => state.auth);
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [toast, setToast] = useState({
     isVisible: false,
     message: "",
@@ -47,6 +49,9 @@ const Login = () => {
       }
     });
   };
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="mx-auto p-[4%] bg-red-20 shadow-lg rounded-lg z-20 border border-white/20 backdrop-blur-md:  backdrop-blur-sm ">
@@ -73,7 +78,7 @@ const Login = () => {
         onSubmit={onSubmit}
       />
       <CustomToast
-        className="z-100"
+        className="z-10"
         message={toast.message}
         type={toast.type}
         isVisible={toast.isVisible}

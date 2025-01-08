@@ -151,7 +151,7 @@ const ShoppingListingPage = () => {
   // console.log(productList, "productLisysys");
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
+    <div className="grid grid-cols-1 mt-[66px] md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
       <ProductFilter filter={filters} handleFilters={handleFilter} />
       <div className="bg-background w-full rounded-lg shadow-sm">
         <div className="p-4 border-b flex gap-4 items-center justify-between">

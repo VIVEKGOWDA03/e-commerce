@@ -4,7 +4,7 @@ import axios from "axios";
 // Initial state
 const initialState = {
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false,
   user: null,
   error: null,
   token: null,

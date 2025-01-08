@@ -40,10 +40,14 @@ const RoutesWithAuth = () => {
     // const token = JSON.parse(sessionStorage.getItem("token"));
     const token = sessionStorage.getItem("token");
 
-    dispatch(checkAuth(token));
-    console.log(token,"token");
-    
-  }, [dispatch]);
+    if (
+      token &&
+      location.pathname !== "/login" &&
+      location.pathname !== "/register"
+    ) {
+      dispatch(checkAuth(token));
+    }
+  }, [dispatch, location]);
   if (isLoading)
     return (
       <div>

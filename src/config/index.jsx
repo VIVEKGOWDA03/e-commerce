@@ -1,8 +1,13 @@
 import {
+  ArrowRight,
+  CassetteTapeIcon,
+  HomeIcon,
   LayoutDashboard,
+  Menu,
   PackageSearch,
   SearchCheckIcon,
   ShoppingBasket,
+  ShoppingCartIcon,
 } from "lucide-react";
 import path from "path";
 
@@ -165,6 +170,7 @@ export const addProductFormElements = [
 ];
 
 import { Home, User, Users, Baby, ShoppingBag, Gem } from "lucide-react"; // Use valid icons
+import { MdCategory } from "react-icons/md";
 
 export const shoppingViewHeaderMenuItems = [
   {
@@ -334,5 +340,32 @@ export const addressFormControls = [
     name: "notes",
     componentType: "textarea",
     placeholder: "Enter any additional notes",
+  },
+];
+
+export const buttonsData = [
+  {
+    text: "Home",
+    icon: <HomeIcon className="w-4 h-4" />,
+    endIcon: <ArrowRight className="w-4 h-4" />,
+    navigateTo: "/shop/home",
+  },
+  {
+    text: "Shop",
+    icon: <ShoppingCartIcon className="w-4 h-4" />,
+    endIcon: <ArrowRight className="w-4 h-4" />,
+    navigateTo: "/shop/account",
+  },
+  {
+    text: "Account",
+    icon: <User className="w-4 h-4" />,
+    endIcon: <ArrowRight className="w-4 h-4" />,
+    navigateTo: "/shop/account",
+  },
+  {
+    text: "Account",
+    icon: <MdCategory className="w-4 h-4" />,
+    endIcon: <ArrowRight className="w-4 h-4" />,
+    navigateTo: "/shop/account",
   },
 ];

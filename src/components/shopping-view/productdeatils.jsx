@@ -17,7 +17,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   const dispatch = useDispatch();
   const [reviewMsg, setreviewMsg] = useState("");
   const [rating, setRating] = useState(0);
-  console.log(productDetails?._id, "hdhdhdh");
+  // console.log(productDetails?._id, "hdhdhdh");
 
   const { reviews, isloading } = useSelector((state) => state.shopReview);
   console.log(reviews, "log");

@@ -31,6 +31,7 @@ import {
   MdStore,
   MdStorefront,
   MdShoppingBag,
+  MdMore,
 } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
@@ -68,12 +69,44 @@ const ShoppingHome = () => {
 
   // console.log(productList,"productList");
   const dispatch = useDispatch();
+  const [displayProducts, setDisplayProducts] = useState(productList);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    // Function to handle window resize event
+    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    // Add event listener for resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    // If screen width is 425px or smaller, select 8 random products
+    if (windowWidth <= 425) {
+      const randomProducts = getRandomProducts(productList, 8);
+      setDisplayProducts(randomProducts);
+    } else {
+      // Show all products for larger screens
+      setDisplayProducts(productList);
+    }
+  }, [windowWidth, productList]);
+
+  // Function to get random products from the product list
+  const getRandomProducts = (products, count) => {
+    const shuffled = [...products].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
   const categoryWithIcon = [
     { id: "men", label: "Men", icon: ShirtIcon },
     { id: "women", label: "Women", icon: CloudLightning },
     { id: "kids", label: "Kids", icon: BabyIcon },
     { id: "accessories", label: "Accessories", icon: WatchIcon },
     { id: "footwear", label: "Footwear", icon: UmbrellaIcon },
+    { id: "listing", label: "Explore", icon: MdMore },
+
   ];
   const brandWithIcon = [
     {
@@ -161,7 +194,7 @@ const ShoppingHome = () => {
 
         setToast({
           isVisible: true,
-          message: "Order Status Updated",
+          message: "Product added to cart",
           type: "success",
         });
       }
@@ -240,7 +273,9 @@ const ShoppingHome = () => {
           </div>
         </div>
       </section>
-      <motion.div
+      {/* <img src="/assets/alert/banner1.svg"
+          alt="Image"/> */}
+      {/* <motion.div
         style={{ overflow: "hidden", width: "100%" }} // Container to hide overflow
       >
         <motion.img
@@ -258,7 +293,7 @@ const ShoppingHome = () => {
             ease: "easeInOut",
           }}
         />
-      </motion.div>
+      </motion.div> */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Shop By Brand</h2>
@@ -284,16 +319,17 @@ const ShoppingHome = () => {
             Feature Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {productList && productList.length > 0
-              ? productList.map((productItem) => (
-                  <ShoppingProductTitle
-                    handleGetProductDetails={handleGetProductDetails}
-                    product={productItem}
-                    handleAddtoCart={handleAddtoCart}
-                  />
-                ))
-              : null}
-          </div>
+      {displayProducts && displayProducts.length > 0
+        ? displayProducts.map((productItem) => (
+            <ShoppingProductTitle
+              key={productItem.id} // Assuming productItem has an 'id' property
+              handleGetProductDetails={handleGetProductDetails}
+              product={productItem}
+              handleAddtoCart={handleAddtoCart}
+            />
+          ))
+        : null}
+    </div>
         </div>
         {/* <CustomCard title="title" productImage={productList?.im} /> */}
       </section>
