@@ -20,7 +20,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   // console.log(productDetails?._id, "hdhdhdh");
 
   const { reviews, isloading } = useSelector((state) => state.shopReview);
-  console.log(reviews, "log");
+  // console.log(reviews, "log");
 
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);

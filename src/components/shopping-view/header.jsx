@@ -69,7 +69,7 @@ const ShoppingHeader = () => {
 
   useEffect(() => {
     if (user?.id) {
-      console.log("Fetching cart items for user:", user.id);
+      // console.log("Fetching cart items for user:", user.id);
       dispatch(fetchCartItems({ userId: user?.id }));
     }
   }, [dispatch, user?.id]);

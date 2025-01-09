@@ -99,45 +99,53 @@ const ShoppingHome = () => {
     const shuffled = [...products].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
-  const categoryWithIcon = [
-    { id: "men", label: "Men", icon: ShirtIcon },
-    { id: "women", label: "Women", icon: CloudLightning },
-    { id: "kids", label: "Kids", icon: BabyIcon },
-    { id: "accessories", label: "Accessories", icon: WatchIcon },
-    { id: "footwear", label: "Footwear", icon: UmbrellaIcon },
-    { id: "listing", label: "Explore", icon: MdMore },
-
+  const categoryWithImages = [
+    { id: "men", label: "Men", image: "/assets/brand/men.png" },
+    { id: "women", label: "Women", image: "/assets/brand/copy4.png" },
+    { id: "kids", label: "Kids", image: "/assets/brand/kid.png" },
+    {
+      id: "accessories",
+      label: "Accessories",
+      image: "/assets/brand/acc.png",
+    },
+    {
+      id: "footwear",
+      label: "Footwear",
+      image: "/assets/brand/foot.png",
+    },
+    // { id: "listing", label: "Explore", image: "/assets/brand/copy4.png" },
   ];
-  const brandWithIcon = [
+
+  const brandWithImages = [
     {
       id: "nike",
       label: "Nike",
-      icon: MdCheckCircle,
+      image: "/assets/brand/nike.svg",
     },
     {
       id: "adidas",
       label: "Adidas",
-      icon: MdFitnessCenter,
+      image: "/assets/brand/adidas.svg",
     },
     {
       id: "puma",
       label: "Puma",
-      icon: MdSportsSoccer,
+      image: "/assets/brand/puma.svg",
     },
     {
       id: "levi",
       label: "Levi's",
-      icon: MdStore,
+      image: "/assets/brand/levis.svg",
     },
     {
       id: "hm",
       label: "H&M",
-      icon: MdStorefront,
+      image: "/assets/brand/h.svg",
     },
     {
       id: "zara",
       label: "Zara",
-      icon: MdShoppingBag,
+      image: "/assets/brand/zara.svg",
     },
   ];
 
@@ -250,13 +258,13 @@ const ShoppingHome = () => {
       </div>
 
       {/* Categories Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-gray-5">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
+          <h2 className="text-3xl font-bold font-cairoPlay text-center mb-8">
             Shop By Category
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {categoryWithIcon.map((categoryItem) => (
+            {categoryWithImages.map((categoryItem) => (
               <Card
                 onClick={() =>
                   handleNavigateToLisitingPage(categoryItem, "category")
@@ -264,9 +272,14 @@ const ShoppingHome = () => {
                 key={categoryItem.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <categoryItem.icon className="w-12 h-12 mb-4 text-black" />
-                  <span className="font-bold">{categoryItem.label}</span>
+                <CardContent className="flex bg-slate-200 flex-col items-center justify-center p-6">
+                  <img
+                    src={categoryItem.image}
+                    alt={`${categoryItem.label} icon`}
+                    className="w-16 h-16  object-contain"
+                    loading="lazy" 
+                  />
+                  <span className="font-bold font-roboto">{categoryItem.label}</span>
                 </CardContent>
               </Card>
             ))}
@@ -294,18 +307,23 @@ const ShoppingHome = () => {
           }}
         />
       </motion.div> */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-gray-100">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Shop By Brand</h2>
+          <h2 className="text-3xl font-bold text-center font-cairoPlay mb-8">Shop By Brand</h2>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-4">
-            {brandWithIcon.map((brandItem) => (
+            {brandWithImages.map((brandItem) => (
               <Card
                 onClick={() => handleNavigateToLisitingPage(brandItem, "Brand")}
                 key={brandItem.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
                 <CardContent className="flex flex-col items-center justify-center p-6">
-                  <brandItem.icon className="w-12 h-12 mb-4 text-red-400" />
+                  <img
+                    src={brandItem.image}
+                    alt={`${brandItem.label} logo`}
+                    className="w-12 h-12 mb-4 object-contain"
+                    loading="lazy"
+                  />
                   <span className="font-bold">{brandItem.label}</span>
                 </CardContent>
               </Card>
@@ -319,22 +337,22 @@ const ShoppingHome = () => {
             Feature Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {displayProducts && displayProducts.length > 0
-        ? displayProducts.map((productItem) => (
-            <ShoppingProductTitle
-              key={productItem.id} // Assuming productItem has an 'id' property
-              handleGetProductDetails={handleGetProductDetails}
-              product={productItem}
-              handleAddtoCart={handleAddtoCart}
-            />
-          ))
-        : null}
-    </div>
+            {displayProducts && displayProducts.length > 0
+              ? displayProducts.map((productItem) => (
+                  <ShoppingProductTitle
+                    key={productItem.id} // Assuming productItem has an 'id' property
+                    handleGetProductDetails={handleGetProductDetails}
+                    product={productItem}
+                    handleAddtoCart={handleAddtoCart}
+                  />
+                ))
+              : null}
+          </div>
         </div>
         {/* <CustomCard title="title" productImage={productList?.im} /> */}
       </section>
       <footer>
-        <Footer className="w-full"/>
+        <Footer className="w-full" />
       </footer>
       <ProductDetailsDialog
         open={openDetailsDialog}
@@ -348,7 +366,6 @@ const ShoppingHome = () => {
         isVisible={toast.isVisible}
         onClose={() => setToast({ ...toast, isVisible: false })}
       />
-
     </div>
   );
 };
