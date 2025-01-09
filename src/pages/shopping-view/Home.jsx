@@ -40,6 +40,7 @@ import CustomToast from "@/components/ui/CustomToast";
 import { getFeatureImages } from "@/store/common-slice";
 import CustomCard from "@/components/common/CustomCard";
 import Footer from "@/components/shopping-view/Footer";
+import { brandWithImages, categoryWithImages } from "@/config";
 
 const ShoppingHome = () => {
   // const slides = [b1, b2, b3, b4, b5, b6];
@@ -99,56 +100,6 @@ const ShoppingHome = () => {
     const shuffled = [...products].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   };
-  const categoryWithImages = [
-    { id: "men", label: "Men", image: "/assets/brand/men.png" },
-    { id: "women", label: "Women", image: "/assets/brand/copy4.png" },
-    { id: "kids", label: "Kids", image: "/assets/brand/kid.png" },
-    {
-      id: "accessories",
-      label: "Accessories",
-      image: "/assets/brand/acc.png",
-    },
-    {
-      id: "footwear",
-      label: "Footwear",
-      image: "/assets/brand/foot.png",
-    },
-    // { id: "listing", label: "Explore", image: "/assets/brand/copy4.png" },
-  ];
-
-  const brandWithImages = [
-    {
-      id: "nike",
-      label: "Nike",
-      image: "/assets/brand/nike.svg",
-    },
-    {
-      id: "adidas",
-      label: "Adidas",
-      image: "/assets/brand/adidas.svg",
-    },
-    {
-      id: "puma",
-      label: "Puma",
-      image: "/assets/brand/puma.svg",
-    },
-    {
-      id: "levi",
-      label: "Levi's",
-      image: "/assets/brand/levis.svg",
-    },
-    {
-      id: "hm",
-      label: "H&M",
-      image: "/assets/brand/h.svg",
-    },
-    {
-      id: "zara",
-      label: "Zara",
-      image: "/assets/brand/zara.svg",
-    },
-  ];
-
   // Automatically transition to the next slide every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -171,10 +122,14 @@ const ShoppingHome = () => {
   };
   function handleNavigateToLisitingPage(getCurrentItem, section) {
     sessionStorage.removeItem("filters");
-    const currentFilter = {
-      [section]: [getCurrentItem.id],
-    };
-    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+
+    if (getCurrentItem.id !== "all") {
+      const currentFilter = {
+        [section]: [getCurrentItem.id],
+      };
+      sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    }
+
     navigate("/shop/listing");
   }
 
@@ -263,11 +218,11 @@ const ShoppingHome = () => {
           <h2 className="text-3xl font-bold font-cairoPlay text-center mb-8">
             Shop By Category
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-4">
             {categoryWithImages.map((categoryItem) => (
               <Card
                 onClick={() =>
-                  handleNavigateToLisitingPage(categoryItem, "category")
+                  handleNavigateToLisitingPage(categoryItem, "Category")
                 }
                 key={categoryItem.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
@@ -276,10 +231,16 @@ const ShoppingHome = () => {
                   <img
                     src={categoryItem.image}
                     alt={`${categoryItem.label} icon`}
-                    className="w-16 h-16  object-contain"
-                    loading="lazy" 
+                    style={{
+                      width: `${categoryItem.size.width}px`,
+                      height: `${categoryItem.size.height}px`,
+                    }}
+                    className="  object-contain"
+                    loading="lazy"
                   />
-                  <span className="font-bold font-roboto">{categoryItem.label}</span>
+                  <span className="font-bold font-roboto">
+                    {categoryItem.label}
+                  </span>
                 </CardContent>
               </Card>
             ))}
@@ -309,7 +270,9 @@ const ShoppingHome = () => {
       </motion.div> */}
       <section className="py-12 bg-gray-100">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center font-cairoPlay mb-8">Shop By Brand</h2>
+          <h2 className="text-3xl font-bold text-center font-cairoPlay mb-8">
+            Shop By Brand
+          </h2>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-4">
             {brandWithImages.map((brandItem) => (
               <Card
@@ -331,12 +294,12 @@ const ShoppingHome = () => {
           </div>
         </div>
       </section>
-      <section className="py-12">
+      <section className="py-12 bg-purple-40">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {displayProducts && displayProducts.length > 0
               ? displayProducts.map((productItem) => (
                   <ShoppingProductTitle

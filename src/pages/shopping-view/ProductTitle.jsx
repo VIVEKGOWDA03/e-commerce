@@ -2,8 +2,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Tooltip from "@/components/ui/Tooltip";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
-import { DollarSignIcon } from "lucide-react";
+import { DollarSignIcon, Star } from "lucide-react";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const ShoppingProductTitle = ({
@@ -11,6 +12,8 @@ const ShoppingProductTitle = ({
   handleGetProductDetails,
   handleAddtoCart,
 }) => {
+  const { reviews, isloading } = useSelector((state) => state.shopReview);
+
   // console.log(product?._id,"product?._id");
   const price = product?.price;
   const salePrice = product?.salePrice;
@@ -23,20 +26,26 @@ const ShoppingProductTitle = ({
     const discountPercentage = (discount / price) * 100;
     return discountPercentage.toFixed(0); // Return the percentage rounded to 2 decimal places
   }
+  const averageReview =
+    reviews && reviews.length > 0
+      ? reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) /
+        reviews.length
+      : 2;
   return (
     <StyledWrapper>
-      <Card className="w-full bg-[#27272a  max-w-sm mx-auto">
+      <Card className="w-full bg-[#27272a   max-w-sm mx-auto">
         <div
           onClick={() => {
             handleGetProductDetails(product?._id);
           }}
-          className=""
+          className="bg-red-40 min-h-fit"
         >
           <div className="relative">
             <img
-              className="w-full h-[200px] object-scaledown rounded-t-lg"
+              className="w-full h-[250px] object-scaledown rounded-t-lg"
               src={product.image}
               alt={product.title || "Product Image"}
+              loading="lazy"
             />
 
             {product?.totalStock === 0 && (
@@ -51,6 +60,10 @@ const ShoppingProductTitle = ({
               </Badge>
             )}
 
+            <span className="w-fit bg-slate-300 rounded-full p-0.5 px-1 font-roboto flex justify-center items-center gap-1 absolute text-[12px] font-bold bottom-2 left-3.5">
+              {averageReview.toFixed(1)}{" "}
+              <Star className="border-none w-3 h-3 fill-green-700" />
+            </span>
             {/* {product?.salePrice > 0 && (
               <Badge className="absolute text-white top-16 left-2 bg-green-600 hover:bg-green-600">
                 Sale
@@ -58,8 +71,8 @@ const ShoppingProductTitle = ({
             )} */}
           </div>
 
-          <CardContent className="p-4">
-            <h2 className="text-xl font-bold mb-">
+          <CardContent className=" bg-white font-roboto">
+            <h2 className="text-xl pt-0.5 font-bold mb">
               {" "}
               {brandOptionsMap[product?.brand]}
             </h2>
@@ -80,7 +93,9 @@ const ShoppingProductTitle = ({
                   // Show only salePrice when both are equal
                   <span className="text-lg font-semibold text-black flex items-center">
                     <p className="inline-block mr-1">₹</p>
-                    {product?.salePrice}
+                    {product?.salePrice?.toLocaleString("en-US", {
+                      maximumFractionDigits: 0,
+                    })}
                   </span>
                 ) : (
                   <>
@@ -91,9 +106,11 @@ const ShoppingProductTitle = ({
                       } text-sm flex items-center text-[gray]`}
                     >
                       {product?.price > 0 && (
-                        <span className="flex items-center font-[10px] text-[gray]">
+                        <span className="flex font-semibold items-center  text-[gray]">
                           <p className="inline-block mr-1">₹</p>
-                          {product?.price}
+                          {product?.price?.toLocaleString("en-US", {
+                            maximumFractionDigits: 0,
+                          })}
                         </span>
                       )}
                     </span>
@@ -101,8 +118,10 @@ const ShoppingProductTitle = ({
                     {/* Sale Price */}
                     {product?.salePrice > 0 && (
                       <span className="text-lg font-bold text-black flex items-center">
-                        <p className="inline-block mr-1">₹</p>
-                        {product?.salePrice}
+                        <p className="inline-block  mr-1">₹</p>
+                        {product?.salePrice?.toLocaleString("en-US", {
+                          maximumFractionDigits: 0,
+                        })}
                       </span>
                     )}
                   </>
@@ -126,14 +145,14 @@ const ShoppingProductTitle = ({
             </div>
           </CardContent>
         </div>
-        <CardFooter className="items-center w-full flex justify-center">
+        <CardFooter className="items-center p-2 w-full flex justify-center">
           {product?.totalStock > 0 ? (
             <button
               onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
-              className="w-full bg-black py-2 flex bg-blue-60 justify-center text-white rounded-lg"
+              className="w-full font-roboto bg-black py-2 flex bg-blue-60 justify-center text-white rounded-lg"
             >
               <Tooltip
-                className="w-full"
+                className="w-full font-roboto"
                 text="Add To Cart"
                 Price={product?.salePrice || product?.price}
               />
@@ -141,9 +160,10 @@ const ShoppingProductTitle = ({
           ) : (
             <button
               disabled
-              className="w-full py-2 flex opacity-60  bg-gray-400 justify-center text-white rounded-lg cursor-not-allowed"
+              className="w-full py-2 font-roboto flex opacity-60  bg-gray-400 justify-center text-white rounded-lg cursor-not-allowed"
             >
               <Tooltip
+                className="font-roboto"
                 text="Out of Stock"
                 Price={product?.salePrice || product?.price}
               />

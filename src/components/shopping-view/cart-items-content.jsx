@@ -80,9 +80,10 @@ const UserCartItemsContent = ({ cartItem }) => {
         className="w-20 h-20 rounded object-cover"
         src={cartItem?.image}
         alt={cartItem?.title}
+        loading="lazy"
       />
       <div className="flex-1">
-        <h3 className="font-extrabold"> {cartItem?.title}</h3>
+        <h3 className="font-extrabold font-roboto"> {cartItem?.title}</h3>
         <div className="flex items-center mt-1 gap-2">
           <button
             onClick={() => handleUpdateQuantity(cartItem, "minus")}
@@ -91,7 +92,7 @@ const UserCartItemsContent = ({ cartItem }) => {
             size="icon"
             className="flex justify-center items-center h-8 w-8 rounded-full"
           >
-            <Minus className="w-4 h-4" />
+            <Minus className="w-4 h-4 bg-[#ED5448 rounded-sm" />
             <span className="sr-only">Decrease</span>
           </button>
           <span className="flex font-semibold justify-center items-center h-8 w-4">
@@ -103,13 +104,18 @@ const UserCartItemsContent = ({ cartItem }) => {
             size="icon"
             className="flex justify-center items-center h-8 w-8 rounded-full"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 bg-green-40 rounded-sm" />
             <span className="sr-only">Increase</span>
           </button>
         </div>
+        <div className="">
+          <p className="text-[14px] font-semibold text-black font-roboto">
+            Delivery in <span className="text-green-400">7 days </span>
+          </p>
+        </div>
       </div>
-      <div className="flex flex-col items-end">
-        <p className="font-semibold">
+      <div className="flex flex-col items-end font-roboto">
+        <p className="font-semibold font-roboto">
           ₹
           {(
             (cartItem?.salePrice && cartItem.salePrice < cartItem.price
@@ -118,10 +124,12 @@ const UserCartItemsContent = ({ cartItem }) => {
           ).toFixed(2)}
         </p>
 
-        <Trash
+        <button
           onClick={() => handleCartItemDelete(cartItem)}
-          className="cursor-pointer mt-1 size={20}"
-        />
+          className="cursor-pointer mt-1 size={10}"
+        >
+          <img className="w-10 h-10" src="/assets/icons/bin.png"></img>
+        </button>
       </div>
       <CustomToast
         className="z-100"

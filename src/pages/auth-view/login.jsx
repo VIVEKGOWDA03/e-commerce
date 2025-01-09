@@ -26,11 +26,11 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(formData)).then((data) => {
+      console.log(data, "formData");
+
       if (data?.payload?.success) {
-        setToast({
-          isVisible: true,
-          message: data?.payload?.message,
-          type: "success",
+        toast({
+          title: data?.payload?.message,
         });
 
         // Redirect based on user role
@@ -43,40 +43,40 @@ const Login = () => {
       } else {
         setToast({
           isVisible: true,
-          message: data?.payload?.message || "Login failed",
-          type: "error",
+          message: data?.payload?.message,
+          type: "success",
         });
       }
     });
   };
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
-    <div className="relative">
-      {isLoading && <Loading />}
-      <div className="mx-auto p-[4%] bg-red-20 shadow-lg rounded-lg z-20 border border-white/20 backdrop-blur-md:  backdrop-blur-sm ">
-        <div className="text-center">
-          <h1 className="text-3xl font-cairoPlay font-bold tracking-tighter text-foreground">
-            Log in to your account
-          </h1>
-          <p className="mt-2 font-cairoPlay ">
-            Don't have an account
-            <Link
-              to="/auth/register"
-              className="ml-2 font-medium font-cairoPlay text-primary hover:underline"
-            >
-              {" "}
-              Sign Up
-            </Link>
-          </p>
-        </div>
-        <CommonForm
-          formControls={loginFormControls}
-          buttonText={"log in"}
-          formData={formData}
-          setFormData={setFormData}
-          onSubmit={onSubmit}
-        />
+    <div className="mx-auto p-[4%] bg-red-20 shadow-lg rounded-lg z-20 border border-white/20 backdrop-blur-md:  backdrop-blur-sm ">
+      <div className="text-center">
+        <h1 className="text-3xl font-cairoPlay font-bold tracking-tighter text-foreground">
+          Log in to your account
+        </h1>
+        <p className="mt-2 font-cairoPlay ">
+          Don't have an account
+          <Link
+            to="/auth/register"
+            className="ml-2 font-medium font-cairoPlay text-primary hover:underline"
+          >
+            {" "}
+            Sign Up
+          </Link>
+        </p>
       </div>
+      <CommonForm
+        formControls={loginFormControls}
+        buttonText={"log in"}
+        formData={formData}
+        setFormData={setFormData}
+        onSubmit={onSubmit}
+      />
       <CustomToast
         className="z-10"
         message={toast.message}

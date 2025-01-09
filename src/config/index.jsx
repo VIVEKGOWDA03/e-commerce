@@ -369,3 +369,75 @@ export const buttonsData = [
     navigateTo: "/shop/account",
   },
 ];
+
+ export const categoryWithImages = [
+    {
+      id: "men",
+      label: "Men",
+      image: "/assets/brand/men.png",
+      size: { width: 50, height: 75 },
+    },
+    {
+      id: "women",
+      label: "Women",
+      image: "/assets/brand/copy4.png",
+      size: { width: 64, height: 75 },
+    },
+    {
+      id: "kids",
+      label: "Kids",
+      image: "/assets/brand/kid.png",
+      size: { width: 56, height: 75 },
+    },
+    {
+      id: "accessories",
+      label: "Accessories",
+      image: "/assets/brand/acc.png",
+      size: { width: 50, height: 75 },
+    },
+    {
+      id: "footwear",
+      label: "Footwear",
+      image: "/assets/brand/foot.png",
+      size: { width: 70, height: 75 },
+    },
+    {
+      id: "all",
+      label: "Explore All",
+      image: "/assets/brand/Category.png",
+      size: { width: 50, height: 75 },
+    },
+  ];
+
+  export const brandWithImages = [
+    {
+      id: "nike",
+      label: "Nike",
+      image: "/assets/brand/nike.svg",
+    },
+    {
+      id: "adidas",
+      label: "Adidas",
+      image: "/assets/brand/adidas.svg",
+    },
+    {
+      id: "puma",
+      label: "Puma",
+      image: "/assets/brand/puma.svg",
+    },
+    {
+      id: "levi",
+      label: "Levi's",
+      image: "/assets/brand/levis.svg",
+    },
+    {
+      id: "hm",
+      label: "H&M",
+      image: "/assets/brand/h.svg",
+    },
+    {
+      id: "zara",
+      label: "Zara",
+      image: "/assets/brand/zara.svg",
+    },
+  ];

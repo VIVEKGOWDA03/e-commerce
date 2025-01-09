@@ -133,7 +133,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
         reviews.length
       : 2;
   return (
-    <div className="w-full h-auto">
+    <div className="w-full h-auto font-roboto">
       <Dialog
         className="bg-white w-full overflow-auto"
         open={open}
