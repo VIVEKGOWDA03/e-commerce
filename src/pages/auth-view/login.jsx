@@ -26,7 +26,7 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(formData)).then((data) => {
-      console.log(data, "formData");
+      // console.log(data, "formData");
 
       if (data?.payload?.success) {
         toast({
@@ -35,10 +35,10 @@ const Login = () => {
 
         // Redirect based on user role
         const role = data.payload.user?.role;
-        if (role === "admin") {
-          navigate("/admin/dashboard");
-        } else if (role === "user") {
+        if (role === "user") {
           navigate("/shop/home");
+        } else if (role === "admin") {
+          navigate("/admin/dashboard");
         }
       } else {
         setToast({

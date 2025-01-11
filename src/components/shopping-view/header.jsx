@@ -3,6 +3,7 @@ import {
   Home,
   House,
   LogOut,
+  Search,
   ShoppingCart,
   ShoppingCartIcon,
   SquareMenu,
@@ -143,7 +144,7 @@ const ShoppingHeader = () => {
   }
 
   return (
-    <header className="fixed top-0 z-40 w-full border-b bg-white ">
+    <header className="fixed top-0 z-40 w-full border-b bg-white bg-cu ">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
         <Link
           to="/shop/home"
@@ -165,7 +166,8 @@ const ShoppingHeader = () => {
         <div className="hidden lg:block">
           <MenuItems />
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1 items-center">
+        <Search onClick={()=>navigate('/shop/search')} className="fill-white font-bold text-black " />
           <div className="flex  gap-1 justify-center items-center lg:block">
             <Sheet
               open={openCartSheet}

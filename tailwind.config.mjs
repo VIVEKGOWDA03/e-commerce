@@ -4,8 +4,12 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        "custom-gradient": "linear-gradient(to right, #F3F6D5, #DAF8E3)",
+        "custom-gradient-2": "linear-gradient(to right, #E2E8F0, #A683C9)",
+      },
       screens: {
-        xs: "325px", 
+        xs: "325px",
       },
       fontFamily: {
         roboto: ['"Roboto"', "sans-serif"],

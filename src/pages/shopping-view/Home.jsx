@@ -8,6 +8,9 @@ import b6 from "../../assets/banners/b6.webp";
 import an1 from "../../assets/gifs/an5.gif";
 import an2 from "../../assets/gifs/an4.gif";
 import { motion } from "framer-motion";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import {
   BabyIcon,
   ChevronLeftIcon,
@@ -40,7 +43,10 @@ import CustomToast from "@/components/ui/CustomToast";
 import { getFeatureImages } from "@/store/common-slice";
 import CustomCard from "@/components/common/CustomCard";
 import Footer from "@/components/shopping-view/Footer";
-import { brandWithImages, categoryWithImages } from "@/config";
+import { brandWithImages, categoryWithImages, images, products, settings } from "@/config";
+import Loading from "@/components/common/Loading";
+import Slider from "react-slick";
+import { HeroParallax } from "@/components/ui/hero-parallax";
 
 const ShoppingHome = () => {
   // const slides = [b1, b2, b3, b4, b5, b6];
@@ -57,10 +63,12 @@ const ShoppingHome = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { user } = useSelector((state) => state.auth);
-  const { productList, isLoading, productDetails } = useSelector(
+  const { productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
   const { featureImageList } = useSelector((state) => state.commonfeature);
+  const { isLoading } = useSelector((state) => state.auth);
+
   const [toast, setToast] = useState({
     isVisible: false,
     message: "",
@@ -94,7 +102,9 @@ const ShoppingHome = () => {
       setDisplayProducts(productList);
     }
   }, [windowWidth, productList]);
-
+  if (isLoading) {
+    return <Loading />;
+  }
   // Function to get random products from the product list
   const getRandomProducts = (products, count) => {
     const shuffled = [...products].sort(() => 0.5 - Math.random());
@@ -181,7 +191,7 @@ const ShoppingHome = () => {
   return (
     <div className="flex flex-col mt-16 min-h-screen">
       {/* Hero Carousel */}
-      <div className="relative w-full bg-slate-200 h-[600px] items-center  lg:h-[91vh]  overflow-hidden">
+      <div className="relative w-full bg-slate-20 bg-gradient-to-t from-[#F3F6D5] via-[#DAF8E3] to-white h-[600px] items-center  lg:h-[91vh]  overflow-hidden">
         {slides.map((slide, index) => (
           <img
             key={index}
@@ -213,9 +223,9 @@ const ShoppingHome = () => {
       </div>
 
       {/* Categories Section */}
-      <section className="py-12 bg-gray-5">
+      <section className="py-12 bg-gray-5 bg-custom-gradien bg-gradient-to-b from-[#F3F6D5] via-[#DAF8E3] to-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold font-cairoPlay text-center mb-8">
+          <h2 className="text-3xl  font-bold font-cairoPlay text-center mb-8">
             Shop By Category
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-4">
@@ -227,7 +237,7 @@ const ShoppingHome = () => {
                 key={categoryItem.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
               >
-                <CardContent className="flex bg-slate-200 flex-col items-center justify-center p-6">
+                <CardContent className="flex bg-slate-20 flex-col items-center justify-center p-6">
                   <img
                     src={categoryItem.image}
                     alt={`${categoryItem.label} icon`}
@@ -268,7 +278,7 @@ const ShoppingHome = () => {
           }}
         />
       </motion.div> */}
-      <section className="py-12 bg-gray-100">
+      <section className="py-12 bg-gray-10 bg-gradient-to-t from-[#F3F6D5] via-[#DAF8E3] to-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center font-cairoPlay mb-8">
             Shop By Brand
@@ -294,7 +304,22 @@ const ShoppingHome = () => {
           </div>
         </div>
       </section>
-      <section className="py-12 bg-purple-40">
+      <section className="py-10 hidden xs:block sm:hidden md:hidden lg:hidden">
+      <Slider {...settings}>
+        {images.map((imgPath, index) => (
+          <div key={index} className="flex justify-center">
+            <img
+              src={imgPath}
+              alt={`Slide ${index + 1}`}
+              className="w-full h-fit object-fit px-12"
+            />
+          </div>
+        ))}
+      </Slider>
+      <HeroParallax className=" bg-[#E3F7DE]"  products={products}/>
+    </section>
+
+      <section className="py-12 bg-purple-40 ">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Feature Products
