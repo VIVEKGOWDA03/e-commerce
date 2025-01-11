@@ -108,7 +108,7 @@ const UserCartItemsContent = ({ cartItem }) => {
             <span className="sr-only">Increase</span>
           </button>
         </div>
-        <div className="">
+        <div className="pt-1">
           <p className="text-[14px] font-semibold text-black font-roboto">
             Delivery in <span className="text-green-400">7 days </span>
           </p>

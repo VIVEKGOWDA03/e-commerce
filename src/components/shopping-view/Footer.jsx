@@ -103,7 +103,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#" className="hover:text-yellow-400">
-                  Souled Army
+                  
                 </a>
               </li>
             </ul>

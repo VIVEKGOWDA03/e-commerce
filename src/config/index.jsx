@@ -3,6 +3,7 @@ import {
   CassetteTapeIcon,
   HomeIcon,
   LayoutDashboard,
+  LogOut,
   Menu,
   PackageSearch,
   SearchCheckIcon,
@@ -369,10 +370,10 @@ export const buttonsData = [
     navigateTo: "/shop/account",
   },
   {
-    text: "Account",
-    icon: <MdCategory className="w-4 h-4" />,
+    text: "logout",
+    icon: <LogOut className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
-    navigateTo: "/shop/account",
+    navigateTo: "/auth/login",
   },
 ];
 
@@ -448,14 +449,22 @@ export const brandWithImages = [
   },
 ];
 
+// export const images = [
+//   "/assets/items/men.jpg",
+//   "/assets/items/kids.webp",
+//   // "/assets/items/ex03.webp",
+//   "/assets/items/c01.jpg",
+//   "/assets/items/c02.webp",
+//   "/assets/items/c03.webp",
+//   "/assets/items/c04.webp",
+// ];
 export const images = [
-  "/assets/items/men.jpg",
-  "/assets/items/kids.webp",
-  // "/assets/items/ex03.webp",
-  "/assets/items/c01.jpg",
-  "/assets/items/c02.webp",
-  "/assets/items/c03.webp",
-  "/assets/items/c04.webp",
+  "/assets/brand/puma.jpg",
+  "/assets/brand/nike.jpg",
+  "/assets/brand/puma.jpg",
+  "/assets/brand/nike.jpg",
+  "/assets/brand/puma.jpg",
+  "/assets/brand/nike.jpg",
 ];
 
 export const settings = {
@@ -484,7 +493,7 @@ export const products = [
     thumbnail: "/assets/items/c04.webp",
     link: "/shop/listing",
   },
- 
+
   {
     title: "Product 4",
     thumbnail: "/assets/items/c02.webp",
@@ -521,6 +530,11 @@ export const products = [
   {
     title: "Product 9",
     thumbnail: "/assets/items/c01.jpg",
+    link: "/shop/listing",
+  },
+  {
+    title: "Product 4",
+    thumbnail: "/assets/items/c02.webp",
     link: "/shop/listing",
   },
   // Add more products...

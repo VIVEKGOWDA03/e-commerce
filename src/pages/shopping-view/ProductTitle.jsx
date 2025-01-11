@@ -34,7 +34,7 @@ const ShoppingProductTitle = ({
       : 2;
   return (
     <StyledWrapper>
-      <Card className="w-full bg-[#27272a   max-w-xs mx-auto">
+      <Card className="w-full bg-[#27272a min-h-[fit]  max-w-xs mx-auto">
         <div
           onClick={() => {
             handleGetProductDetails(product?._id);
@@ -43,7 +43,7 @@ const ShoppingProductTitle = ({
         >
           <div className="relative">
             <img
-              className="w-full h-[250px] xs:w-[180px]  xs:h-[200px] xs:object-scaledown object-fill rounded-t-lg"
+              className="w-full h-[250px] xs:w-[180px]  xs:h-[200px] xs:object-fill object-fill "
               src={product.image}
               alt={product.title || "Product Image"}
               loading="lazy"
@@ -54,17 +54,29 @@ const ShoppingProductTitle = ({
                 Out of stock
               </Badge>
             )}
-
-            {product?.totalStock > 0 && product?.totalStock < 10 && (
+            {product?.salePrice > 0 &&
+              calculateDiscountPercentage(product?.price, product?.salePrice) >
+                0 && (
+                <span className="text-[12px] font-roboto box-border justify-center px-1 bg-black w-fit max-w-[75%]  bottom-0 left-0 absolute flex items-center font-bold text-white">
+                  -
+                  {calculateDiscountPercentage(
+                    product?.price,
+                    product?.salePrice
+                  )}
+                  %{/* <p className="inline-block ml-1">OFF!</p> */}
+                </span>
+              )}
+            {/* {product?.totalStock > 0 && product?.totalStock < 10 && (
               <Badge className="text-white absolute top-1 left-2 bg-yellow-500 hover:bg-yellow-500">
                 Only {product?.totalStock} items left
               </Badge>
-            )}
+            )} */}
 
-            <span className="w-fit bg-slate-300 rounded-full p-0.5 px-1 font-roboto flex justify-center items-center gap-1 absolute text-[12px] font-bold bottom-2 left-3.5">
+            {/* <span className="w-fit bg-slate-300 rounded-full p-0.5 px-1 font-roboto flex justify-center items-center gap-1 absolute text-[12px] font-bold bottom-2 left-3.5">
               {averageReview.toFixed(1)}{" "}
               <Star className="border-none w-3 h-3 fill-green-700" />
-            </span>
+            </span> */}
+
             {/* {product?.salePrice > 0 && (
               <Badge className="absolute text-white top-16 left-2 bg-green-600 hover:bg-green-600">
                 Sale
@@ -78,13 +90,32 @@ const ShoppingProductTitle = ({
               {brandOptionsMap[product?.brand]}
             </h2>
             <div className="flex flex-col w-full gap-[2px]  justify-betwee items-cente mb-">
-              <span className=" text-[gray] text-xs font-[700] text-muted-foreground">
-                {product?.title}
+              <span className="text-[gray] text-xs font-[700] text-muted-foreground">
+                {product?.title?.length > 5
+                  ? `${product.title.slice(0, 25)}...`
+                  : product?.title}
               </span>
-              <span className=" w-fit  text-white bg-gradient-to-r from-yellow-400 to-yellow-600 py-0.5 px-1 rounded-full text-[8px] font-[700] shadow-lg text-center">
-                {/* {categoryOptionsMap[product?.category]} */}
-                Deal of the day
-              </span>
+
+              <p className="flex gap-1 items-center">
+                {/* <span className=" w-fit  text-white bg-gradient-to-r from-yellow-400 to-yellow-600 py-0.5 px-1 rounded-full text-[8px] font-[700] shadow-lg text-center">
+                  {categoryOptionsMap[product?.category]}
+                  Deal of the day
+                </span> */}
+                {/* Discount Percentage */}
+                {/* {product?.salePrice > 0 &&
+                  calculateDiscountPercentage(
+                    product?.price,
+                    product?.salePrice
+                  ) > 0 && (
+                    <span className="text-[13px] flex items-center font-bold text-red-500">
+                      {calculateDiscountPercentage(
+                        product?.price,
+                        product?.salePrice
+                      )}
+                      %<p className="inline-block ml-1">OFF!</p>
+                    </span>
+                  )} */}
+              </p>
             </div>
 
             <div className="flex w-full gap-2 items-center mb-2">
@@ -127,21 +158,6 @@ const ShoppingProductTitle = ({
                     )}
                   </>
                 )}
-
-                {/* Discount Percentage */}
-                {product?.salePrice > 0 &&
-                  calculateDiscountPercentage(
-                    product?.price,
-                    product?.salePrice
-                  ) > 0 && (
-                    <span className="text-[13px] flex items-center font-bold text-red-500">
-                      {calculateDiscountPercentage(
-                        product?.price,
-                        product?.salePrice
-                      )}
-                      %<p className="inline-block ml-1">OFF!</p>
-                    </span>
-                  )}
               </div>
             </div>
           </CardContent>

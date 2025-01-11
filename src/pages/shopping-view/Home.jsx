@@ -43,7 +43,13 @@ import CustomToast from "@/components/ui/CustomToast";
 import { getFeatureImages } from "@/store/common-slice";
 import CustomCard from "@/components/common/CustomCard";
 import Footer from "@/components/shopping-view/Footer";
-import { brandWithImages, categoryWithImages, images, products, settings } from "@/config";
+import {
+  brandWithImages,
+  categoryWithImages,
+  images,
+  products,
+  settings,
+} from "@/config";
 import Loading from "@/components/common/Loading";
 import Slider from "react-slick";
 import { HeroParallax } from "@/components/ui/hero-parallax";
@@ -304,26 +310,27 @@ const ShoppingHome = () => {
           </div>
         </div>
       </section>
-      <section className="py-10 hidden xs:block sm:hidden md:hidden lg:hidden">
-      <Slider {...settings}>
-        {images.map((imgPath, index) => (
-          <div key={index} className="flex justify-center">
-            <img
-              src={imgPath}
-              alt={`Slide ${index + 1}`}
-              className="w-full h-fit object-fit px-12"
-            />
-          </div>
-        ))}
-      </Slider>
-    </section>
-    <HeroParallax className=" bg-[#E3F7DE]"  products={products}/>
+      <section className="py-10   xs:bloc hidden ">
+        <p className="text-black mb-5 font-roboto w-full flex justify-center text-4xl ">
+          Shop for men gear{" "}
+        </p>
+        <Slider {...settings}>
+          {images.map((imgPath, index) => (
+            <div key={index} className="flex justify-center">
+              <img
+                src={imgPath}
+                alt={`Slide ${index + 1}`}
+                className="w-full xs:h-[220px] h-[480px] object-fit px-"
+              />
+            </div>
+          ))}
+        </Slider>
+      </section>
+      <HeroParallax className=" bg-[#E3F7DE]" products={products} />
 
       <section className="py-12 bg-purple-40 ">
         <div className="containe mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Feature Products
-          </h2>
+          <h2 className="text-3xl font-bold text-center mb-8">New & Featured</h2>
           <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xs:gap-2 gap-6">
             {displayProducts && displayProducts.length > 0
               ? displayProducts.map((productItem) => (
