@@ -29,10 +29,6 @@ const Login = () => {
       // console.log(data, "formData");
 
       if (data?.payload?.success) {
-        toast({
-          title: data?.payload?.message,
-        });
-
         // Redirect based on user role
         const role = data.payload.user?.role;
         if (role === "user") {

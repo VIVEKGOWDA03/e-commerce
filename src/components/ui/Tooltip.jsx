@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Tooltip = ({ text, Price }) => {
   return (
     <StyledWrapper>
-      <div className="button" data-tooltip={`₹${Price}`}>
+      <div className="button xs:text-[13px]" data-tooltip={`₹${Price}`}>
         <div className="button-wrapper w-full">
           <div className="text">{text}</div>
           <span className="icon">

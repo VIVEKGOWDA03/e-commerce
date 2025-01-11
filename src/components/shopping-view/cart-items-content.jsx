@@ -84,7 +84,7 @@ const UserCartItemsContent = ({ cartItem }) => {
       />
       <div className="flex-1">
         <h3 className="font-extrabold font-roboto"> {cartItem?.title}</h3>
-        <div className="flex items-center mt-1 gap-2">
+        <div className="flex w-fit h-[25px]  rounded-md border-red-40 border-purple-500 border-opacity-30 border-[2px] items-center mt-1 gap-2">
           <button
             onClick={() => handleUpdateQuantity(cartItem, "minus")}
             variant="outline"

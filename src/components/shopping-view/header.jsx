@@ -98,7 +98,7 @@ const ShoppingHeader = () => {
         {shoppingViewHeaderMenuItems.map((menuItem) => (
           <Label
             onClick={() => handleNavigate(menuItem)}
-            className="text-sm font-medium cursor-pointer"
+            className="text-sm font-medium font-roboto cursor-pointer"
             key={menuItem.id}
           >
             {menuItem.label}
@@ -110,7 +110,7 @@ const ShoppingHeader = () => {
 
   function HeaderRightContent({className}) {
     return (
-      <div className={`flex ${className} lg:block lg:items-center lg:flex-row gap-2`}>
+      <div className={`flex ${className}  lg:block lg:items-center lg:flex-row gap-2`}>
         <DropdownMenu className="">
           <DropdownMenuTrigger asChild>
             <Avatar className="bg-black">
@@ -191,7 +191,7 @@ const ShoppingHeader = () => {
               </Button>
             </Sheet>
 
-            <Sheet
+            <Sheet className="bg-custom-gradient"
               open={openMenuSheet}
               onOpenChange={(open) => setOpenMenuSheet(open)}
             >
@@ -208,7 +208,7 @@ const ShoppingHeader = () => {
                   <span className="sr-only">Toggle header menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-full max-w-xs bg-white">
+              <SheetContent side="left" className="w-full max-w-xs  bg-custom-gradient-2">
                 <HeaderRightContent />
                 <div className="flex  w-full flex-col justify-center items-center mt-3">
                   {buttonsData.map((button, index) => (

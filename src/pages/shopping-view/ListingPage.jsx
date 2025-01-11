@@ -192,7 +192,7 @@ const ShoppingListingPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-col-3 lg:grid-cols-4 p-4">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-col-3 lg:grid-cols-4 p-4">
           {productList && productList.length > 0
             ? productList.map((productItem) => {
                 // console.log(productItem._id, "productItem in map");
@@ -202,6 +202,8 @@ const ShoppingListingPage = () => {
                     product={productItem}
                     handleGetProductDetails={handleGetProductDetails}
                     handleAddtoCart={handleAddtoCart}
+                    classNameFooter={"xs:"}
+
                   />
                 );
               })

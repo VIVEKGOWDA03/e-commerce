@@ -23,7 +23,7 @@ const UserCartWrapper = ({ cartItems, setOpenCartSheet }) => {
 
   return (
     <div>
-      <SheetContent className="px-4 sm:max-w-md w-full bg-white p-6 rounded-lg shadow-md">
+      <SheetContent className="px-4 overflow-auto sm:max-w-md w-full bg-gradient-to-r from-[#F3F6D5] via-[#c5e8ce] to-[#FFFFFF] p-6 rounded-lg shadow-md">
         <SheetHeader>
           <SheetTitle className="text-xl font-semibold text-gray-800">
             {/* Your Cart */}
@@ -76,7 +76,7 @@ const UserCartWrapper = ({ cartItems, setOpenCartSheet }) => {
         >
           PLACE ORDER
         </Button>
-        <section className="py-4 mt-4 bg-gray-100">
+        <section className="py-4 mt-4 bg-gray-10">
           <div className="container mx-auto px-2">
             <h2 className="text-xl font-bold text-center font-cairoPlay mb-8">
               Shop Your Favorite Brands

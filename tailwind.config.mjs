@@ -9,7 +9,7 @@ export default {
         "custom-gradient-2": "linear-gradient(to right, #E2E8F0, #A683C9)",
       },
       screens: {
-        xs: "325px",
+        xs: { min: "325px", max: "639px" },
       },
       fontFamily: {
         roboto: ['"Roboto"', "sans-serif"],

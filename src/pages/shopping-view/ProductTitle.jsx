@@ -11,6 +11,7 @@ const ShoppingProductTitle = ({
   product,
   handleGetProductDetails,
   handleAddtoCart,
+  classNameFooter,
 }) => {
   const { reviews, isloading } = useSelector((state) => state.shopReview);
 
@@ -33,7 +34,7 @@ const ShoppingProductTitle = ({
       : 2;
   return (
     <StyledWrapper>
-      <Card className="w-full bg-[#27272a   max-w-sm mx-auto">
+      <Card className="w-full bg-[#27272a   max-w-xs mx-auto">
         <div
           onClick={() => {
             handleGetProductDetails(product?._id);
@@ -42,7 +43,7 @@ const ShoppingProductTitle = ({
         >
           <div className="relative">
             <img
-              className="w-full h-[250px] object-scaledown rounded-t-lg"
+              className="w-full h-[250px] xs:w-[180px]  xs:h-[200px] xs:object-scaledown object-fill rounded-t-lg"
               src={product.image}
               alt={product.title || "Product Image"}
               loading="lazy"
@@ -72,15 +73,15 @@ const ShoppingProductTitle = ({
           </div>
 
           <CardContent className=" bg-white font-roboto">
-            <h2 className="text-xl pt-0.5 font-bold mb">
+            <h2 className="text-xs pt-0.5 text-[10px  font-bold mb">
               {" "}
               {brandOptionsMap[product?.brand]}
             </h2>
             <div className="flex flex-col w-full gap-[2px]  justify-betwee items-cente mb-">
-              <span className=" text-[gray] font-[700] text-muted-foreground">
+              <span className=" text-[gray] text-xs font-[700] text-muted-foreground">
                 {product?.title}
               </span>
-              <span className=" w-fit text-white bg-gradient-to-r from-yellow-400 to-yellow-600 py-0.5 px-1 rounded-full text-[10px] font-[700] shadow-lg text-center">
+              <span className=" w-fit  text-white bg-gradient-to-r from-yellow-400 to-yellow-600 py-0.5 px-1 rounded-full text-[8px] font-[700] shadow-lg text-center">
                 {/* {categoryOptionsMap[product?.category]} */}
                 Deal of the day
               </span>
@@ -91,7 +92,7 @@ const ShoppingProductTitle = ({
                 {/* Price and Sale Price Logic */}
                 {product?.price === product?.salePrice ? (
                   // Show only salePrice when both are equal
-                  <span className="text-lg font-semibold text-black flex items-center">
+                  <span className="text-[13px] font-semibold text-black flex items-center">
                     <p className="inline-block mr-1">₹</p>
                     {product?.salePrice?.toLocaleString("en-US", {
                       maximumFractionDigits: 0,
@@ -107,7 +108,7 @@ const ShoppingProductTitle = ({
                     >
                       {product?.price > 0 && (
                         <span className="flex font-semibold items-center  text-[gray]">
-                          <p className="inline-block mr-1">₹</p>
+                          <p className="inline-block text-[13px] mr-1">₹</p>
                           {product?.price?.toLocaleString("en-US", {
                             maximumFractionDigits: 0,
                           })}
@@ -117,7 +118,7 @@ const ShoppingProductTitle = ({
 
                     {/* Sale Price */}
                     {product?.salePrice > 0 && (
-                      <span className="text-lg font-bold text-black flex items-center">
+                      <span className="text-[14px] font-bold text-black flex items-center">
                         <p className="inline-block  mr-1">₹</p>
                         {product?.salePrice?.toLocaleString("en-US", {
                           maximumFractionDigits: 0,
@@ -133,7 +134,7 @@ const ShoppingProductTitle = ({
                     product?.price,
                     product?.salePrice
                   ) > 0 && (
-                    <span className="text-sm flex items-center font-bold text-red-500">
+                    <span className="text-[13px] flex items-center font-bold text-red-500">
                       {calculateDiscountPercentage(
                         product?.price,
                         product?.salePrice
@@ -145,14 +146,16 @@ const ShoppingProductTitle = ({
             </div>
           </CardContent>
         </div>
-        <CardFooter className="items-center p-2 w-full flex justify-center">
+        <CardFooter
+          className={`items-center xs:h-[25px p-2 w-full flex justify-center ${classNameFooter}`}
+        >
           {product?.totalStock > 0 ? (
             <button
               onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
-              className="w-full font-roboto bg-black py-2 flex bg-blue-60 justify-center text-white rounded-lg"
+              className="w-full font-roboto bg-black xs:py-0 py-2 flex bg-blue-60 justify-center text-white rounded-lg"
             >
               <Tooltip
-                className="w-full font-roboto"
+                className="w-full text-[13px] font-roboto"
                 text="Add To Cart"
                 Price={product?.salePrice || product?.price}
               />

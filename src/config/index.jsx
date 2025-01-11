@@ -170,7 +170,7 @@ export const addProductFormElements = [
 ];
 
 import { Home, User, Users, Baby, ShoppingBag, Gem } from "lucide-react"; // Use valid icons
-import { MdCategory } from "react-icons/md";
+import { MdCategory, MdProductionQuantityLimits } from "react-icons/md";
 
 export const shoppingViewHeaderMenuItems = [
   {
@@ -216,12 +216,12 @@ export const shoppingViewHeaderMenuItems = [
     icon: <Gem className="w-6 h-6" />, // Replaced with 'Gem'
     path: "/shop/listing",
   },
-  {
-    id: "search",
-    label: "Search",
-    icon: <SearchCheckIcon className="w-6 h-6" />,
-    path: "/shop/search",
-  },
+  // {
+  //   id: "search",
+  //   label: "Search",
+  //   icon: <SearchCheckIcon className="w-6 h-6" />,
+  //   path: "/shop/search",
+  // },
 ];
 
 export const FilterOptions = {
@@ -352,7 +352,13 @@ export const buttonsData = [
   },
   {
     text: "Shop",
-    icon: <ShoppingCartIcon className="w-4 h-4" />,
+    icon: <MdProductionQuantityLimits className="w-4 h-4" />,
+    endIcon: <ArrowRight className="w-4 h-4" />,
+    navigateTo: "/shop/listing",
+  },
+  {
+    text: "Orders",
+    icon: <PackageSearch className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/account",
   },
