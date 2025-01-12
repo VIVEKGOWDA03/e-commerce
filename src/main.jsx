@@ -42,9 +42,11 @@ const RoutesWithAuth = () => {
 
     if (
       token &&
-      location.pathname !== "/login" &&
-      location.pathname !== "/register"
+      location.pathname !== "auth/login" &&
+      location.pathname !== "auth/register"
     ) {
+      console.log("heelo");
+      
       dispatch(checkAuth(token));
     }
   }, [dispatch, location]);

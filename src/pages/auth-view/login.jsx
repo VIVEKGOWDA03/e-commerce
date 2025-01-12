@@ -26,25 +26,32 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(formData)).then((data) => {
-      // console.log(data, "formData");
+      // console.log("Login Response:", data);
+      // console.log("Toast data:", data?.payload?.message);
+      setToast({
+        isVisible: true,
+        message: message,
+        type: success,
+      });
+      const message = data?.payload?.message;
+      const success = data?.payload?.success;
+      const role = data.payload?.user?.role;
 
-      if (data?.payload?.success) {
-        // Redirect based on user role
-        const role = data.payload.user?.role;
+      // Set the toast based on the success/failure and role
+      if (success) {
         if (role === "user") {
           navigate("/shop/home");
         } else if (role === "admin") {
           navigate("/admin/dashboard");
         }
       } else {
-        setToast({
-          isVisible: true,
-          message: data?.payload?.message,
-          type: "success",
-        });
+        console.log("Toast data (failure):", message); // Logging in failure case
       }
+
+      // Set the toast once after handling the logic
     });
   };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -74,7 +81,7 @@ const Login = () => {
         onSubmit={onSubmit}
       />
       <CustomToast
-        className="z-10"
+        className="z-50"
         message={toast.message}
         type={toast.type}
         isVisible={toast.isVisible}

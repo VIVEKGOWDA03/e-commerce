@@ -34,7 +34,7 @@ const ShoppingProductTitle = ({
       : 2;
   return (
     <StyledWrapper>
-      <Card className="w-full bg-[#27272a min-h-[fit]  max-w-xs mx-auto">
+      <Card className="w-full bg-[#27272a min-h-[291px]  max-w-xs mx-auto">
         <div
           onClick={() => {
             handleGetProductDetails(product?._id);
