@@ -12,26 +12,26 @@ const Authlayout = () => {
     "shopify",
     "woocommerce",
     "magento",
-    "bigcommerce", // E-commerce platforms
+    "bigcommerce",
     "paypal",
     "stripe",
     "klarna",
-    "afterpay", // Payment services
+    "afterpay",
     "fedex",
     "ups",
-    "dhl", // Shipping services
+    "dhl",
     "facebook",
     "instagram",
     "pinterest",
-    "tiktok", // Social media for marketing
+    "tiktok",
     "gucci",
     "prada",
     "zara",
-    "hm", // Fashion brands
+    "hm",
     "shoes",
     "bags",
     "jewelry",
-    "clothing", // Fashion categories
+    "clothing",
     "sustainable",
     "luxury",
     "fastfashion",
@@ -48,10 +48,19 @@ const Authlayout = () => {
     },
   ];
 
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const images = ["/assets/logos/trolley.png", "/assets/logos/bucket.png"];
   const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    // Show splash only if it's the user's first visit
+    const hasVisited = localStorage.getItem("hasVisited");
+    if (!hasVisited) {
+      setShowSplash(true);
+      localStorage.setItem("hasVisited", "true");
+    }
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,7 +69,7 @@ const Authlayout = () => {
 
     return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, [images.length]);
-  // Check for small screen width
+
   useEffect(() => {
     if (window.innerWidth < 1024) {
       setIsSmallScreen(true); // Set to true for small screens
@@ -68,17 +77,17 @@ const Authlayout = () => {
   }, []);
 
   useEffect(() => {
-    if (isSmallScreen) {
+    if (showSplash && isSmallScreen) {
       const timer = setTimeout(() => {
-        setShowSplash(false); // Hide Section 1 after 2 seconds on small screens
+        setShowSplash(false); // Hide splash after 5 seconds
       }, 5000);
       return () => clearTimeout(timer); // Clean up the timer
     }
-  }, [isSmallScreen]);
+  }, [showSplash, isSmallScreen]);
 
   return (
     <div className="w-full min-h-screen flex bg-black">
-      {/* section-1 */}
+      {/* Splash Screen Section */}
       <div
         className={`${
           showSplash && isSmallScreen ? "flex w-full px-0" : "hidden"
@@ -96,23 +105,14 @@ const Authlayout = () => {
             currentImage={currentImage}
             className=""
           />
-          {/* <p className="top-[20%] left-[10% w-fit h-[120px] absolute font-cairoPlay text-xl text-white">
-            Urban Store is an online fashion hub offering trendy products with a
-            seamless shopping experience.
-          </p> */}
         </div>
-        {/* <IconCloud iconSlugs={iconSlugs} /> */}
-
-        {/* <div className="w-ful absolute h-[100px bottom-0 ">
-          <WorldMap dots={dots} />
-        </div> */}
       </div>
 
-      {/* section-2 */}
+      {/* Main Content Section */}
       <div
         className={`${
           !showSplash || !isSmallScreen ? "flex" : "hidden"
-        } flex bg-red-20 bg-blac relative flex-1 items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8`}
+        } flex bg-red-20 bg-black relative flex-1 items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8`}
       >
         <div className="absolute bg-purple-300 inset-0 z-1">
           <RetroGrid />
