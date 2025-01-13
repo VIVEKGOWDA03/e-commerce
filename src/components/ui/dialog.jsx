@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
-import { IoCloseSharp } from "react-icons/io5";
+import { IoClose, IoCloseSharp } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 
 const Dialog = DialogPrimitive.Root;
@@ -37,8 +37,9 @@ const DialogContent = React.forwardRef(
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-          <X className="h-5 w-5 font-bold font-rubikVinyl" />
+        <DialogPrimitive.Close className="absolute right-4 top-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+          {/* <X className="h-5 w-5 font-bold font-rubikVinyl" /> */}
+          <IoClose className="h-6 w-6 font-extrabold bg-slate-300 rounded-sm font-rubikVinyl" />
           {/* <IoCloseSharp className="h-4 w-4 " /> */}
           {/* <img className="w-[50px]" src="/assets/icons/close.gif"/> */}
           <span className="sr-only">Close</span>

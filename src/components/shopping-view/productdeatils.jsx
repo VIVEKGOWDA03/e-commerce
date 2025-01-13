@@ -135,11 +135,11 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   return (
     <div className="w-full h-auto font-roboto  ">
       <Dialog
-        className="bg-whit w-full overflow-auto py-10  "
+        className="bg-whit w-full overflow-auto   "
         open={open}
         onOpenChange={handleDialogClose}
       >
-        <DialogContent className=" bg-whit !bg-blac bg-slate-200 pb-[10%] overflow-auto sm:flex sm:w-full sm:h-fit gap-5 sm:p-12 h-[100vh] max-w-[fit] sm:max-w-[fit] lg:max-w-[fit]">
+        <DialogContent className=" bg-whit !bg-blac p-10 bg-slate-200 pb-[10%] overflow-auto sm:flex sm:w-full sm:h-fit gap-5 sm:p-12 h-[100vh] max-w-[fit] sm:max-w-[80vw] lg:max-w-[80vw]">
           <div className="relative w-fit h-auto overflow-auto rounded-l">
             <img
               src={productDetails?.image}
