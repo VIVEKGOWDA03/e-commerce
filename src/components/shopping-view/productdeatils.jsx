@@ -17,7 +17,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
   const dispatch = useDispatch();
   const [reviewMsg, setreviewMsg] = useState("");
   const [rating, setRating] = useState(0);
-  // console.log(productDetails?._id, "hdhdhdh");
+  console.log(productDetails, "hdhdhdh");
 
   const { reviews, isloading } = useSelector((state) => state.shopReview);
   // console.log(reviews, "log");
@@ -74,12 +74,12 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchCartItems({ userId: user?.id }));
-        setOpen(false);
         setToast({
           isVisible: true,
           message: "Product added to cart",
           type: "success",
         });
+        // setOpen(false);
       }
     });
   }
@@ -98,7 +98,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
       reviewValue: rating,
     };
 
-    console.log("Form Data:", formData); // Log the formData for debugging
+    // console.log("Form Data:", formData); // Log the formData for debugging
 
     dispatch(addReview({ formData })).then((data) => {
       if (data.payload.success) {
@@ -133,13 +133,13 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
         reviews.length
       : 2;
   return (
-    <div className="w-full h-auto font-roboto">
+    <div className="w-full h-auto font-roboto  ">
       <Dialog
-        className="bg-white w-full overflow-auto"
+        className="bg-whit w-full overflow-auto py-10  "
         open={open}
         onOpenChange={handleDialogClose}
       >
-        <DialogContent className=" bg-white pb-[10%] overflow-auto sm:flex sm:w-full sm:h-fit gap-5 sm:p-12 h-[100vh] max-w-[fit] sm:max-w-[fit] lg:max-w-[fit]">
+        <DialogContent className=" bg-whit !bg-blac bg-slate-200 pb-[10%] overflow-auto sm:flex sm:w-full sm:h-fit gap-5 sm:p-12 h-[100vh] max-w-[fit] sm:max-w-[fit] lg:max-w-[fit]">
           <div className="relative w-fit h-auto overflow-auto rounded-l">
             <img
               src={productDetails?.image}
@@ -151,7 +151,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
           </div>
           <div className=" flex flex-col min-h-[10px] ">
             <h1 className="text-3xl  font-extrabold">
-              {productDetails?.title}
+              {productDetails?.brand}
             </h1>
             <p className="text-foreground text-2xl mb-5 mt-4">
               {productDetails?.description}
@@ -215,7 +215,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
             </div>
             <div className="mt-5 w-full mb-5">
               {productDetails?.totalStock === 0 ? (
-                <button className="w-full !bg-black opacity-60 cursor-not-allowed rounded-[10px] btn-danger">
+                <button className="w-full  opacity-60 cursor-not-allowed rounded-[10px] btn-danger">
                   Out of stock
                 </button>
               ) : (
@@ -226,14 +226,14 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
                       productDetails?.totalStock
                     )
                   }
-                  className="w-full font-roboto  !bg-black rounded-[10px] btn-danger"
+                  className="w-full font-roboto   rounded-[10px] btn-danger"
                 >
                   Add to cart
                 </button>
               )}
             </div>
             <Separator />
-            <div className={` max-h-[300px] overflow-auto font-roboto }`}>
+            <div className={` max-h-[fit] pb-6 overflow-aut font-roboto }`}>
               {reviews && reviews.length > 0 ? (
                 <h2 className={` text-xl font-bold mb-4  `}>Reviews</h2>
               ) : null}
@@ -264,7 +264,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
                 )}
               </div>
 
-              <div className=" mt-10 font-roboto flex-col min-h-fit overflow-hidden w-full relative flex gap-2">
+              <div className=" mt-10 border-black border-[1px] p-1 border-opacity-5 font-roboto flex-col min-h-fit overflow-hidden w-full relative flex gap-2">
                 <Label>Write a review</Label>
                 <div className="flex gap-2 ">
                   <StarRating

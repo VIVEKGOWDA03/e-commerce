@@ -46,7 +46,7 @@ const RoutesWithAuth = () => {
       location.pathname !== "auth/register"
     ) {
       console.log("heelo");
-      
+
       dispatch(checkAuth(token));
     }
   }, [dispatch, location]);
