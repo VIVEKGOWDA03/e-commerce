@@ -28,14 +28,14 @@ const Login = () => {
     dispatch(loginUser(formData)).then((data) => {
       // console.log("Login Response:", data);
       // console.log("Toast data:", data?.payload?.message);
-      setToast({
-        isVisible: true,
-        message: message,
-        type: success,
-      });
       const message = data?.payload?.message;
       const success = data?.payload?.success;
       const role = data.payload?.user?.role;
+      // setToast({
+      //   isVisible: true,
+      //   message: message,
+      //   type: success,
+      // });
 
       // Set the toast based on the success/failure and role
       if (success) {

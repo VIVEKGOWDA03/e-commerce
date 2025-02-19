@@ -28,6 +28,7 @@ import PaypalReturnPage from "./components/shopping-view/paypal-return";
 import PaymentSuccess from "./components/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/SearchProducts";
 import AdminFeatures from "./pages/admin-view/Features";
+import { Loader } from "lucide-react";
 
 // This is a functional component that retrieves the authentication state from the store
 const RoutesWithAuth = () => {
@@ -52,9 +53,9 @@ const RoutesWithAuth = () => {
   }, [dispatch, location]);
   if (isLoading)
     return (
-      <div>
-        <Skeleton className="w-full  h-full " />
-      </div>
+      <div className="flex items-center justify-center h-screen">
+      <Loader className="size-10 animate-spin"></Loader>
+    </div>
     );
   // console.log("isAuthenticated:", isAuthenticated, "user:", user);
 
