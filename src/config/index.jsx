@@ -350,30 +350,39 @@ export const buttonsData = [
     icon: <HomeIcon className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/home",
+    className:"hover:bg-green-400 "
   },
   {
     text: "Shop",
     icon: <MdProductionQuantityLimits className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/listing",
+    className:""
+
   },
   {
     text: "Orders",
     icon: <PackageSearch className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/account",
+    className:"hover:bg-yellow-400"
+
   },
   {
     text: "Account",
     icon: <User className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/account",
+    className:"hover:bg-green-400"
+
   },
   {
     text: "logout",
     icon: <LogOut className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/auth/login",
+    className:"hover:bg-red-400"
+
   },
 ];
 

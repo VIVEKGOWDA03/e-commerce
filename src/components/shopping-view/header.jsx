@@ -45,6 +45,7 @@ import Tooltip from "../ui/Tooltip";
 import { Dock, DockIcon } from "../ui/dock";
 import { Button } from "../ui/button";
 import CustomButton from "../common/CustomButton";
+// import Sidebar from "../ui/SideBar";
 
 const ShoppingHeader = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -55,6 +56,7 @@ const ShoppingHeader = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [open, setOpen] = useState(false);
 
   function handleLogout() {
     // dispatch(logoutUser());
@@ -98,7 +100,7 @@ const ShoppingHeader = () => {
         {shoppingViewHeaderMenuItems.map((menuItem) => (
           <Label
             onClick={() => handleNavigate(menuItem)}
-            className="text-sm font-medium font-roboto cursor-pointer"
+            className="text-[18px] font-bold font-mono cursor-pointer"
             key={menuItem.id}
           >
             {menuItem.label}
@@ -108,9 +110,11 @@ const ShoppingHeader = () => {
     );
   }
 
-  function HeaderRightContent({className}) {
+  function HeaderRightContent({ className }) {
     return (
-      <div className={`flex ${className}  lg:block lg:items-center lg:flex-row gap-2`}>
+      <div
+        className={`flex ${className}  lg:block lg:items-center lg:flex-row gap-2`}
+      >
         <DropdownMenu className="">
           <DropdownMenuTrigger asChild>
             <Avatar className="bg-black">
@@ -144,7 +148,7 @@ const ShoppingHeader = () => {
   }
 
   return (
-    <header className="fixed top-0 z-40 w-full border-b bg-white bg-cu ">
+    <header className=" z-40 w-full max-w-[1140px] border-b bg-whit bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-2xl ">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
         <Link
           to="/shop/home"
@@ -167,7 +171,10 @@ const ShoppingHeader = () => {
           <MenuItems />
         </div>
         <div className="flex gap-1 items-center">
-        <Search onClick={()=>navigate('/shop/search')} className="fill-white font-bold text-black " />
+          <Search
+            onClick={() => navigate("/shop/search")}
+            className="fill-white font-bold text-black "
+          />
           <div className="flex  gap-1 justify-center items-center lg:block">
             <Sheet
               open={openCartSheet}
@@ -191,7 +198,8 @@ const ShoppingHeader = () => {
               </Button>
             </Sheet>
 
-            <Sheet className="bg-custom-gradient"
+            <Sheet
+              className="bg-custom-gradient"
               open={openMenuSheet}
               onOpenChange={(open) => setOpenMenuSheet(open)}
             >
@@ -208,18 +216,21 @@ const ShoppingHeader = () => {
                   <span className="sr-only">Toggle header menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-full max-w-xs  bg-custom-gradient-2">
+              <SheetContent
+                side="left"
+                className="w-full max-w-xs  bg-[#2E3B4E] border-[#2E3B4E]"
+              >
                 <HeaderRightContent />
                 <div className="flex  w-full flex-col justify-center items-center mt-3">
                   {buttonsData.map((button, index) => (
                     <CustomButton
-                      className="w-full"
                       onClick={() => setOpenMenuSheet(false)}
                       key={index}
                       text={button.text}
                       icon={button.icon}
                       endIcon={button.endIcon}
                       navigateTo={button.navigateTo}
+                      className={button.className}
                     />
                   ))}
                 </div>

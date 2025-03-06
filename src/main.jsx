@@ -54,8 +54,8 @@ const RoutesWithAuth = () => {
   if (isLoading)
     return (
       <div className="flex items-center justify-center h-screen">
-      <Loader className="size-10 animate-spin"></Loader>
-    </div>
+        <Loader className="size-10 animate-spin"></Loader>
+      </div>
     );
   // console.log("isAuthenticated:", isAuthenticated, "user:", user);
 

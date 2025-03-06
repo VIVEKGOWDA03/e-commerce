@@ -19,7 +19,7 @@ const ShoppingAccountPage = () => {
       <div className="containe mx-auto grid grid-cols gap-8 py-8 ">
         <div className="flex w-full  flex-col rounded-lg border bg-background p-6 shadow-sm">
           <Tabs defaultValue="orders">
-            <TabsList className="font-cairoPlay text-2xl bg-purple-400">
+            <TabsList className="font-cairoPlay text-3xl bg-purple-200">
               <TabsTrigger className="text-2xl" value="orders">Orders</TabsTrigger>
               <TabsTrigger value="address">Address</TabsTrigger>
             </TabsList>

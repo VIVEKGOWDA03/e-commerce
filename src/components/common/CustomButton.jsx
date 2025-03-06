@@ -4,7 +4,14 @@ import { ArrowRight } from "lucide-react"; // Example end icon, you can replace 
 import { resetTokenAndCredentials } from "@/store/auth-slice";
 import { useDispatch } from "react-redux";
 
-const CustomButton = ({ text, icon, endIcon, onClick, navigateTo }) => {
+const CustomButton = ({
+  text,
+  icon,
+  endIcon,
+  onClick,
+  navigateTo,
+  className,
+}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // Handle navigation if `navigateTo` is provided
@@ -26,13 +33,15 @@ const CustomButton = ({ text, icon, endIcon, onClick, navigateTo }) => {
   return (
     <button
       onClick={handleClick}
-      className="flex w-full justify-between items-center font-roboto gap-2 px-2 py-2 rounded-md  text-black hover:bg-blue-600 transition duration-300 ease-in-out"
+      className={`flex w-full justify-between items-center font-roboto gap-2 px-2 py-2 rounded-md  text-black hover:bg-blue-600 transition duration-300 ease-in-out ${className}`}
     >
-      <span className="flex items-center justify-center gap-1">
+      <span
+        className={`flex items-center font-bold text-white justify-cente gap-1 `}
+      >
         {icon}
         {text}
       </span>
-      <span>{endIcon}</span>
+      <span className="font-bold text-white ">{endIcon}</span>
     </button>
   );
 };
