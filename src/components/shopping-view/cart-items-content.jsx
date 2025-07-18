@@ -1,138 +1,123 @@
+// Modernized UserCartItemsContent.js with icons and UX improvements
 import { deleteCartItems, updateCartItems } from "@/store/cart-slice";
-import { Minus, Plus, Trash } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomToast from "../ui/CustomToast";
 
 const UserCartItemsContent = ({ cartItem }) => {
-  // console.log(cartItems, "cartxxxxxxxxxxx");
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
+  const { productList } = useSelector((state) => state.shopProducts);
   const [toast, setToast] = useState({
     isVisible: false,
     message: "",
     type: "",
   });
-  const dispatch = useDispatch();
-  const { productList, isLoading, productDetails } = useSelector(
-    (state) => state.shopProducts
-  );
-  function handleCartItemDelete(getCartItem) {
+
+  const handleCartItemDelete = (getCartItem) => {
     dispatch(
       deleteCartItems({ userId: user?.id, productId: getCartItem?.productId })
     ).then((data) => {
-      if (data?.payload?.succes) {
-        toast({
-          title: "Cart item deleted succssfully ",
-        });
+      if (data?.payload?.success) {
+        setToast({ isVisible: true, message: "Item removed from cart", type: "success" });
       }
     });
-  }
+  };
 
-  function handleUpdateQuantity(getCartItem, typeOfAction) {
+  const handleUpdateQuantity = (getCartItem, typeOfAction) => {
     if (typeOfAction === "plus") {
-      let getCartItems = cartItems.items || [];
-      {
-        if (getCartItems.length) {
-          const indexOfCurrentCartItem = getCartItems.findIndex(
-            (items) => items.productId === getCartItem?.productId
-          );
-          const getCurrentProductIndex = productList.findIndex(
-            (product) => product._id === getCartItem?.productId
-          );
-          // console.log(getCurrentProductIndex,getTotalStock,"getTotalStock");
-
-          const getTotalStock = productList[getCurrentProductIndex].totalStock;
-          if (indexOfCurrentCartItem > -1) {
-            const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
-            if (getQuantity + 1 > getTotalStock) {
-              setToast({
-                isVisible: true,
-                message: `Only ${getQuantity} items can be added.`,
-                type: "info",
-              });
-              return;
-            }
-          }
-        }
+      const existingItem = cartItems.items?.find(
+        (item) => item.productId === getCartItem?.productId
+      );
+      const product = productList.find(
+        (p) => p._id === getCartItem?.productId
+      );
+      const totalStock = product?.totalStock || 0;
+      if (existingItem && existingItem.quantity + 1 > totalStock) {
+        setToast({
+          isVisible: true,
+          message: `Only ${existingItem.quantity} items can be added.`,
+          type: "info",
+        });
+        return;
       }
     }
+
     dispatch(
       updateCartItems({
         userId: user?.id,
         productId: getCartItem?.productId,
         quantity:
           typeOfAction === "plus"
-            ? getCartItem?.quantity + 1
-            : getCartItem?.quantity - 1,
+            ? getCartItem.quantity + 1
+            : getCartItem.quantity - 1,
       })
     ).then((data) => {
-      if (data?.payload?.succes) {
-        toast({
-          title: "Cart item is updated succssfully ",
+      if (data?.payload?.success) {
+        setToast({
+          isVisible: true,
+          message: "Cart updated",
+          type: "success",
         });
       }
     });
-  }
+  };
+
+  const getEffectivePrice =
+    cartItem?.salePrice && cartItem.salePrice < cartItem.price
+      ? cartItem.salePrice
+      : cartItem.price;
+
   return (
-    <div className="flex items-center space-x-4">
-      <img
-        className="w-20 h-20 rounded object-cover"
-        src={cartItem?.image}
-        alt={cartItem?.title}
-        loading="lazy"
-      />
-      <div className="flex-1">
-        <h3 className="font-extrabold font-roboto"> {cartItem?.title}</h3>
-        <div className="flex w-fit h-[25px]  rounded-md border-red-40 border-purple-500 border-opacity-30 border-[2px] items-center mt-1 gap-2">
-          <button
-            onClick={() => handleUpdateQuantity(cartItem, "minus")}
-            variant="outline"
-            disabled={cartItem?.quantity === 1}
-            size="icon"
-            className="flex justify-center items-center h-8 w-8 rounded-full"
-          >
-            <Minus className="w-4 h-4 bg-[#ED5448 rounded-sm" />
-            <span className="sr-only">Decrease</span>
-          </button>
-          <span className="flex font-semibold justify-center items-center h-8 w-4">
-            {cartItem?.quantity}
-          </span>
-          <button
-            onClick={() => handleUpdateQuantity(cartItem, "plus")}
-            variant="outline"
-            size="icon"
-            className="flex justify-center items-center h-8 w-8 rounded-full"
-          >
-            <Plus className="w-4 h-4 bg-green-40 rounded-sm" />
-            <span className="sr-only">Increase</span>
-          </button>
-        </div>
-        <div className="pt-1">
-          <p className="text-[14px] font-semibold text-black font-roboto">
-            Delivery in <span className="text-green-400">7 days </span>
+    <div className="flex items-center justify-between w-full border-b py-4">
+      <div className="flex items-center gap-4">
+        <img
+          className="w-20 h-20 object-cover rounded"
+          src={cartItem?.image}
+          alt={cartItem?.title}
+        />
+        <div className="flex flex-col">
+          <h3 className="font-semibold text-sm text-gray-900">
+            {cartItem?.title}
+          </h3>
+          <div className="flex items-center gap-2 mt-2">
+            <button
+              onClick={() => handleUpdateQuantity(cartItem, "minus")}
+              disabled={cartItem?.quantity === 1}
+              className="h-8 w-8 flex items-center justify-center border rounded-full hover:bg-gray-100 disabled:opacity-50"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            <span className="text-sm font-medium w-6 text-center">
+              {cartItem?.quantity}
+            </span>
+            <button
+              onClick={() => handleUpdateQuantity(cartItem, "plus")}
+              className="h-8 w-8 flex items-center justify-center border rounded-full hover:bg-gray-100"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+          </div>
+          <p className="text-xs text-gray-600 mt-1">
+            Delivery in <span className="text-green-600">7 days</span>
           </p>
         </div>
       </div>
-      <div className="flex flex-col items-end font-roboto">
-        <p className="font-semibold font-roboto">
-          ₹
-          {(
-            (cartItem?.salePrice && cartItem.salePrice < cartItem.price
-              ? cartItem.salePrice
-              : cartItem.price) * cartItem?.quantity
-          ).toFixed(2)}
-        </p>
-
+      <div className="flex flex-col items-end gap-2">
+        <span className="text-sm font-semibold text-black">
+          ₹{(getEffectivePrice * cartItem?.quantity).toFixed(2)}
+        </span>
         <button
           onClick={() => handleCartItemDelete(cartItem)}
-          className="cursor-pointer mt-1 size={10}"
+          className="hover:text-red-600"
         >
-          <img className="w-10 h-10" src="/assets/icons/bin.png"></img>
+          <Trash2 className="w-5 h-5" />
         </button>
       </div>
       <CustomToast
-        className="z-100"
+        className="z-50"
         message={toast.message}
         type={toast.type}
         isVisible={toast.isVisible}

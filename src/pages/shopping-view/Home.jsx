@@ -27,15 +27,6 @@ import {
   fetchProductsDetails,
 } from "@/store/shop/products-slice";
 import ShoppingProductTitle from "./ProductTitle";
-import {
-  MdCheckCircle,
-  MdFitnessCenter,
-  MdSportsSoccer,
-  MdStore,
-  MdStorefront,
-  MdShoppingBag,
-  MdMore,
-} from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { addToCart, fetchCartItems } from "@/store/cart-slice";
 import ProductDetailsDialog from "@/components/shopping-view/productdeatils";
