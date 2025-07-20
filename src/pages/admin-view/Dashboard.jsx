@@ -95,6 +95,7 @@ const AdminDashboard = () => {
                   src={imgItem.image}
                   alt={`Feature ${index + 1}`}
                   className="w-full h-[200px] object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-black/50 text-white px-3 py-2 flex items-center justify-between text-sm">
                   <span>Feature {index + 1}</span>

@@ -20,26 +20,28 @@ const Footer = () => {
             className="h-[50px]"
             src="/assets/alert/appstores.png"
             alt="app-store"
+            loading="lazy" 
           />
           <img
             className="h-[50px]"
             src="/assets/alert/playstore.png"
             alt="ad-store"
+            loading="lazy" 
           />
         </div>
 
         <div className="social   justify-end flex gap-2">
           <a href="#" className="w-4 h-4">
-            <img className="w-4 h-4" src="/assets/social/fb.svg" alt="fb" />
+            <img className="w-4 h-4" src="/assets/social/fb.svg" alt="fb" loading="lazy"  />
           </a>
           <a href="#" className="w-4 h-4">
-            <img className="w-4 h-4" src="/assets/social/in.svg" alt="in" />
+            <img className="w-4 h-4" src="/assets/social/in.svg" alt="in" loading="lazy"  />
           </a>
           <a href="#" className="w-4 h-4">
-            <img className="w-4 h-4" src="/assets/social/yt.svg" alt="yt" />
+            <img className="w-4 h-4" src="/assets/social/yt.svg" alt="yt" loading="lazy"  />
           </a>
           <a href="#" className="w-4 h-4">
-            <img className="w-4 h-4" src="/assets/social/x.svg" alt="x" />
+            <img className="w-4 h-4" src="/assets/social/x.svg" alt="x" loading="lazy"  />
           </a>
         </div>
       </div>

@@ -5,8 +5,6 @@ import b3 from "../../assets/banners/b3.webp";
 import b4 from "../../assets/banners/b4.webp";
 import b5 from "../../assets/banners/b5.webp";
 import b6 from "../../assets/banners/b6.webp";
-import an1 from "../../assets/gifs/an5.gif";
-import an2 from "../../assets/gifs/an4.gif";
 import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -197,6 +195,7 @@ const ShoppingHome = () => {
             }`}
             src={slide}
             alt={`Slide ${index + 1}`}
+            loading="lazy"
           />
         ))}
 
@@ -312,6 +311,7 @@ const ShoppingHome = () => {
                 src={imgPath}
                 alt={`Slide ${index + 1}`}
                 className="w-full xs:h-[220px] h-[480px] object-fit px-"
+                loading="lazy"
               />
             </div>
           ))}
@@ -321,12 +321,14 @@ const ShoppingHome = () => {
 
       <section className="py-12 bg-purple-40 ">
         <div className="containe mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">New & Featured</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">
+            New & Featured
+          </h2>
           <div className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xs:gap-2 gap-6">
             {displayProducts && displayProducts.length > 0
               ? displayProducts.map((productItem) => (
                   <ShoppingProductTitle
-                    key={productItem.id} // Assuming productItem has an 'id' property
+                    key={productItem._id} // Assuming productItem has an 'id' property
                     handleGetProductDetails={handleGetProductDetails}
                     product={productItem}
                     classNameFooter={"xs:hidden"}

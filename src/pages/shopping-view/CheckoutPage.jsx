@@ -112,6 +112,7 @@ const ShoppingCheckoutPage = () => {
           className="h-full w-full object-cover object-center"
           src={accountImage}
           alt="account"
+          loading="lazy"
         />
       </div>
 

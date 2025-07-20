@@ -30,6 +30,7 @@ export function SpotlightPreview({
             }`}
             src={image}
             alt={`Image-${index}`}
+            loading="lazy" 
           />
         ))}
       </div>

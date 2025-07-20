@@ -20,6 +20,7 @@ const AdminProductTile = ({
               src={product?.image}
               alt={product?.title}
               className="w-full h-[300px] object-cover rounded-t-lg"
+              loading="lazy" 
             />
           </div>
           <CardContent>

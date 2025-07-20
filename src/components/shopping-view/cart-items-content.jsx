@@ -77,6 +77,7 @@ const UserCartItemsContent = ({ cartItem }) => {
           className="w-20 h-20 object-cover rounded"
           src={cartItem?.image}
           alt={cartItem?.title}
+          loading="lazy" 
         />
         <div className="flex flex-col">
           <h3 className="font-semibold text-sm text-gray-900">

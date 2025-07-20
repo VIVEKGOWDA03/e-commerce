@@ -350,39 +350,35 @@ export const buttonsData = [
     icon: <HomeIcon className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/home",
-    className:"hover:bg-green-400 "
+    className: "hover:bg-green-400 ",
   },
   {
     text: "Shop",
     icon: <MdProductionQuantityLimits className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/listing",
-    className:""
-
+    className: "",
   },
   {
     text: "Orders",
     icon: <PackageSearch className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/account",
-    className:"hover:bg-yellow-400"
-
+    className: "hover:bg-yellow-400",
   },
   {
     text: "Account",
     icon: <User className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/shop/account",
-    className:"hover:bg-green-400"
-
+    className: "hover:bg-green-400",
   },
   {
     text: "logout",
     icon: <LogOut className="w-4 h-4" />,
     endIcon: <ArrowRight className="w-4 h-4" />,
     navigateTo: "/auth/login",
-    className:"hover:bg-red-400"
-
+    className: "hover:bg-red-400",
   },
 ];
 
@@ -488,60 +484,82 @@ export const settings = {
 
 export const products = [
   {
+    id: 1,
     title: "Product 4",
     thumbnail: "/assets/items/c02.webp",
     link: "/shop/listing",
   },
   {
+    id: 2,
     title: "Product 5",
     thumbnail: "/assets/items/c03.webp",
     link: "/shop/listing",
   },
   {
+    id: 3,
     title: "Product 6",
     thumbnail: "/assets/items/c04.webp",
     link: "/shop/listing",
   },
 
   {
+    id: 4,
     title: "Product 4",
     thumbnail: "/assets/items/c02.webp",
     link: "/shop/listing",
   },
   {
+    id: 5,
     title: "Product 5",
     thumbnail: "/assets/items/c03.webp",
     link: "/shop/listing",
   },
   {
+    id: 6,
     title: "Product 6",
     thumbnail: "/assets/items/c04.webp",
     link: "/shop/listing",
   },
-  { title: "Product 1", thumbnail: "/assets/items/men.jpg", link: "/product2" },
   {
+    id: 7,
+    title: "Product 1",
+    thumbnail: "/assets/items/men.jpg",
+    link: "/product2",
+  },
+  {
+    id: 8,
     title: "Product 2",
     thumbnail: "/assets/items/c04.webp",
     link: "/shop/listing",
   },
-  { title: "Product 3", thumbnail: "/assets/items/c01.jpg", link: "/product2" },
+  {
+    id: 9,
+    title: "Product 3",
+    thumbnail: "/assets/items/c01.jpg",
+    link: "/product2",
+  },
 
   {
+    id: 10,
     title: "Product 7",
     thumbnail: "/assets/items/men.jpg",
     link: "/shop/listing",
   },
   {
+    id: 11,
+
     title: "Product 8",
     thumbnail: "/assets/items/c04.webp",
     link: "/shop/listing",
   },
   {
+    id: 12,
     title: "Product 9",
     thumbnail: "/assets/items/c01.jpg",
     link: "/shop/listing",
   },
   {
+    id: 13,
     title: "Product 4",
     thumbnail: "/assets/items/c02.webp",
     link: "/shop/listing",

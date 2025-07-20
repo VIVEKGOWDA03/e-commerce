@@ -96,6 +96,7 @@ const ProductDetailsDialog = ({ setOpen, open, productDetails }) => {
                 src={productDetails?.image}
                 alt={productDetails?.title}
                 className="rounded-md w-full h-[300px] object-cover"
+                loading="lazy" 
               />
             </div>
             <div className="w-full sm:w-1/2 flex flex-col gap-4">

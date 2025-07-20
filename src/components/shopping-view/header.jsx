@@ -157,8 +157,8 @@ const ShoppingHeader = () => {
           <WordRotate
             className="w-12"
             words={[
-              <img src={bucket} alt="Bucket" className="w-12 h-12" />,
-              <img src={trolley} alt="Trolley" className="w-12 h-12" />,
+              <img src={bucket} alt="Bucket" className="w-12 h-12" loading="lazy" />,
+              <img src={trolley} alt="Trolley" className="w-12 h-12" loading="lazy"  />,
             ]}
           />
           <h1 className="text-xl sm:text-2xl md:text-2xl font-rubikVinyl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-700 bg-opacity-50">
@@ -210,9 +210,9 @@ const ShoppingHeader = () => {
                   className="lg:hidden w-10 h-10"
                   onClick={() => setOpenMenuSheet(true)}
                 >
-                  {/* <img className="w-8 h-8" src="/assets/icons/menu.gif"/> */}
-                  <TiThMenu className="w-8 h-8" />
-                  {/* <img className="w-8 h-8" src="/assets/icons/menu.gif"/> */}
+                  {/* <img className="w-8 h-8" src="/assets/icons/menu.gif" loading="lazy" /> */}
+                  <TiThMenu className="w-8 h-8" loading="lazy"  />
+                  {/* <img className="w-8 h-8" src="/assets/icons/menu.gif" loading="lazy" /> */}
                   <span className="sr-only">Toggle header menu</span>
                 </Button>
               </SheetTrigger>
